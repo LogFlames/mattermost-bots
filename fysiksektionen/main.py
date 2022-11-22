@@ -105,7 +105,7 @@ def delete_new_posts_in_clean_channels(driver: Driver):
     for channel in CHANNELS:
         res = driver.posts.get_posts_for_channel(channel_id = CHANNELS[channel])
         for post in res["posts"]:
-            if res["posts"][post]["type"] == "system_add_to_channel":
+            if res["posts"][post]["type"] in ("system_add_to_channel", "system_join_channel"):
                 print(f"Deleting {post}")
                 driver.posts.delete_post(post_id = post)
 
