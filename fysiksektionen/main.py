@@ -104,6 +104,7 @@ def add_to_default_channels(driver: Driver, data):
 def delete_new_posts_in_clean_channels(driver: Driver):
     for channel in CHANNELS:
         res = driver.posts.get_posts_for_channel(channel_id = CHANNELS[channel])
+        for post in res["posts"]:
             if res["posts"][post]["type"] == "system_add_to_channel":
                 print(f"Deleting {post}")
                 driver.posts.delete_post(post_id = post)
@@ -125,8 +126,6 @@ def main():
 
     driver.login()
     ws = WebSocket()
-
-    cc = CourseChannels(driver)
 
     ws.subscribe("user_added", lambda data: add_to_default_channels(driver, data))
 
