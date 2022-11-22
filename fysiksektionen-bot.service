@@ -1,0 +1,11 @@
+[Unit]
+Description=Start Fysiksektionen-bot
+After=multi-user.target
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/bin/python3 /opt/mattermost_bots/mattermost-bots/fysiksektionen/main.py
+
+[Install]
+WantedBy=multi-user.target
