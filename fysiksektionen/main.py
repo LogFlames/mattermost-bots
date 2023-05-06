@@ -96,6 +96,18 @@ def delete_new_posts_in_clean_channels(driver: Driver):
                 print(f"Deleting {post}")
                 driver.posts.delete_post(post_id = post)
 
+def get_team_members(driver, team):
+    members = []
+    page = 0
+    while True:
+        mems = driver.teams.get_team_members(team, {"per_page": 200, "page": page})
+        for member in mems:
+            members.append(member["user_id"])
+        if len(mems) == 0:
+            break
+        page += 1
+    return members
+
 def main():
     driver = Driver(
             {
@@ -118,8 +130,8 @@ def main():
 
     delete_new_posts_in_clean_channels(driver)
 
-    #for user in driver.teams.get_team_members(TEAM_ID, {"per_page": 2000}):
-    #    manage_channel_categories(driver, user["user_id"], TEAM_ID)
+    #for user in get_team_members(driver, TEAM_ID):
+    #    manage_channel_categories(driver, user, TEAM_ID)
 
     # User addad to team -> Add to channel {'event': 'user_added', 'data': {'team_id': 'g16tqepa3ffntkfnnwqyapkzkr', 'user_id': 'zu7i4ow3obfa3egwpau59r6s4a'}, 'broadcast': {'omit_users': None, 'user_id': '', 'channel_id': '8e9yhhagtjbnpdyr6eiox8i3oa', 'team_id': '', 'connection_id': ''}, 'seq': 8}
 

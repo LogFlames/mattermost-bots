@@ -3,6 +3,18 @@ from secret import TOKEN
 
 FYSIKSEKTIONEN_TEAM = "71bh96izu7f1iee7ayhuan9itr"
 
+def get_team_members(driver, team):
+    members = []
+    page = 0
+    while True:
+        mems = driver.teams.get_team_members(team, {"per_page": 200, "page": page})
+        for member in mems:
+            members.append(member["user_id"])
+        if len(mems) == 0:
+            break
+        page += 1
+    return members
+
 def main():
     driver = Driver(
             {
@@ -20,14 +32,12 @@ def main():
 
     driver.login()
 
-    fysiksektionen_members = driver.teams.get_team_members(FYSIKSEKTIONEN_TEAM, {"per_page": 2000})
-
-    fysiksektionen_members = [*map(lambda x: x["user_id"], fysiksektionen_members)]
+    fysiksektionen_members = get_team_members(driver, FYSIKSEKTIONEN_TEAM)
 
     for team in driver.teams.get_teams({"per_page": 100}):
-        for user in driver.teams.get_team_members(team["id"], {"per_page": 2000}):
-            if user["user_id"] not in fysiksektionen_members:
-                print(f"Adding user {user['user_id']} to Fysiksektionen")
+        for user in get_team_members(driver, team["id"]):
+            if user not in fysiksektionen_members:
+                print(f"Adding user {user['user_id']} to Fysiksektionen from team {team['name']}")
                 driver.teams.add_user_to_team(FYSIKSEKTIONEN_TEAM, {"team_id": FYSIKSEKTIONEN_TEAM, "user_id": user["user_id"]})
 
     #for user in driver.teams.get_team_members(TEAM_ID, {"per_page": 2000}):
