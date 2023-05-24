@@ -126,12 +126,16 @@ def main():
     driver.login()
     ws = WebSocket()
 
+    print("Listening for new users")
     ws.subscribe("user_added", lambda data: add_to_default_channels(driver, data))
 
     delete_new_posts_in_clean_channels(driver)
 
-    #for user in get_team_members(driver, TEAM_ID):
-    #    manage_channel_categories(driver, user, TEAM_ID)
+    print("Adding new users to default channels...")
+    for user in get_team_members(driver, TEAM_ID):
+        manage_channel_categories(driver, user, TEAM_ID)
+        add_to_default_channels(driver, {"team_id": TEAM_ID, "user_id": user})
+    print("Adding new users to default channels ... Done")
 
     # User addad to team -> Add to channel {'event': 'user_added', 'data': {'team_id': 'g16tqepa3ffntkfnnwqyapkzkr', 'user_id': 'zu7i4ow3obfa3egwpau59r6s4a'}, 'broadcast': {'omit_users': None, 'user_id': '', 'channel_id': '8e9yhhagtjbnpdyr6eiox8i3oa', 'team_id': '', 'connection_id': ''}, 'seq': 8}
 
