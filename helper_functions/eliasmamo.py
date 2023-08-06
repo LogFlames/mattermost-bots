@@ -105,18 +105,13 @@ def enable_all_notifications(driver: Driver, user_id):
         '/users/' + user_id + '/patch',
         options={
             "notify_props": {
-                "auto_responder_active": "false",
-                "auto_responder_message": "Hello, I am out of office and unable to respond to messages.",
                 "channel": "true",
                 "comments": "never",
                 "desktop": "all",
-                "desktop_notification_sound": "Bing",
-                "desktop_sound": "true",
                 "desktop_threads": "all",
                 "email": "true",
                 "email_threads": "all",
                 "first_name": "true",
-                "mention_keys": "ellundel",
                 "push": "all",
                 "push_status": "online",
                 "push_threads": "all"
