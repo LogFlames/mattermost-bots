@@ -23,6 +23,50 @@ def mm_channels_delete_user_sidebar_category(driver: Driver, user_id, team_id, c
         '/users/' + user_id + '/teams/' + team_id + '/channels/categories/' + category_id
     )
 
+def manage_channel_categories(driver: Driver, user_id, team_id, channels, conf_categories):
+    # make sure this happens AFTER the user has been added to the relevant categories
+    categories = mm_channels_get_user_sidebar_categories(driver, user_id, team_id)["categories"]
+
+
+    for required_category in conf_categories:
+        for category in categories:
+            if category["display_name"] == required_category:
+                break
+        else:
+            mm_channels_create_user_sidebar_category(driver, user_id, team_id, 
+                                                     { 
+                                                      "user_id": user_id, 
+                                                      "team_id": team_id, 
+                                                      "display_name": required_category, 
+                                                      "type": "custom"
+                                                      }
+                                                     )
+            categories = mm_channels_get_user_sidebar_categories(driver, user_id, team_id)["categories"]
+
+    channel_ids = []
+    for category_name in conf_categories:
+        channel_ids.extend([channels[channel_name] for channel_name in conf_categories[category_name]])
+
+    new_categories = []
+    for category in categories:
+        should_have_channels = set(category["channel_ids"])
+        should_have_channels -= {*channel_ids}
+
+        for category_name in conf_categories:
+            if category_name == category["display_name"]:
+                should_have_channels |= {channels[channel_name] for channel_name in conf_categories[category_name]}
+
+        if should_have_channels != set(category["channel_ids"]):
+            new_categories.append({
+                "id": category["id"],
+                "display_name": category["display_name"],
+                "user_id": user_id,
+                "team_id": team_id,
+                "channel_ids": [channel_id for channel_id in should_have_channels]
+                })
+    if new_categories:
+        mm_channels_update_user_sidebar_categories(driver, user_id, team_id, new_categories)
+
 def get_team_members(driver: Driver, team):
     members = []
     page = 0
@@ -55,3 +99,28 @@ def add_to_default_channels(driver: Driver, wsdata, team_id, channels):
             thread.join()
 
         delete_new_posts_in_clean_channels(driver, channels)
+
+def enable_all_notifications(driver: Driver, user_id):
+    return driver.client.put(
+        '/users/' + user_id + '/patch',
+        options={
+            "notify_props": {
+                "auto_responder_active": "false",
+                "auto_responder_message": "Hello, I am out of office and unable to respond to messages.",
+                "channel": "true",
+                "comments": "never",
+                "desktop": "all",
+                "desktop_notification_sound": "Bing",
+                "desktop_sound": "true",
+                "desktop_threads": "all",
+                "email": "true",
+                "email_threads": "all",
+                "first_name": "true",
+                "mention_keys": "ellundel",
+                "push": "all",
+                "push_status": "online",
+                "push_threads": "all"
+            }
+        }
+    )
+
