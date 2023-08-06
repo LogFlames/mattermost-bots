@@ -1,42 +1,6 @@
-from mattermostdriver import Driver
-from threading import Thread
-
+from eliasmamo_import import *
 from secret import TOKEN
 from configuration import *
-from ws import WebSocket
-
-def add_to_default_channels(driver: Driver, data):
-    if data["team_id"] == TEAM_ID:
-        threads = []
-        for channel in CHANNELS:
-            thread = Thread(target = driver.channels.add_user, args = (CHANNELS[channel], {"user_id": data["user_id"]}))
-            thread.start()
-            threads.append(thread)
-
-        for thread in threads:
-            thread.join()
-
-        delete_new_posts_in_clean_channels(driver)
-
-def delete_new_posts_in_clean_channels(driver: Driver):
-    for channel in CHANNELS:
-        res = driver.posts.get_posts_for_channel(channel_id = CHANNELS[channel])
-        for post in res["posts"]:
-            if res["posts"][post]["type"] in ("system_add_to_channel", "system_join_channel"):
-                print(f"Deleting {post}")
-                driver.posts.delete_post(post_id = post)
-
-def get_team_members(driver, team):
-    members = []
-    page = 0
-    while True:
-        mems = driver.teams.get_team_members(team, {"per_page": 200, "page": page})
-        for member in mems:
-            members.append(member["user_id"])
-        if len(mems) == 0:
-            break
-        page += 1
-    return members
 
 def main():
     driver = Driver(
@@ -54,12 +18,12 @@ def main():
             )
 
     driver.login()
-    ws = WebSocket()
+    ws = WebSocket(TOKEN)
 
     print("Listening for new users")
-    ws.subscribe("user_added", lambda data: add_to_default_channels(driver, data))
+    ws.subscribe("user_added", lambda data: add_to_default_channels(driver, data, TEAM_ID, CHANNELS))
 
-    delete_new_posts_in_clean_channels(driver)
+    delete_new_posts_in_clean_channels(driver, CHANNELS)
 
     if False:
         print("Adding new users to default channels...")

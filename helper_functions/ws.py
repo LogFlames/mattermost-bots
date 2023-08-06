@@ -1,15 +1,12 @@
 from asyncio import run
 import websockets.client
-from secret import TOKEN
 from threading import Thread
 import json
 
-URI = "wss://mattermost.fysiksektionen.se:443/api/v4/websocket"
-AUTH_SEND = json.dumps({ "seq": 1, "action": "authentication_challenge", "data": { "token": TOKEN}})
-
-
 class WebSocket:
-    def __init__(self):
+    def __init__(self, TOKEN):
+        self.URI = "wss://mattermost.fysiksektionen.se:443/api/v4/websocket"
+        self.AUTH_SEND = json.dumps({ "seq": 1, "action": "authentication_challenge", "data": { "token": TOKEN}})
         self.subscriptions = {}
         thread = Thread(target = self.start)
         thread.start()
@@ -33,8 +30,8 @@ class WebSocket:
         run(self._connect())
 
     async def _connect(self):
-        async with websockets.client.connect(URI) as websocket:
-            await websocket.send(AUTH_SEND)
+        async with websockets.client.connect(self.URI) as websocket:
+            await websocket.send(self.AUTH_SEND)
             while True:
                 res = json.loads(await websocket.recv())
                 if "event" in res and res["event"] in self.subscriptions and "data" in res:
@@ -42,4 +39,5 @@ class WebSocket:
                         callback(res["data"])
 
 if __name__ == "__main__":
-    WebSocket().start()
+    from secret import TOKEN
+    WebSocket(TOKEN).start()

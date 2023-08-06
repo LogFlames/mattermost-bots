@@ -1,19 +1,7 @@
-from mattermostdriver import Driver
+from eliasmamo_import import *
 from secret import TOKEN
 
 FYSIKSEKTIONEN_TEAM = "71bh96izu7f1iee7ayhuan9itr"
-
-def get_team_members(driver, team):
-    members = []
-    page = 0
-    while True:
-        mems = driver.teams.get_team_members(team, {"per_page": 200, "page": page})
-        for member in mems:
-            members.append(member["user_id"])
-        if len(mems) == 0:
-            break
-        page += 1
-    return members
 
 def main():
     driver = Driver(
@@ -37,8 +25,8 @@ def main():
     for team in driver.teams.get_teams({"per_page": 100}):
         for user in get_team_members(driver, team["id"]):
             if user not in fysiksektionen_members:
-                print(f"Adding user {user['user_id']} to Fysiksektionen from team {team['name']}")
-                driver.teams.add_user_to_team(FYSIKSEKTIONEN_TEAM, {"team_id": FYSIKSEKTIONEN_TEAM, "user_id": user["user_id"]})
+                print(f"Adding user {user} to Fysiksektionen from team {team['name']}")
+                driver.teams.add_user_to_team(FYSIKSEKTIONEN_TEAM, {"team_id": FYSIKSEKTIONEN_TEAM, "user_id": user})
 
     #for user in driver.teams.get_team_members(TEAM_ID, {"per_page": 2000}):
     #    manage_channel_categories(driver, user["user_id"], TEAM_ID)
