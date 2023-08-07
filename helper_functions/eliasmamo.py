@@ -101,21 +101,22 @@ def add_to_default_channels(driver: Driver, wsdata, team_id, channels):
         delete_new_posts_in_clean_channels(driver, channels)
 
 def enable_all_notifications(driver: Driver, user_id):
+    user_props = driver.client.put(
+            '/users/' + user_id + "/patch")
+
+    notify = user_props["notify_props"]
+    notify["channel"] = "true"
+    notify["desktop"] = "all"
+    notify["desktop_threads"] = "all"
+    notify["first_name"] = "true"
+    notify["push"] = "all"
+    notify["push_status"] = "online"
+    notify["push_threads"] = "all"
+
     return driver.client.put(
         '/users/' + user_id + '/patch',
-        options={
-            "notify_props": {
-                "channel": "true",
-                "comments": "never",
-                "desktop": "all",
-                "desktop_threads": "all",
-                "email": "true",
-                "email_threads": "all",
-                "first_name": "true",
-                "push": "all",
-                "push_status": "online",
-                "push_threads": "all"
-            }
+        options = {
+            "notify_props": notify
         }
     )
 
