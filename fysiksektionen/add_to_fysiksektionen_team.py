@@ -27,6 +27,7 @@ def main():
             if user not in fysiksektionen_members:
                 print(f"Adding user {user} to Fysiksektionen from team {team['name']}")
                 driver.teams.add_user_to_team(FYSIKSEKTIONEN_TEAM, {"team_id": FYSIKSEKTIONEN_TEAM, "user_id": user})
+                fysiksektionen_members.append(user)
 
     #for user in driver.teams.get_team_members(TEAM_ID, {"per_page": 2000}):
     #    manage_channel_categories(driver, user["user_id"], TEAM_ID)
