@@ -13,7 +13,6 @@ messages_from_fiek = ('gdjwfnhjjfn7fpz9x13z68xd4w', )
 messages_from_kajsaeng = ('t8zgua7g33gjmy7jpniwhby35e', )
 messages_from_lijanes = ('jmigo3ngi3rdmpbzjb9higydkw', )
 
-
 messages_to_delete = (*messages_from_matwan,
                       *messages_from_sael,
                       *messages_from_emmakt,
