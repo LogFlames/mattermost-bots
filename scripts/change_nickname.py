@@ -19,20 +19,19 @@ def main():
     driver.login()
 
     user_id = input("UserID: ")
-    position = input("Position: ")
+    nickname = input("Nickname: ")
 
     user_props = driver.client.put(
             '/users/' + user_id + "/patch")
 
-    user_props["position"] = position
+    user_props["nickname"] = nickname
 
     driver.client.put(
         '/users/' + user_id + '/patch',
         options = user_props
     )
 
-    print(f"Updated {user_id}'s position to: {position}")
-
+    print(f"Updated {user_id}'s position to: {nickname}")
 
     #for user in driver.teams.get_team_members(TEAM_ID, {"per_page": 2000}):
     #    manage_channel_categories(driver, user["user_id"], TEAM_ID)

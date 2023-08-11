@@ -17,25 +17,7 @@ def main():
             )
 
     driver.login()
-
-    user_id = input("UserID: ")
-    position = input("Position: ")
-
-    user_props = driver.client.put(
-            '/users/' + user_id + "/patch")
-
-    user_props["position"] = position
-
-    driver.client.put(
-        '/users/' + user_id + '/patch',
-        options = user_props
-    )
-
-    print(f"Updated {user_id}'s position to: {position}")
-
-
-    #for user in driver.teams.get_team_members(TEAM_ID, {"per_page": 2000}):
-    #    manage_channel_categories(driver, user["user_id"], TEAM_ID)
+    ws = WebSocket(TOKEN).start()
 
     # User addad to team -> Add to channel {'event': 'user_added', 'data': {'team_id': 'g16tqepa3ffntkfnnwqyapkzkr', 'user_id': 'zu7i4ow3obfa3egwpau59r6s4a'}, 'broadcast': {'omit_users': None, 'user_id': '', 'channel_id': '8e9yhhagtjbnpdyr6eiox8i3oa', 'team_id': '', 'connection_id': ''}, 'seq': 8}
 
