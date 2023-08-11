@@ -1,0 +1,11 @@
+[Unit]
+Description=Start Fohseriet Ser Dig-monitor
+After=multi-user.target
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/bin/python3 /opt/mattermost_bots/mattermost-bots/f23/fohseriet_ser_dig.py
+
+[Install]
+WantedBy=multi-user.target
