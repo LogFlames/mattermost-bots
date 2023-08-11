@@ -11,10 +11,16 @@ psql
 
 Then normal SQL querys, strings must be in `'`.
 
+Undelete one message:
 ```
 UPDATE posts SET deleteat = 0 WHERE id='chowcd1f7bni9xs6mnc1ttwgny'
 ```
 
+Undelete multiple messages:
+```
+UPDATE posts SET deleteat = 0
+WHERE id IN ('chowcd1f7bni9xs6mnc1ttwgny',...);
+```
 
 ## Be Careful! This writes directly to PROD!!! Do not undelete every message on the server for example :)
 
