@@ -8,8 +8,8 @@ class WebSocket:
         self.URI = "wss://mattermost.fysiksektionen.se:443/api/v4/websocket"
         self.AUTH_SEND = json.dumps({ "seq": 1, "action": "authentication_challenge", "data": { "token": TOKEN}})
         self.subscriptions = {}
-        thread = Thread(target = self.start)
-        thread.start()
+        self.thread = Thread(target = self.start)
+        self.thread.start()
 
     def subscribe(self, event, callback):
         if event not in self.subscriptions:
@@ -37,6 +37,9 @@ class WebSocket:
                 if "event" in res and res["event"] in self.subscriptions and "data" in res:
                     for callback in self.subscriptions[res["event"]]:
                         callback(res["data"])
+
+    def join(self):
+        self.thread.join()
 
 if __name__ == "__main__":
     from secret import TOKEN
