@@ -35,7 +35,9 @@ def main():
 
     if False:
         print("Adding new users to default channels...")
-        for user in get_team_members(driver, TEAM_ID):
+        team_members = get_team_members(driver, TEAM_ID)
+        for i, user in enumerate(team_members):
+            print(f"Handling user: {user} {i}/{len(team_members)}")
             new_user(driver, {"user_id": user, "team_id": TEAM_ID})
         print("Adding new users to default channels ... Done")
 
