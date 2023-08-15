@@ -31,6 +31,8 @@ def main():
             add_to_default_channels(driver, {"team_id": TEAM_ID, "user_id": user}, TEAM_ID, CHANNELS)
         print("Adding new users to default channels ... Done")
 
+    ws.join()
+
     # User addad to team -> Add to channel {'event': 'user_added', 'data': {'team_id': 'g16tqepa3ffntkfnnwqyapkzkr', 'user_id': 'zu7i4ow3obfa3egwpau59r6s4a'}, 'broadcast': {'omit_users': None, 'user_id': '', 'channel_id': '8e9yhhagtjbnpdyr6eiox8i3oa', 'team_id': '', 'connection_id': ''}, 'seq': 8}
 
 if __name__ == "__main__":

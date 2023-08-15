@@ -47,8 +47,8 @@ def main():
     ws.subscribe("posted", lambda data: clean_message(driver, data))
     ws.subscribe("post_edited", lambda data: clean_message(driver, data))
 
-    thread = Thread(target = lambda: update_user_status(driver))
-    thread.start()
+    always_online_thread = Thread(target = lambda: update_user_status(driver))
+    always_online_thread.start()
 
 
     if False:
@@ -57,7 +57,7 @@ def main():
             for reaction in driver.reactions.get_reactions_of_post(post):
                 clean_fohsare(driver, {"reaction": json.dumps({"user_id": reaction["user_id"], "post_id": post, "emoji_name": reaction["emoji_name"]})})
 
-    thread.join()
+    always_online_thread.join()
     ws.join()
 
 if __name__ == "__main__":
