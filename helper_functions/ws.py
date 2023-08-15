@@ -30,7 +30,7 @@ class WebSocket:
         run(self._connect())
 
     async def _connect(self):
-        async with websockets.client.connect(self.URI) as websocket:
+        async with websockets.client.connect(self.URI, max_queue = 1024) as websocket:
             await websocket.send(self.AUTH_SEND)
             while True:
                 res = json.loads(await websocket.recv())
@@ -43,4 +43,4 @@ class WebSocket:
 
 if __name__ == "__main__":
     from secret import TOKEN
-    WebSocket(TOKEN).start()
+    WebSocket(TOKEN).join()
