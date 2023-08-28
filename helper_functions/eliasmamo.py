@@ -67,11 +67,23 @@ def manage_channel_categories(driver: Driver, user_id, team_id, channels, conf_c
     if new_categories:
         mm_channels_update_user_sidebar_categories(driver, user_id, team_id, new_categories)
 
-def get_team_members(driver: Driver, team):
+def get_channel_members(driver: Driver, channel_id):
     members = []
     page = 0
     while True:
-        mems = driver.teams.get_team_members(team, {"per_page": 200, "page": page})
+        mems = driver.channels.get_channel_members(channel_id, {"per_page": 200, "page": page})
+        for member in mems:
+            members.append(member["user_id"])
+        if len(mems) == 0:
+            break
+        page += 1
+    return members
+
+def get_team_members(driver: Driver, team_id):
+    members = []
+    page = 0
+    while True:
+        mems = driver.teams.get_team_members(team_id, {"per_page": 200, "page": page})
         for member in mems:
             members.append(member["user_id"])
         if len(mems) == 0:
