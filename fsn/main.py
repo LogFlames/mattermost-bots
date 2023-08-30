@@ -71,9 +71,9 @@ class CourseChannels:
             if user not in self.users_should_channels:
                 self.users_should_channels[user] = set()
 
-            if "triangular_ruler" in self.reactions[user] and "f0" in self.reactions[user] or user in f0_users:
+            if "triangular_ruler" in self.reactions[user] and ("f0" in self.reactions[user] or user in f0_users):
                 self.users_should_channels[user] |= CHANNEL_GROUPS["CTMAT-f0"]
-            if "thermometer" in self.reactions[user] and "f0" in self.reactions[user] or user in f0_users:
+            if "thermometer" in self.reactions[user] and ("f0" in self.reactions[user] or user in f0_users):
                 self.users_should_channels[user] |= CHANNEL_GROUPS["CTFYS-f0"]
 
     def fix_diff(self):
