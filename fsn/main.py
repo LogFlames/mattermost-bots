@@ -20,6 +20,8 @@ def add_channel_member(driver: Driver, channel, user_id, users_in_channels):
     users_in_channels[channel].add(user_id)
 
 def remove_channel_member(driver: Driver, channel, user_id, users_in_channels):
+    if user_id not in users_in_channels[channel]:
+        return
     driver.channels.remove_channel_member(COURSE_CHANNELS[channel], user_id)
     users_in_channels[channel].remove(user_id)
 
@@ -70,21 +72,25 @@ class CourseChannels:
 
     def fix_diff(self):
         threads = []
+        modified_users = []
         for user in self.users_should_channels:
             if len(self.users_should_channels[user]) == 0:
                 continue
 
-            print(f"Adding '{user}' to '{self.users_should_channels[user]}'")
             for channel in self.users_should_channels[user]:
+                if user in self.users_in_channels[channel]:
+                    continue
+                print(f"Adding '{user}' to '{channel}'")
                 thread = Thread(target = add_channel_member, args = (self.driver, channel, user, self.users_in_channels))
                 thread.start()
                 threads.append(thread)
+                modified_users.append(user)
 
         for thread in threads:
             thread.join()
 
         threads = []
-        for user in self.users_should_channels:
+        for user in modified_users:
             thread = Thread(target = manage_channel_categories, args = (self.driver, user, TEAM_ID, CHANNELS, CATEGORIES))
             thread.start()
             threads.append(thread)
@@ -125,8 +131,6 @@ class CourseChannels:
             if reaction["user_id"] in self.users_in_channels[channel]:
                 print(f"Removing '{reaction['user_id']}' from '{channel}'")
                 remove_channel_member(self.driver, channel, reaction["user_id"], self.users_in_channels)
-
-        self.fix_diff()
 
 def main():
     driver = Driver(
