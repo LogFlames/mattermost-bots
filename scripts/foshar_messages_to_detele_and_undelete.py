@@ -15,7 +15,8 @@ blacklisted_messages = {
         "chrieh": ['9zqw5971qp8h5mpi81yb6g9zha'],
         "martengf": ['hxaqro8a5tnw9jinoz6gamnqrw'],
         "jjl": ['ce55eda867dotbc383moqeu1ae'],
-        "tufva": ['zjuk3dh8d3n8uxgocr1e38pyfe', 'gebnz5tg9tntpeetxup9n58s5o']
+        "tufva": ['zjuk3dh8d3n8uxgocr1e38pyfe', 'gebnz5tg9tntpeetxup9n58s5o'],
+        "fysikalen_team": ['3kyyh5tscinexd7yjjiwoeyn6h', 'yipjz849z3brdrfag9ty417rgo']
         }
 
 messages_to_delete = []
