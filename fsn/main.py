@@ -61,13 +61,19 @@ class CourseChannels:
     def build_user_should_channels(self):
         self.users_should_channels = {}
 
+        # Temporary hack
+        f0_members = set(get_team_members(self.driver, "1ymsbdqk83dzmnx3e1ttgsbf7w"))
+        fysiksektionen_members = set(get_team_members(self.driver, "71bh96izu7f1iee7ayhuan9itr"))
+        mottagningen_members = set(get_team_members(self.driver, "b7hgwxzpzibdtdicycojcsn54w"))
+        f0_users = f0_members - fysiksektionen_members - mottagningen_members
+
         for user in self.reactions:
             if user not in self.users_should_channels:
                 self.users_should_channels[user] = set()
 
-            if "triangular_ruler" in self.reactions[user] and "f0" in self.reactions[user]:
+            if "triangular_ruler" in self.reactions[user] and "f0" in self.reactions[user] or user in f0_users:
                 self.users_should_channels[user] |= CHANNEL_GROUPS["CTMAT-f0"]
-            if "thermometer" in self.reactions[user] and "f0" in self.reactions[user]:
+            if "thermometer" in self.reactions[user] and "f0" in self.reactions[user] or user in f0_users:
                 self.users_should_channels[user] |= CHANNEL_GROUPS["CTFYS-f0"]
 
     def fix_diff(self):
