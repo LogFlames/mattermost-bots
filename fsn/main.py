@@ -1,5 +1,6 @@
 from threading import Thread
 import json
+import os
 
 from eliasmamo_import import *
 from secret import TOKEN
@@ -62,10 +63,11 @@ class CourseChannels:
         self.users_should_channels = {}
 
         # Temporary hack
-        f0_members = set(get_team_members(self.driver, "1ymsbdqk83dzmnx3e1ttgsbf7w"))
-        fysiksektionen_members = set(get_team_members(self.driver, "71bh96izu7f1iee7ayhuan9itr"))
-        mottagningen_members = set(get_team_members(self.driver, "b7hgwxzpzibdtdicycojcsn54w"))
-        f0_users = f0_members - fysiksektionen_members - mottagningen_members
+        if os.path.exists("f0_users.txt"):
+            with open("f0_users.txt", "r") as f:
+                f0_users = {user.strip(" ,") for user in f.read().split(",")}
+        else:
+            f0_users = set()
 
         for user in self.reactions:
             if user not in self.users_should_channels:
