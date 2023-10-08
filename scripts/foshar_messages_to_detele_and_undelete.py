@@ -79,6 +79,7 @@ def main():
             messages = f.read().split()
         posts = "', '".join(messages)
         print(f"UPDATE posts SET deleteat = 0 WHERE id IN ('{posts}');")
+        print(f"UPDATE fileinfo SET deleteat = 0 WHERE postid IN ('{posts}');")
 
 if __name__ == "__main__":
     main()
