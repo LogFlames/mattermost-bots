@@ -83,7 +83,8 @@ def main():
 
         for row in v:
             if row not in prev_vals:
-                print(f"@channel {row[1]} {row[2]} {row[3]} har sökt {row[4]}")
+                message = f"@channel {row[1]} {row[2]} {row[3]} har sökt {row[4]}"
+                driver.posts.create_post({"channel_id": CHANNEL_ID, "message": message})
 
     # User addad to team -> Add to channel {'event': 'user_added', 'data': {'team_id': 'g16tqepa3ffntkfnnwqyapkzkr', 'user_id': 'zu7i4ow3obfa3egwpau59r6s4a'}, 'broadcast': {'omit_users': None, 'user_id': '', 'channel_id': '8e9yhhagtjbnpdyr6eiox8i3oa', 'team_id': '', 'connection_id': ''}, 'seq': 8}
 
