@@ -83,7 +83,7 @@ def main():
 
         for row in v:
             if row not in prev_vals:
-                message = f"@channel {row[1]} {row[2]} {row[3]} har sökt {row[4]}"
+                message = f"@channel {row[0]} {row[1]} {row[2]} har sökt {row[3]}"
                 driver.posts.create_post({"channel_id": CHANNEL_ID, "message": message})
 
         prev_vals = v
