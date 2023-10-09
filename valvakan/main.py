@@ -23,18 +23,17 @@ def read_sheet():
     # The file token.json stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
     # time.
-    if os.path.exists('token.json'):
-        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+    if os.path.exists(os.path.join(os.path.dirname(__file__), 'token.json')):
+        creds = Credentials.from_authorized_user_file(os.path.join(os.path.dirname(__file__), 'token.json'), SCOPES)
     # If there are no (valid) credentials available, let the user log in.
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
-            flow = InstalledAppFlow.from_client_secrets_file(
-                'credentials.json', SCOPES)
+            flow = InstalledAppFlow.from_client_secrets_file(os.path.join(os.path.dirname(__file__), 'credentials.json'), SCOPES)
             creds = flow.run_local_server(port=0)
         # Save the credentials for the next run
-        with open('token.json', 'w') as token:
+        with open(os.path.join(os.path.dirname(__file__), 'token.json'), 'w') as token:
             token.write(creds.to_json())
 
     try:
@@ -74,7 +73,7 @@ def main():
     prev_vals = read_sheet()
 
     while True:
-        time.sleep(10)
+        time.sleep(20)
         v = read_sheet()
 
         if v is None:
