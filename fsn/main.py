@@ -77,6 +77,10 @@ class CourseChannels:
                 self.users_should_channels[user] |= CHANNEL_GROUPS["CTMAT-f0"]
             if "thermometer" in self.reactions[user] and ("f0" in self.reactions[user] or user in f0_users):
                 self.users_should_channels[user] |= CHANNEL_GROUPS["CTFYS-f0"]
+            if "triangular_ruler" in self.reactions[user] and "f22" in self.reactions[user]:
+                self.users_should_channels[user] |= CHANNEL_GROUPS["CTMAT-f22"]
+            if "thermometer" in self.reactions[user] and "f22" in self.reactions[user]:
+                self.users_should_channels[user] |= CHANNEL_GROUPS["CTFYS-f22"]
 
     def fix_diff(self):
         threads = []
