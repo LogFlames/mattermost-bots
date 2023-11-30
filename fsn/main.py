@@ -8,7 +8,7 @@ from configuration import *
 
 
 def new_user(driver, data):
-    add_to_default_channels(driver, data, TEAM_ID, CHANNELS)
+    add_to_default_channels(driver, data, TEAM_ID, DEFAULT_CHANNELS)
     manage_channel_categories(driver, data["user_id"], TEAM_ID, CHANNELS, CATEGORIES)
     enable_all_notifications(driver, data["user_id"])
     driver.teams.add_user_to_team(TEAM_ID, {"team_id": TEAM_ID, "user_id": data["user_id"]})

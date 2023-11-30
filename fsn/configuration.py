@@ -52,6 +52,12 @@ CHANNELS = {
         **COURSE_CHANNELS
         }
 
+DEFAULT_CHANNELS = {
+        "välkommen-till-fsn": "8tyspqdmyifsmg9wj9zitfeb4c",
+        "random": "q77s98iqkjbsfknafm8zcoft6r",
+        "general": "wuuw5rnkpjykfedsbk99hghjpe"
+        }
+
 CATEGORIES = {
         "Kurser": [*COURSE_CHANNELS],
         "Channels": ["välkommen-till-fsn", "random", "general"]
