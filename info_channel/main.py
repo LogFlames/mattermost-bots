@@ -11,7 +11,8 @@ def send_to_channel(driver: Driver, CHANNEL, MESSAGES):
     old_posts = driver.posts.get_posts_for_channel(CHANNEL)
 
     for post in old_posts["posts"]:
-        if old_posts["posts"][post]["user_id"] == driver.client.userid:
+        if old_posts["posts"][post]["user_id"] == driver.client.userid and \
+                old_posts["posts"][post]["root_id"] == "":
             driver.posts.delete_post(old_posts["posts"][post]["id"])
 
     for mes in MESSAGES:
