@@ -1,0 +1,11 @@
+[Unit]
+Description=Start Translator-bot
+After=multi-user.target
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/bin/python3 /opt/mattermost_bots/mattermost-bots/translator/main.py
+
+[Install]
+WantedBy=multi-user.target
