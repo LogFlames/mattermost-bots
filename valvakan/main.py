@@ -49,7 +49,7 @@ def read_sheet():
             print('No data found.')
             return
 
-        return values
+        return [f"@channel {row[0]} {row[1]} {row[2]} har sökt {row[3]}" for row in values]
     except HttpError as err:
         print(err)
 
@@ -82,8 +82,7 @@ def main():
 
         for row in v:
             if row not in prev_vals:
-                message = f"@channel {row[0]} {row[1]} {row[2]} har sökt {row[3]}"
-                driver.posts.create_post({"channel_id": CHANNEL_ID, "message": message})
+                driver.posts.create_post({"channel_id": CHANNEL_ID, "message": row})
 
         prev_vals = v
 
