@@ -2,6 +2,8 @@ from eliasmamo_import import *
 from secret import TOKEN, OPENAI_API_KEY
 from dictionary import DICTIONARY
 import openai
+import os
+import time
 import json
 
 ADMIN_TRANSLATION_TEST_CHANNEL_ID = "8u5crz5fjid15nphaecbxb84er"
@@ -45,9 +47,16 @@ def handle_event(driver: Driver, openai_client: openai.OpenAI, data):
 
     message_eng = translate(openai_client, post["message"])
 
+
     if message_eng is None:
         driver.posts.create_post({"channel_id": ADMIN_TRANSLATION_TEST_CHANNEL_ID, "message": "Error occured while translating a message with openai. Check journal."})
         return
+
+    with open(os.path.join(os.path.dirname(__file__), "translations", f"{int(time.time())}-{post['id']}.txt"), "w+") as f:
+        f.write("Translated ------\n")
+        f.write(post["message"] + "\n")
+        f.write("----- into -----\n")
+        f.write(message_eng + "\n")
 
     dm_channel = driver.channels.create_direct_message_channel([post["user_id"], driver.client.userid])
 
