@@ -128,7 +128,7 @@ Sektionen använder sig av Google Calendar för att nämnder ska kunna boka even
 * Länk till dokumentet [Guide till sektionens delade kalendrar](https://docs.google.com/document/d/1Ryssu6XsLoAJT9KFJVsHr7QjEeiRgbgM9paMbphSFOg/edit?usp=sharing) där instruktioner om hur man lägger till kalendrarna i sin egen privata kalender återfinns."""],
 [
 "##### :fysiksektionen: Fysiksektionen — Styrdokument & sektionsinformation",
-"""####Fysiksektionenn
+"""#### Fysiksektionenn
 Fysiksektionen är en ideell organisation som finns till för alla studenter som pluggar Teknisk Fysik och Teknisk Matematik på KTH. Fysiksektionen bedriver studiebevakning, arrangerar en massa roliga event och har framförallt flertalet aktiva och engagerande nämnder.
 
 Mer information om sektionen, hur den fungerar, alla olika nämnder, hur sektionen styrs kan du läsa om i [Allmän information om Fysiksektionen](https://docs.google.com/document/d/1D5Y2mL0bZRMmgrb7hj3XKklxRyj-DVOtVsGIOrhFSr8/edit).""",
