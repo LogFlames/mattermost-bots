@@ -15,8 +15,8 @@ channels_conf = TranslateChannelsConf()
 channels_conf.add_channel(
         name = "ADMIN_TRANSLATION_TEST_CHANNEL",
         channel_id = ADMIN_TRANSLATION_TEST_CHANNEL_ID,
-        add_to_events = True,
-        send_reply = "dm")
+        add_to_events = False,
+        send_reply = "reply")
 
 channels_conf.add_channel(
         name = "SEKTIONSNYTT_CHANNEL",
