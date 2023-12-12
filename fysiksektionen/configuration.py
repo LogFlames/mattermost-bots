@@ -9,8 +9,8 @@ CHANNELS = {
         "events": "it7zah8m5jrw9dm8bkjm14eyaw"
         }
 
-DEFAULT_CHANNELS = ["sektionsnytt", "evenemang", "general", "random"]
-ENGLISH_CHANNELS = ["events"]
+DEFAULT_CHANNELS = ["sektionsnytt", "evenemang", "general", "random", "info"]
+ENGLISH_CHANNELS = ["events", "info_eng"]
 
 CATEGORIES = {
         "Fysiksektionen": ["sektionsnytt", "evenemang", "info"],

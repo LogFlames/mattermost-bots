@@ -75,7 +75,7 @@ def main():
 
     delete_new_posts_in_clean_channels(driver, CHANNELS)
 
-    if False:
+    if True:
         fix_users(driver)
 
     ws.join()
