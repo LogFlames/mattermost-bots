@@ -180,4 +180,7 @@ Verksamhetsplan | Operational plan
 Yrkande | Motion
 Matanmälan | Food sign-up form
 Märke | Patch
+Kandidatutfrågning | Candidate Questioning Session
+Taggpubb, taggpub | Hype pub
+(att) tagga | (to) hype
 """
