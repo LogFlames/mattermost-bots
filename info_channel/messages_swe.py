@@ -44,7 +44,7 @@ Förtroendevalda är de som på sektionen har valts till ett särskilt förtroen
 """#### Aktivitetsnämnden FAN
 ||||||
 |:--|:--:|:--|--|--
-|Hugo Wretling|Ordförande för aktivitetsnämnden (oFAN)|Frågor som rör alkoholfria aktiviteter, både att delta att starta nya.|@hugowr|ofan@f.kth.se
+|Hugo Wretling|Ordförande för aktivitetsnämnden (oFAN)|Frågor som rör alkoholfria aktiviteter, både att delta och att starta nya.|@hugowr|ofan@f.kth.se
 |Elliot Collin|Vice ordförande för aktivitetsnämnden (vaFAN)|^|@elliotc|vafan@f.kth.se
 """,
 """#### Kommunikationsnämnden Fcom
@@ -102,7 +102,7 @@ Sektionens skyddsombud, @erikasan, kan också kontaktas på Mattermost."""],
 - sektionens Gmail — där sektionens medlemmar kan motta och skicka mejl i sektionssammanhang
 - samt sektionens kalendrar — där sektionens medlemmar kan få en överblick över kommande evenemang och lokalbokningar.""",
 """##### Tillgång till Google Workspace :closed_lock_with_key: 
-* För information om hur du loggar in på ditt konto, se [Att logga in på sitt fysiksektionen.se-konto](https://docs.google.com/document/d/1Hb_cAmtI1FNej1uR8SmOYcpVXcChCl1WNc4VmHnCd2o/edit?usp=sharing). Där finns även information om hur du sedan når sektionens Google Drive, Gmail och Google Calendar.""",
+* För information om hur du loggar in på ditt konto, se [Att logga in på sitt fysiksektionen.se-konto](https://docs.google.com/document/d/1Hb_cAmtI1FNej1uR8SmOYcpVXcChCl1WNc4VmHnCd2o/edit?usp=sharing).""",
 """##### Sektionens Google Drive :google_drive: 
 På sektionens Google Drive återfinns styrdokument, guider, många Drive:s för sektionens diverse grupper och nämnder och mycket mycket mer. Alla sektionsmedlemmar har tillgång till Drive:sen 'Fysiksektionen — Alla | Everyone' och 'Fysiksektionen — Funktionärer'.
 
@@ -133,7 +133,7 @@ Fysiksektionen är en ideell organisation som finns till för alla studenter som
 
 Mer information om sektionen, hur den fungerar, alla olika nämnder, hur sektionen styrs kan du läsa om i [Allmän information om Fysiksektionen](https://docs.google.com/document/d/1D5Y2mL0bZRMmgrb7hj3XKklxRyj-DVOtVsGIOrhFSr8/edit).""",
 """#### Möteshandlingar
-Fysiksektionen har 6 st sektionsmöten (SM) och flera styrelsemöten (STYM) varje år. Sektionsmöten är sektionens högst beslutande organ och där sektionens medlemmar har möjlighet att påverka sektionen och ta viktiga beslut. Möteshandlingar till dessa finns tillgängliga i Konsulatet inför möterna och skikas löpande ut i ~sektionsnytt här i Mattermost. Om man vill hitta gamla kallelser och protokoll kan dessa hittas på [Möteshandlingar för SM och STYM](https://f.kth.se/sektionen/dokument/moteshandlingar/).""",
+Fysiksektionen har 6 st sektionsmöten (SM) och flera styrelsemöten (STYM) varje år. Sektionsmöten är sektionens högst beslutande organ och där sektionens medlemmar har möjlighet att påverka sektionen och ta viktiga beslut. Möteshandlingar till dessa finns tillgängliga i Konsulatet inför möterna och skickas löpande ut i ~sektionsnytt här i Mattermost. Om man vill hitta gamla kallelser och protokoll kan dessa hittas på [Möteshandlingar för SM och STYM](https://f.kth.se/sektionen/dokument/moteshandlingar/).""",
 """#### Styrdokument
 Fysiksektionen har även styrdokument som definierar sektionen och styr verksamheten. PM bestäms av styret och resten (Stadgar, Rambudget, Policydokument, osv) bestäms av SM. Dessa kan uppdateras genom att skicka in en motion till ett SM nära dig. 
 

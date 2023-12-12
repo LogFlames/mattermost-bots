@@ -22,15 +22,15 @@ The Physics Chapter has a website and Google Drive. In addition to this the stud
 * [Governing documents](https://f.kth.se/sektionen/dokument/styrdokument)
 * [Information about and links to all committees](https://f.kth.se/namnder/)""",
          """On the website there is a contact form for the chapter's student safety representative, SSO. The chapter's student safety representative has a duty of confidentiality according to the law and is there to talk to if you want to talk about something (anything!) or report something that has happened in connection with the chapter or KTH. Report what you find out, even if you don't want any action to be taken! It helps the chapter's preventive work.
-* [Contact form for the chapter's SSO (Student Social Welfare Representative)](https://f.kth.se/skyddsombud/)
+* [Contact form for the chapter's SSO (Student Safety Representative)](https://f.kth.se/skyddsombud/)
 The chapter's student safety representative, @erikasan, can also be contacted on Mattermost."""],
-        ["##### **:google_drive: Google Workspace** — Drive, mail & calender",
+        ["##### **:google_drive: Google Workspace** — Drive, Mail & Calendar",
          """The chapter provides a Google Workspace with accounts at @fysiksektionen.se and @f.kth.se. All chapter members receive an account and thus have access to
 - the chapter's Google Drive — where many files and documents related to the chapter are available
 - the chapter's Gmail — where chapter members can receive and send emails in chapter contexts
 - as well as the chapter's calendars — where chapter members can get an overview of upcoming events and room bookings.""",
          """##### Access to Google Workspace :closed_lock_with_key:
-* For information on how to log in to your account, see [Log in to your fysiksektionen.se account](https://docs.google.com/document/d/1QcuIxhI4yj-lGqAv2d4rmcgoCSgNSi1vhPKf0A7AKUY/edit?usp=sharing). There, there is also information on how to access the chapter's Google Drive, Gmail and Google Calendar.""",
+* For information on how to log in to your account, see [Log in to your fysiksektionen.se account](https://docs.google.com/document/d/1QcuIxhI4yj-lGqAv2d4rmcgoCSgNSi1vhPKf0A7AKUY/edit?usp=sharing).""",
          """##### The Chapter's Google Drive :google_drive:
 In the Chapter's Google Drive you can find governing documents, guides, many drives for the chapter's various groups and committees, and much more. All chapter members have access to the drives 'Fysiksektionen — Alla | Everyone' and 'Fysiksektionen — Funktionärer'.
 
