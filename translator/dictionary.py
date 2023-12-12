@@ -182,5 +182,8 @@ Matanmälan | Food sign-up form
 Märke | Patch
 Kandidatutfrågning | Candidate Questioning Session
 Taggpubb, taggpub | Hype pub
-(att) tagga | (to) hype
+Tagga | Hype
+Förtidsval | Pre-Election
+Fysiker | Physics Student
+Matematiker | Mathematics Student 
 """

@@ -1,15 +1,46 @@
 from eliasmamo_import import *
 from secret import TOKEN, OPENAI_API_KEY
 from dictionary import DICTIONARY
+from translator_conf import TranslateChannelsConf, ChannelSettings
 import openai
 import os
 import time
 import json
 
-ADMIN_TRANSLATION_TEST_CHANNEL_ID = "8u5crz5fjid15nphaecbxb84er"
 EVENTS_CHANNEL_ID = "it7zah8m5jrw9dm8bkjm14eyaw"
-SEKTIONSNYTT_CHANNEL_ID = "pda7c6r7zbbtmc17x4ehczc8gc"
-EVENEMANG_CHANNEL_ID = "wkgnsmmbqpgpj8ptdiyx8os16c"
+ADMIN_TRANSLATION_TEST_CHANNEL_ID = "8u5crz5fjid15nphaecbxb84er"
+
+channels_conf = TranslateChannelsConf()
+
+channels_conf.add_channel(
+        name = "ADMIN_TRANSLATION_TEST_CHANNEL",
+        channel_id = ADMIN_TRANSLATION_TEST_CHANNEL_ID,
+        add_to_events = True,
+        send_reply = "dm")
+
+channels_conf.add_channel(
+        name = "SEKTIONSNYTT_CHANNEL",
+        channel_id = "pda7c6r7zbbtmc17x4ehczc8gc",
+        add_to_events = True,
+        send_reply = "dm")
+
+channels_conf.add_channel(
+        name = "EVENEMANG_CHANNEL",
+        channel_id = "wkgnsmmbqpgpj8ptdiyx8os16c",
+        add_to_events = True,
+        send_reply = "dm")
+
+channels_conf.add_channel(
+        name = "STYRET_TRANSLATE",
+        channel_id = "eqn9pmk5g3yitrhhgjr1ufbaua",
+        add_to_events = False,
+        send_reply = "reply")
+
+channels_conf.add_channel(
+        name = "FINT_TRANSLATE",
+        channel_id = "j7oqyius63rt78bb8gqh8y979o",
+        add_to_events = False,
+        send_reply = "reply")
 
 def translate(openai_client: openai.OpenAI, message):
     try:
@@ -29,8 +60,10 @@ def translate(openai_client: openai.OpenAI, message):
 
 def handle_event(driver: Driver, openai_client: openai.OpenAI, data):
     post = json.loads(data["post"])
-    if post["channel_id"] not in (SEKTIONSNYTT_CHANNEL_ID, EVENEMANG_CHANNEL_ID, ADMIN_TRANSLATION_TEST_CHANNEL_ID):
+    if post["channel_id"] not in channels_conf.channels:
         return
+
+    conf: ChannelSettings = channels_conf.channels[post["channel_id"]]
 
     if post["user_id"] == driver.client.userid:
         return
@@ -41,12 +74,11 @@ def handle_event(driver: Driver, openai_client: openai.OpenAI, data):
     if post["root_id"]:
         return
 
-    driver.channels.add_user(EVENTS_CHANNEL_ID, {"user_id": post["user_id"]})
-
-    delete_new_posts_in_clean_channels(driver, {"events": EVENTS_CHANNEL_ID})
+    if conf.add_to_events:
+        driver.channels.add_user(EVENTS_CHANNEL_ID, {"user_id": post["user_id"]})
+        delete_new_posts_in_clean_channels(driver, {"events": EVENTS_CHANNEL_ID})
 
     message_eng = translate(openai_client, post["message"])
-
 
     if message_eng is None:
         driver.posts.create_post({"channel_id": ADMIN_TRANSLATION_TEST_CHANNEL_ID, "message": "Error occured while translating a message with openai. Check journal."})
@@ -58,15 +90,26 @@ def handle_event(driver: Driver, openai_client: openai.OpenAI, data):
         f.write("----- into -----\n")
         f.write(message_eng + "\n")
 
-    dm_channel = driver.channels.create_direct_message_channel([post["user_id"], driver.client.userid])
+    if conf.send_reply == "dm":
+        dm_channel = driver.channels.create_direct_message_channel([post["user_id"], driver.client.userid])
 
-    driver.posts.create_post({
-        "channel_id": dm_channel["id"], 
-        "message": """Vi vill gärna att internationella studenter får möjlighet att gå på evenemang som kan ges på engelska. Vänligen lägg upp ditt evenemang i den engelska kanalen [info-eng](https://mattermost.fysiksektionen.se/fysiksektionen/channels/events) i Fysiksektionen-teamet ifall det är relevant att internationella studenter får informationen. Här är ett förslag på en översättning att utgå ifrån:"""})
+        driver.posts.create_post({
+            "channel_id": dm_channel["id"], 
+            "message": """Vi vill gärna att internationella studenter får möjlighet att gå på evenemang som kan ges på engelska. Vänligen lägg upp ditt evenemang i den engelska kanalen [info-eng](https://mattermost.fysiksektionen.se/fysiksektionen/channels/events) i Fysiksektionen-teamet ifall det är relevant att internationella studenter får informationen. Här är ett förslag på en översättning att utgå ifrån:"""})
 
-    driver.posts.create_post({
-        "channel_id": dm_channel["id"], 
-        "message": message_eng})
+        driver.posts.create_post({
+            "channel_id": dm_channel["id"], 
+            "message": message_eng})
+    elif conf.send_reply == "reply":
+        driver.posts.create_post({
+            "channel_id": post["channel_id"],
+            "root_id": post["id"],
+            "message": message_eng
+            })
+    else:
+        print("ERROR: Unknown 'send_reply' option for {conf.name = }.")
+    
+
 
 def main():
     driver = Driver(
@@ -90,6 +133,8 @@ def main():
     ws = WebSocket(TOKEN)
 
     ws.subscribe("posted", lambda data: handle_event(driver, openai_client, data))
+
+    print("Setup done. Listening for new posts...")
 
     ws.join()
 
