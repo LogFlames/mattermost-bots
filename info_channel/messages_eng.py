@@ -2,14 +2,14 @@ MESSAGES_ENG = [
         ["""## Chapter Officials 
 Chapter Officials are those who the chapter has elected and entrusted to perform a certain duty. They can be presidents for a certain part of the chapter or have another responsibility.
 
-| | Name | Post (year 2024) | Talk to me about...|Profile on Mattermost| Mail |
-|:--:|:--|:--:|:--|--|--
-|| Niklas Käll|President| Questions regarding the chapter as a whole, or if you don't know who to contact.|@nkall|ordf@f.kth.se
-|| Rilind Hoti|Vice president| Questions regarding Google Workspace, chapter groups or room bookings. |@hoti|vordf@f.kth.se
-|| Erika Sandhagen|Safety officer (SSO)|If you need to talk to someone or want to report something that has happened at the chapter or at KTH. **I am bound by professional security, by law.**|@erikasan|studiesocialt@f.kth.se
-|| Rebecca Martinsson|Chapter treasurer| Questions regarding the economy. |@rebmar|kassor@f.kth.se
-|| Lovisa Tallenmo Keller|President of the Study Board|Questions regarding KTH and advocacy work for your studies.|@lovisatk|sno@f.kth.se
-|| <Vacant\\>|President of the International Group FINT|Questions regarding events for international students and the international reception||**Please contact the chapter board for these questions at styret@f.kth.se.**
+| Name | Post (year 2024) | Talk to me about...|Profile on Mattermost| Mail |
+|:--|:--:|:--|--|--
+| Niklas Käll|President| Questions regarding the chapter as a whole, or if you don't know who to contact.|@nkall|ordf@f.kth.se
+| Rilind Hoti|Vice president| Questions regarding Google Workspace, chapter groups or room bookings. |@hoti|vordf@f.kth.se
+| Erika Sandhagen|Safety officer (SSO)|If you need to talk to someone or want to report something that has happened at the chapter or at KTH. **I am bound by professional security, by law.**|@erikasan|studiesocialt@f.kth.se
+| Rebecca Martinsson|Chapter treasurer| Questions regarding the economy. |@rebmar|kassor@f.kth.se
+| Lovisa Tallenmo Keller|President of the Study Board|Questions regarding KTH and advocacy work for your studies.|@lovisatk|sno@f.kth.se
+| <Vacant\\>|President of the International Group FINT|Questions regarding events for international students and the international reception||**Please contact the chapter board for these questions at styret@f.kth.se.**
 
 Other questions should be sent to styret@f.kth.se."""],
         ["""## Links to resources
