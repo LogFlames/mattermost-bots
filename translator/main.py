@@ -53,10 +53,26 @@ def translate(openai_client: openai.OpenAI, message):
           ]
         )
 
-        return completion.choices[0].message.content
+        return completion.choices[0].message.content, True
     except Exception as e:
         print(f"OpenAI threw an error: {e}")
-        return None
+
+        try:
+            return f"""The translation prompt received an error from OpenAI:
+```text
+{e.response.json()['error']['message']}
+```
+Contact mattermost@f.kth.se for assistance.""", False
+        except Exception as f:
+            print(f"Error while trying to get message from OpenAIError: {f}")
+            return """
+The translation prompt received an error while trying to parse an error OpenAI
+```text
+{f}
+```
+Contact mattermost@f.kth.se for assistance.
+""", False
+
 
 def handle_event(driver: Driver, openai_client: openai.OpenAI, data):
     post = json.loads(data["post"])
@@ -78,10 +94,13 @@ def handle_event(driver: Driver, openai_client: openai.OpenAI, data):
         driver.channels.add_user(EVENTS_CHANNEL_ID, {"user_id": post["user_id"]})
         delete_new_posts_in_clean_channels(driver, {"events": EVENTS_CHANNEL_ID})
 
-    message_eng = translate(openai_client, post["message"])
+    message_eng, translation_successfull = translate(openai_client, post["message"])
+
+    if not translation_successfull:
+        driver.posts.create_post({"channel_id": ADMIN_TRANSLATION_TEST_CHANNEL_ID, "message": f"Error occured while translating a message with openai. Check journal. \n Sent to user: \n {message_eng}"})
 
     if message_eng is None:
-        driver.posts.create_post({"channel_id": ADMIN_TRANSLATION_TEST_CHANNEL_ID, "message": "Error occured while translating a message with openai. Check journal."})
+        driver.posts.create_post({"channel_id": ADMIN_TRANSLATION_TEST_CHANNEL_ID, "message": f"Error occured while translating a message with openai. Check journal."})
         return
 
     with open(os.path.join(os.path.dirname(__file__), "translations", f"{int(time.time())}-{post['id']}.txt"), "w+") as f:
