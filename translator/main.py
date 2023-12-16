@@ -143,13 +143,14 @@ def handle_reaction(driver: Driver, openai_client: openai.OpenAI, data):
     if reaction["user_id"] == driver.client.userid:
         return
 
-    driver.reactions.create_reaction({"post_id": reaction["post_id"], "emoji_name": "english", "user_id": driver.client.userid})
 
     reactions_on_post = driver.reactions.get_reactions_of_post(reaction["post_id"])
 
     for reaction_on_post in reactions_on_post:
         if reaction_on_post["user_id"] == driver.client.userid:
             return
+
+    driver.reactions.create_reaction({"post_id": reaction["post_id"], "emoji_name": "english", "user_id": driver.client.userid})
 
     post = driver.posts.get_post(reaction["post_id"])
 
