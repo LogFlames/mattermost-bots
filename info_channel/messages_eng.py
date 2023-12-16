@@ -104,6 +104,9 @@ On THS's website [ths.kth.se](https://ths.kth.se/) there are many helpful resour
 **This channel is an excellent starting point if you're looking for something in particular.**
 
 The Swedish version of this channel is available at ~info.
-"""]
+"""],
+    ["""Oh and by the way, if you react to any message with :english:, **`:english:`**, we have a bot that translates the message for you!
+
+*It will not translate messages in channels which are already translated in some other way, such as the Swedish event channels.*"""]
 ]
 
