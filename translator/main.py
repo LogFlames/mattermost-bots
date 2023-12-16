@@ -7,6 +7,10 @@ import os
 import time
 import json
 
+INFO_AND_URLS_SWE_CHANNEL_ID = "dz1jak398fyhir1uxpya7grify"
+INFO_AND_URLS_ENG_CHANNEL_ID = "1kfcce1i7py4ip1933fkb95jrh"
+WELCOME_CHANNEL_ID = "14qsngxzdi8nxfdr8it5xzr81y"
+
 EVENTS_CHANNEL_ID = "it7zah8m5jrw9dm8bkjm14eyaw"
 ADMIN_TRANSLATION_TEST_CHANNEL_ID = "8u5crz5fjid15nphaecbxb84er"
 
@@ -137,7 +141,7 @@ def handle_reaction(driver: Driver, openai_client: openai.OpenAI, data):
     if reaction["emoji_name"] != "english":
         return 
 
-    if reaction["channel_id"] in channels_conf.channels or reaction["channel_id"] == EVENTS_CHANNEL_ID:
+    if reaction["channel_id"] in channels_conf.channels or reaction["channel_id"] == (EVENTS_CHANNEL_ID, INFO_AND_URLS_SWE_CHANNEL_ID, INFO_AND_URLS_ENG_CHANNEL_ID, WELCOME_CHANNEL_ID):
         return
 
     if reaction["user_id"] == driver.client.userid:
