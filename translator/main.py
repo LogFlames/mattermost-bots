@@ -129,6 +129,51 @@ def handle_event(driver: Driver, openai_client: openai.OpenAI, data):
         print("ERROR: Unknown 'send_reply' option for {conf.name = }.")
     
 
+def handle_reaction(driver: Driver, openai_client: openai.OpenAI, data):
+    reaction = json.loads(data["reaction"])
+    if reaction["emoji_name"] != "english":
+        return 
+
+    if reaction["channel_id"] in channels_conf.channels or reaction["channel_id"] == EVENTS_CHANNEL_ID:
+        return
+
+    if reaction["user_id"] == driver.client.userid:
+        return
+
+    reactions_on_post = driver.reactions.get_reactions_of_post(reaction["post_id"])
+
+    for reaction_on_post in reactions_on_post:
+        if reaction_on_post["user_id"] == driver.client.userid:
+            return
+
+    post = driver.posts.get_post(reaction["post_id"])
+
+    message_eng, translation_successfull = translate(openai_client, post["message"])
+
+    if not translation_successfull:
+        driver.posts.create_post({"channel_id": ADMIN_TRANSLATION_TEST_CHANNEL_ID, "message": f"Error occured while translating a message with openai. Check journal. \n Edited into message: \n {message_eng}"})
+
+    if message_eng is None:
+        driver.posts.create_post({"channel_id": ADMIN_TRANSLATION_TEST_CHANNEL_ID, "message": f"Error occured while translating a message with openai. Check journal."})
+        return
+
+    with open(os.path.join(os.path.dirname(__file__), "translations", f"{int(time.time())}-{reaction['post_id']}.txt"), "w+") as f:
+        f.write("Translated ------\n")
+        f.write(post["message"] + "\n")
+        f.write("----- into -----\n")
+        f.write(message_eng + "\n")
+
+    qouted_message = "> ###### :english: Translation by @translator-bot\n>\n"
+
+    for line in message_eng.split("\n"):
+        qouted_message += "> " + line
+
+    driver.posts.update_post(post["id"], {
+        "id": post["id"],
+        "message": post["message"] + "\n\n" + qouted_message
+        })
+
+    driver.reactions.create_reaction({"post_id": post["id"], "emoji_name": "english", "user_id": driver.client.userid})
 
 def main():
     driver = Driver(
@@ -152,6 +197,7 @@ def main():
     ws = WebSocket(TOKEN)
 
     ws.subscribe("posted", lambda data: handle_event(driver, openai_client, data))
+    ws.subscribe("reaction_added", lambda data: handle_reaction(driver, openai_client, data))
 
     print("Setup done. Listening for new posts...")
 
