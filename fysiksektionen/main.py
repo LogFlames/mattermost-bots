@@ -48,7 +48,7 @@ def reacted(driver, data):
     reaction = json.loads(data["reaction"])
 
     if reaction["post_id"] == MESSAGE_WITH_ENGLISH_REACTIONS_POST_ID:
-        if reaction["emoji_name"] in ("english", "en_english"):
+        if reaction["emoji_name"] in ("english", "en_english", "en"):
             add_to_english(driver, reaction["user_id"])
 
 def main():
