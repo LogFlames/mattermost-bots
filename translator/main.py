@@ -179,7 +179,7 @@ def handle_reaction(driver: Driver, openai_client: openai.OpenAI, data):
     qouted_message = "> ###### :english: Translation by @translator-bot\n>\n"
 
     for line in message_eng.split("\n"):
-        qouted_message += "> " + line
+        qouted_message += "> " + line + "\n"
 
     driver.posts.update_post(post["id"], {
         "id": post["id"],
