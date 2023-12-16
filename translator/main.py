@@ -90,6 +90,9 @@ def handle_event(driver: Driver, openai_client: openai.OpenAI, data):
     if post["root_id"]:
         return
 
+    if not post["message"]:
+        return
+
     if conf.add_to_events:
         driver.channels.add_user(EVENTS_CHANNEL_ID, {"user_id": post["user_id"]})
         delete_new_posts_in_clean_channels(driver, {"events": EVENTS_CHANNEL_ID})
@@ -140,6 +143,8 @@ def handle_reaction(driver: Driver, openai_client: openai.OpenAI, data):
     if reaction["user_id"] == driver.client.userid:
         return
 
+    driver.reactions.create_reaction({"post_id": reaction["post_id"], "emoji_name": "english", "user_id": driver.client.userid})
+
     reactions_on_post = driver.reactions.get_reactions_of_post(reaction["post_id"])
 
     for reaction_on_post in reactions_on_post:
@@ -147,6 +152,9 @@ def handle_reaction(driver: Driver, openai_client: openai.OpenAI, data):
             return
 
     post = driver.posts.get_post(reaction["post_id"])
+
+    if not post["message"]:
+        return
 
     message_eng, translation_successfull = translate(openai_client, post["message"])
 
@@ -173,7 +181,6 @@ def handle_reaction(driver: Driver, openai_client: openai.OpenAI, data):
         "message": post["message"] + "\n\n" + qouted_message
         })
 
-    driver.reactions.create_reaction({"post_id": post["id"], "emoji_name": "english", "user_id": driver.client.userid})
 
 def main():
     driver = Driver(
