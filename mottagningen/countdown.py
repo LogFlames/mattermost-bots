@@ -1,7 +1,6 @@
 from eliasmamo_import import *
 from secret import TOKEN
 from datetime import datetime
-import math
 
 COUNTDOWN_CHANNEL = "uduyxpg5stgttfkiehqwszf7he"
 
@@ -32,7 +31,7 @@ def main():
         if posts[post_id]["type"] == "system_displayname_change":
             driver.posts.delete_post(post_id)
 
-    driver.posts.create_post({"channel_id": COUNTDOWN_CHANNEL, "message": f"@mottagningen24 {dagar} dag{'ar' if dagar != 1 else ''} kvar till dag Ø"})
+    driver.posts.create_post({"channel_id": COUNTDOWN_CHANNEL, "message": f"{dagar} dag{'ar' if dagar != 1 else ''} kvar till dag Ø"})
 
 if __name__ == "__main__":
     main()
