@@ -1,3 +1,4 @@
 tqdm==4.66.1
 mattermostdriver==7.3.2
 openai==1.7.2
+markdown==3.5.2
