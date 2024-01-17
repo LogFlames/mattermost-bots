@@ -25,7 +25,7 @@ EMOJI_MAP = {
 
 USERS = {
         "mattermästare": [
-            "xzt5e9rmtb8b5c78auq3h7bffr" # Elias Lundell F-22
+            "xzt5e9rmtb8b5c78auq3h7bffr", # Elias Lundell F-22
             "zpi7y8ohw7b5t8ieutka3wi4yw" # Eskil Nyberg F-21
             ]
         }
