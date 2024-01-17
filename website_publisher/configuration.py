@@ -31,19 +31,19 @@ USERS = {
         }
 
 AUTHENTICATED_USERS = {
-        "fan": [*USERS["mattermästare"]],
-        "fart": [*USERS["mattermästare"]],
-        "fcom": [*USERS["mattermästare"]],
-        "fdev": [*USERS["mattermästare"]],
-        "fint": [*USERS["mattermästare"]],
-        "fkm": [*USERS["mattermästare"]],
-        "fn": [*USERS["mattermästare"]],
-        "force": [*USERS["mattermästare"]],
-        "frum": [*USERS["mattermästare"]],
-        "fsn": [*USERS["mattermästare"]],
-        "fysikalen": [*USERS["mattermästare"]],
-        "jamn": [*USERS["mattermästare"]],
-        "mottagningen": [*USERS["mattermästare"]],
+        "fan": [],
+        "fart": [],
+        "fcom": [],
+        "fdev": [],
+        "fint": [],
+        "fkm": [],
+        "fn": [],
+        "force": [],
+        "frum": [],
+        "fsn": [],
+        "fysikalen": [],
+        "jamn": [],
+        "mottagningen": [],
         "styret": [*USERS["mattermästare"]],
         "valberedningen": []
         }
