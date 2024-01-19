@@ -4,12 +4,13 @@ from threading import Thread
 import json
 
 class WebSocket:
-    def __init__(self, TOKEN):
+    def __init__(self, TOKEN, print_events = False):
         self.URI = "wss://mattermost.fysiksektionen.se:443/api/v4/websocket"
         self.AUTH_SEND = json.dumps({ "seq": 1, "action": "authentication_challenge", "data": { "token": TOKEN}})
         self.subscriptions = {}
         self.thread = Thread(target = self.start)
         self.thread.start()
+        self.print_events = print_events
 
     def subscribe(self, event, callback):
         if event not in self.subscriptions:
@@ -34,7 +35,13 @@ class WebSocket:
             await websocket.send(self.AUTH_SEND)
             while True:
                 res = json.loads(await websocket.recv())
-                if "event" in res and res["event"] in self.subscriptions and "data" in res:
+                if "event" not in res:
+                    continue
+                
+                if self.print_events:
+                    print(res["event"])
+
+                if res["event"] in self.subscriptions and "data" in res:
                     for callback in self.subscriptions[res["event"]]:
                         callback(res["data"])
 

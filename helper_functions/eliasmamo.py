@@ -132,3 +132,9 @@ def enable_all_notifications(driver: Driver, user_id):
         }
     )
 
+def send_dm(driver: Driver, userid, message):
+    dm_channel = driver.channels.create_direct_message_channel([userid, driver.client.userid])
+    driver.posts.create_post({
+        "channel_id": dm_channel["id"], 
+        "message": message})
+
