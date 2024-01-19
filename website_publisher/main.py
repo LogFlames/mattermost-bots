@@ -55,7 +55,7 @@ def handle_reaction_added(driver: Driver, data, CHANNEL_ID_TO_TEAM_URL):
     if res_status >= 400:
         print("Got non-ok status from f.kth.se")
         print(res)
-        send_dm(driver, reaction["user_id"], f"An error occured while trynig to create post on the website. Please check with Mattermästare at mattermost@f.kth.se.")
+        send_dm(driver, reaction["user_id"], f"An error occured while trying to create post on the website. Please check with Mattermästare at mattermost@f.kth.se.")
         return
 
     wp_post_id = res["id"]
