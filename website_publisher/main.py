@@ -116,7 +116,7 @@ def handle_posted(driver: Driver, data):
     content = publish_content_post["message"]
     title = post["message"]
 
-    res_status, res = update_wp_post(namnd, publish_data["wp_post_id"], title = title, message = content, status = "publish")
+    res_status, res = update_wp_post(namnd, publish_data["wp_post_id"], title = title, message = markdown.markdown(content), status = "publish")
 
     if res_status >= 400:
         print("Got non-ok status from f.kth.se")
