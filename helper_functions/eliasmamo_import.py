@@ -1,4 +1,5 @@
 from mattermostdriver import Driver
+import mattermostdriver.exceptions
 import os
 import sys
 
