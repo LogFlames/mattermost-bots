@@ -5,6 +5,10 @@ from configuration import AUTHENTICATED_USERS, POSTABLE_CHANNELS, EMOJI_MAP
 import json
 import markdown
 
+def convert_mamo_to_wp(text):
+    conv_text = markdown.markdown(text.encode("latin1", "xmlcharrefreplace").decode("latin1"))
+    return conv_text
+
 def get_teams_name(driver: Driver):
     channel_id_to_team_urls = {}
     for channel_id in POSTABLE_CHANNELS:
@@ -48,9 +52,16 @@ def handle_reaction_added(driver: Driver, data, CHANNEL_ID_TO_TEAM_URL):
     if not post["message"]:
         return
 
-    first_line = post["message"].split("\n")[0]
+    lines = list(filter(None, post["message"].split("\n")))
+    
+    if len(lines) == 0:
+        title = ""
+    else:
+        title = convert_mamo_to_wp(lines[0])
 
-    res_status, res = create_wp_post(namnd = namnd, title = first_line, message = markdown.markdown(post["message"]), status = "draft")
+    message = convert_mamo_to_wp(post["message"])
+
+    res_status, res = create_wp_post(namnd = namnd, title = title, message = message, status = "draft")
 
     if res_status >= 400:
         print("Got non-ok status from f.kth.se")
@@ -113,10 +124,10 @@ def handle_posted(driver: Driver, data):
         driver.posts.create_post({"channel_id": post["channel_id"], "message": "The original mattermost post seems to have been deleted, cannot get the post.", "root_id": post["root_id"]})
         return
 
-    content = publish_content_post["message"]
-    title = post["message"]
+    content = convert_mamo_to_wp(publish_content_post["message"])
+    title = convert_mamo_to_wp(post["message"])
 
-    res_status, res = update_wp_post(namnd, publish_data["wp_post_id"], title = title, message = markdown.markdown(content), status = "publish")
+    res_status, res = update_wp_post(namnd, publish_data["wp_post_id"], title = title, message = content, status = "publish")
 
     if res_status >= 400:
         print("Got non-ok status from f.kth.se")
