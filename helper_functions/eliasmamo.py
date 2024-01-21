@@ -138,3 +138,14 @@ def send_dm(driver: Driver, userid, message):
         "channel_id": dm_channel["id"], 
         "message": message})
 
+def get_all_users(driver: Driver):
+    users = []
+    page = 0
+    new_users = [None]
+    while len(new_users) > 0:
+        new_users = driver.users.get_users({"page": page, "per_page": 100})
+        users.extend(new_users)
+        page += 1
+
+    return users
+
