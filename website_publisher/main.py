@@ -6,6 +6,20 @@ import json
 import markdown
 import re
 
+def replace_usertags(driver: Driver, text):
+    if "@" not in text:
+        return text
+
+    users = get_all_users(driver)
+
+    for user in users:
+        if "is_bot" in user and user["is_bot"]:
+            continue
+        reg = fr"@{re.escape(user['username'])}(?=[-_\.]*[^A-Za-z0-9-\._])"
+        text = re.sub(reg, f"[{user['first_name']} {user['last_name']}](mailto:{user['username']}@fysiksektionen.se)", text)
+
+    return text
+
 def convert_markdown(text):
     return markdown.markdown(text)
 
@@ -66,7 +80,7 @@ def handle_reaction_added(driver: Driver, data, CHANNEL_ID_TO_TEAM_URL):
     else:
         title = html_escape_codes(remove_emojis(lines[0]))
 
-    message = convert_markdown(html_escape_codes(remove_emojis(post["message"])))
+    message = convert_markdown(html_escape_codes(replace_usertags(driver, remove_emojis(post["message"]))))
 
     res_status, res = create_wp_post(namnd = namnd, title = title, message = message, status = "draft")
 
@@ -131,7 +145,7 @@ def handle_posted(driver: Driver, data):
         driver.posts.create_post({"channel_id": post["channel_id"], "message": "The original mattermost post seems to have been deleted, cannot get the post.", "root_id": post["root_id"]})
         return
 
-    content = convert_markdown(html_escape_codes(remove_emojis(publish_content_post["message"])))
+    content = convert_markdown(html_escape_codes(replace_usertags(driver, remove_emojis(publish_content_post["message"]))))
     title = html_escape_codes(remove_emojis(post["message"]))
 
     res_status, res = update_wp_post(namnd, publish_data["wp_post_id"], title = title, message = content, status = "publish")
