@@ -62,7 +62,9 @@ USERS = {
         "fkm": [
             "7r84odxya38qxyqn1m9opzop6a", # Emil Wiktorsson
             "5d85r8gsn7dcjyeo48o4j41cjo", # Katja Borelius
-            "wnq7fw5kdiyiiq5kamz4u7r4oc" # Sam Houghton
+            "wnq7fw5kdiyiiq5kamz4u7r4oc", # Sam Houghton
+            "qzqkrjydrir7xf9fjckfp3enbo", # PR-Mästare: Signe Stjernstoft
+            "tyic3tfxjpffbxcwet4efuxryc" # PR-Mästare: Mathilda Häggbrink
             ],
         "fcom": [
             "e64p9dgbxjgeuc83c6eugwpfao" # Mårten Gunnarson Fürstenbach
