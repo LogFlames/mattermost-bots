@@ -14,7 +14,7 @@ def html_escape_codes(text):
 
 
 def remove_emojis(text):
-    return re.sub(r":[a-zA-Z0-9-_+]", "", text)
+    return re.sub(r":[a-zA-Z0-9-_+]+:", "", text)
 
 def get_teams_name(driver: Driver):
     channel_id_to_team_urls = {}
