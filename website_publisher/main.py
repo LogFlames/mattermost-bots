@@ -4,10 +4,17 @@ from publish import create_wp_post, update_wp_post
 from configuration import AUTHENTICATED_USERS, POSTABLE_CHANNELS, EMOJI_MAP
 import json
 import markdown
+import re
 
-def convert_mamo_to_wp(text):
-    conv_text = markdown.markdown(text.encode("latin1", "xmlcharrefreplace").decode("latin1"))
-    return conv_text
+def convert_markdown(text):
+    return markdown.markdown(text)
+
+def html_escape_codes(text):
+    return text.encode("latin1", "xmlcharrefreplace").decode("latin1")
+
+
+def remove_emojis(text):
+    return re.sub(r":[a-zA-Z0-9-_+]", "", text)
 
 def get_teams_name(driver: Driver):
     channel_id_to_team_urls = {}
@@ -57,9 +64,9 @@ def handle_reaction_added(driver: Driver, data, CHANNEL_ID_TO_TEAM_URL):
     if len(lines) == 0:
         title = ""
     else:
-        title = convert_mamo_to_wp(lines[0])
+        title = html_escape_codes(remove_emojis(lines[0]))
 
-    message = convert_mamo_to_wp(post["message"])
+    message = convert_markdown(html_escape_codes(remove_emojis(post["message"])))
 
     res_status, res = create_wp_post(namnd = namnd, title = title, message = message, status = "draft")
 
@@ -124,8 +131,8 @@ def handle_posted(driver: Driver, data):
         driver.posts.create_post({"channel_id": post["channel_id"], "message": "The original mattermost post seems to have been deleted, cannot get the post.", "root_id": post["root_id"]})
         return
 
-    content = convert_mamo_to_wp(publish_content_post["message"])
-    title = convert_mamo_to_wp(post["message"])
+    content = convert_markdown(html_escape_codes(remove_emojis(publish_content_post["message"])))
+    title = html_escape_codes(remove_emojis(post["message"]))
 
     res_status, res = update_wp_post(namnd, publish_data["wp_post_id"], title = title, message = content, status = "publish")
 
