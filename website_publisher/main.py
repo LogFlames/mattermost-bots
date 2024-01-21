@@ -16,7 +16,7 @@ def replace_usertags(driver: Driver, text):
         if "is_bot" in user and user["is_bot"]:
             continue
         reg = fr"@{re.escape(user['username'])}(?=[-_\.]*[^A-Za-z0-9-\._])"
-        text = re.sub(reg, f"[{user['first_name']} {user['last_name']}](mailto:{user['username']}@fysiksektionen.se)", text)
+        text = re.sub(reg, f"[@{user['first_name']} {user['last_name']}](mailto:{user['username']}@fysiksektionen.se)", text)
 
     return text
 
