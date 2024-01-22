@@ -65,18 +65,18 @@ class CourseChannels:
         # Temporary hack
         if os.path.exists("f0_users.txt"):
             with open("f0_users.txt", "r") as f:
-                f0_users = {user.strip(" ,") for user in f.read().split(",")}
+                f23_users = {user.strip(" ,") for user in f.read().split(",")}
         else:
-            f0_users = set()
+            f23_users = set()
 
         for user in self.reactions:
             if user not in self.users_should_channels:
                 self.users_should_channels[user] = set()
 
-            if "triangular_ruler" in self.reactions[user] and ("f0" in self.reactions[user] or user in f0_users):
-                self.users_should_channels[user] |= CHANNEL_GROUPS["CTMAT-f0"]
-            if "thermometer" in self.reactions[user] and ("f0" in self.reactions[user] or user in f0_users):
-                self.users_should_channels[user] |= CHANNEL_GROUPS["CTFYS-f0"]
+            if "triangular_ruler" in self.reactions[user] and ("f23" in self.reactions[user] or user in f23_users):
+                self.users_should_channels[user] |= CHANNEL_GROUPS["CTMAT-f23"]
+            if "thermometer" in self.reactions[user] and ("f23" in self.reactions[user] or user in f23_users):
+                self.users_should_channels[user] |= CHANNEL_GROUPS["CTFYS-f23"]
             if "triangular_ruler" in self.reactions[user] and "f22" in self.reactions[user]:
                 self.users_should_channels[user] |= CHANNEL_GROUPS["CTMAT-f22"]
             if "thermometer" in self.reactions[user] and "f22" in self.reactions[user]:

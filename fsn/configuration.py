@@ -64,12 +64,12 @@ CATEGORIES = {
         }
 
 CHANNEL_GROUPS = {
-        "CTMAT-f0": {
+        "CTMAT-f23": {
             "sf1918-sannolikhetsteori-och-statistik",
             "sf1672-linjar-algebra",
             "sa1006-ingenjorsfardigheter-i-teknisk-matematik"
             },
-        "CTFYS-f0": {
+        "CTFYS-f23": {
             "sf1672-linjar-algebra",
             "sk1104-klassik-fysik",
             "dd1331-grundlaggande-programmering-ctfys"
