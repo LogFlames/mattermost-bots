@@ -9,7 +9,7 @@ from googleapiclient.errors import HttpError
 # If modifying these scopes, delete the file token.json.
 SCOPES = ["https://www.googleapis.com/auth/admin.directory.group"]
 
-def get_group_members():
+def get_group_members(group, recursive = False, include_subgroups = False):
     creds = None
     # The file token.json stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
@@ -31,8 +31,22 @@ def get_group_members():
 
     try:
         service = build("admin", "directory_v1", credentials = creds)
-        res = service.members().list(groupKey = "styret@fysiksektionen.se").execute()
-        return res
+        members = []
+
+        res = service.members().list(groupKey = group, includeDerivedMembership = recursive, maxResults = 200).execute()
+        members.extend(res["members"])
+
+        while "nextPageToken" in res:
+            res = service.members().list(groupKey = group, includeDerivedMembership = recursive, maxResults = 200, pageToken = res["nextPageToken"]).execute()
+
+            if "members" in res:
+                members.extend(res["members"])
+        if not include_subgroups:
+            members = list(filter(lambda x: x["type"] != "GROUP", members))
+
+        members = set(map(lambda x: x["email"], members))
+
+        return members
     except HttpError as err:
         print(err)
-        return None
+        return set()
