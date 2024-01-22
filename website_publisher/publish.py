@@ -1,11 +1,12 @@
 import base64
 import requests
+import datetime
 
 from typing import Literal
 
 from secret import WP_AUTH
 
-def create_wp_post(namnd, title, message, status: Literal["draft", "publish"] = "publish"):
+def create_wp_post(namnd, title, message, timestamp=None, status: Literal["draft", "publish"] = "publish"):
     if namnd not in WP_AUTH:
         return 401, {"error": "Must be a valid nämnd from WP_AUTH"}
 
@@ -23,6 +24,9 @@ def create_wp_post(namnd, title, message, status: Literal["draft", "publish"] = 
             "status": status,
             "lang": "sv"
             }
+
+    if timestamp:
+        body["date_gmt"] = datetime.datetime.fromtimestamp(timestamp).strftime("%Y-%m-%dT%H:%M:%S")
 
     res = requests.post(url + "/posts", data = body, headers = headers)
     return res.status_code, res.json()
@@ -46,5 +50,3 @@ def update_wp_post(namnd, postid, title = None, message = None, status: Literal[
 
     res = requests.post(url + f"/posts/{postid}", data = body, headers = headers)
     return res.status_code, res.json()
-
-
