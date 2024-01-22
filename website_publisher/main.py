@@ -112,6 +112,7 @@ def handle_posted(driver: Driver, data):
     post = json.loads(data["post"])
 
     if not post["root_id"]:
+        send_dm(driver, post["user_id"], "Titles should be written as a reply in the thread of the message.")
         return
 
     if post["user_id"] == driver.client.userid:
