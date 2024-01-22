@@ -183,7 +183,7 @@ def main():
     ws.subscribe("reaction_added", lambda data: handle_reaction_added(driver, data, CHANNEL_ID_TO_TEAM_URL))
     ws.subscribe("posted", lambda data: handle_posted(driver, data))
 
-    print("Setup done. Listening for new posts...")
+    print("Setup done. Listening for new posts and reactions...")
 
     ws.join()
 
