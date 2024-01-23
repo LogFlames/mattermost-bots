@@ -97,6 +97,7 @@ def handle_reaction_added(driver: Driver, data, CHANNEL_ID_TO_TEAM_URL):
 
     data = json.dumps({"wp_post_id": wp_post_id, "post_id": reaction["post_id"], "namnd": namnd}, separators=(",", ":"))
 
+    print(f"Sent to {post['user_id']}: Publish post message with links to {mattermost_message_link} and {res['link']}")
     send_dm(driver, reaction["user_id"], 
     f"""### Publish post to website
 [Mattermost Message]({mattermost_message_link})
@@ -113,12 +114,12 @@ def handle_posted(driver: Driver, data):
 
     post = json.loads(data["post"])
 
+    if post["user_id"] == driver.client.userid:
+        return
+
     if not post["root_id"]:
         send_dm(driver, post["user_id"], "Titles should be written as a reply in the thread of the message.")
         print(f"{post['user_id']} sent a direct DM, answered that titles should be written in a thread.")
-        return
-
-    if post["user_id"] == driver.client.userid:
         return
 
     root_post = driver.posts.get_post(post["root_id"])
@@ -160,6 +161,7 @@ def handle_posted(driver: Driver, data):
         driver.posts.create_post({"channel_id": post["channel_id"], "message": f"An error occured while trying to update the post on the website. Please check with Mattermästare at mattermost@f.kth.se.", "root_id": post["root_id"]})
         return
 
+    print(f"Sent to {post['user_id']}: Published and/or updated post on website with new title and content. With WP post id: {publish_data['wp_post_id']}")
     driver.posts.create_post({"channel_id": post["channel_id"], "message": "Published and/or updated post on website with new title and content.", "root_id": post["root_id"]})
 
 def main():
