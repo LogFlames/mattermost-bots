@@ -54,10 +54,12 @@ def handle_reaction_added(driver: Driver, data, CHANNEL_ID_TO_TEAM_URL):
 
     if reaction["user_id"] not in AUTHENTICATED_USERS[namnd]:
         send_dm(driver, reaction["user_id"], f"You lack permission to create posts on the website for `{namnd}`. Please contact Mattermästare at mattermost@f.kth.se if you think this is a mistake.")
+        print(f"{reaction['user_id']} attempted to react with {reaction['emoji_name']} but is not authenticated. Sent DM.")
         return
 
     if reaction["channel_id"] not in POSTABLE_CHANNELS:
         send_dm(driver, reaction["user_id"], "Messages in this channel cannot be posted to the website. If you think this is a mistake please contact Mattermästare at mattermost@f.kth.se.")
+        print(f"{reaction['user_id']} attempted to react with {reaction['emoji_name']} in an non-postable channel. Sent DM.")
         return
 
     reactions_on_post = driver.reactions.get_reactions_of_post(reaction["post_id"])
@@ -113,6 +115,7 @@ def handle_posted(driver: Driver, data):
 
     if not post["root_id"]:
         send_dm(driver, post["user_id"], "Titles should be written as a reply in the thread of the message.")
+        print(f"{post['user_id']} sent a direct DM, answered that titles should be written in a thread.")
         return
 
     if post["user_id"] == driver.client.userid:

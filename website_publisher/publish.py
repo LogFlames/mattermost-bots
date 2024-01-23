@@ -28,6 +28,7 @@ def create_wp_post(namnd, title, message, timestamp=None, status: Literal["draft
     if timestamp:
         body["date_gmt"] = datetime.datetime.fromtimestamp(timestamp).strftime("%Y-%m-%dT%H:%M:%S")
 
+    print(f"Creating new post with title {title}")
     res = requests.post(url + "/posts", data = body, headers = headers)
     return res.status_code, res.json()
 
@@ -48,5 +49,6 @@ def update_wp_post(namnd, postid, title = None, message = None, status: Literal[
     if message is not None: body["content"] = message
     if status is not None: body["status"] = status
 
+    print(f"Updating post {postid} with title {title}")
     res = requests.post(url + f"/posts/{postid}", data = body, headers = headers)
     return res.status_code, res.json()
