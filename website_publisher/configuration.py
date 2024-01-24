@@ -23,6 +23,24 @@ EMOJI_MAP = {
         "post-to-website-valberedningen": "valberedningen"
         }
 
+FEATURED_MEDIA = {
+        "fan": 55979,
+        "fart": 55784,
+        "fcom": 53687,
+        "fdev": 54998,
+        "fint": 56481,
+        "fkm": 53014,
+        "fn": 55668,
+        "force": 49467,
+        "frum": 50366,
+        "fsn": 54686,
+        "fysikalen": 57056,
+        "jamn": 50465,
+        "mottagningen": 49511,
+        "styret": 51462
+#        "valberedningen": 0
+        }
+
 USERS = {
         "mattermästare": [
             "xzt5e9rmtb8b5c78auq3h7bffr", # Elias Lundell @ellundel
