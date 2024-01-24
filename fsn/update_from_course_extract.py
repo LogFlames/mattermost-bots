@@ -97,7 +97,8 @@ def main():
                 print(f"Not creating a new channel. Skipping course for user...")
                 continue
             print(f"Creating new channel {channel_name}")
-            new_channel = driver.channels.create_channel({"team_id": TEAM_ID, "name": channel_name, "display_name": f"{course_code} {course_name}", "type": "O"})
+            channel_display_name = f"({course_version}) {course_code} {course_name}"[:64]
+            new_channel = driver.channels.create_channel({"team_id": TEAM_ID, "name": channel_name, "display_name": channel_display_name, "type": "O"})
             channels[channel_name] = new_channel["id"]
 
         if channel_name not in channels:
