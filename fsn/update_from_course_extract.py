@@ -107,5 +107,7 @@ def main():
         print(f"Adding user {kth_id} to channel {channel_name}...")
         driver.channels.add_user(channels[channel_name], {"user_id": users[kth_id]})
 
+    ## TODO: Något utskick (i kanalerna, att alla har blivit tillagda för denna omgång?)
+
 if __name__ == "__main__":
     main()
