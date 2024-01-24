@@ -89,7 +89,7 @@ def main():
             channel_name += "-" + str(row[program_column - 1].value).lower()
 
         if channel_name not in channels:
-            ans = input(f"Missing channel f{channel_name}, create a new channel? (y/N): ")
+            ans = input(f"Missing channel {channel_name}, create a new channel? (y/N): ")
             if ans not in ["y", "Y", "yes", "Yes"]:
                 print(f"Not creating a new channel. Skipping course for user...")
                 continue
