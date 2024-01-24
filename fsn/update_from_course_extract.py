@@ -33,6 +33,7 @@ def main():
     kth_id_column = 2
     course_code_column = 6
     course_name_column = 7
+    course_version_column = 8
 
     if sheet_name not in dataframe.sheetnames:
         print(f"Could not find '{sheet_name}' among the sheets, available sheets are: {dataframe.sheetnames}.")
@@ -45,6 +46,7 @@ def main():
     print(f"    KTH id: {sheet.cell(row = 1, column = kth_id_column).value}")
     print(f"    Course code: {sheet.cell(row = 1, column = course_code_column).value}")
     print(f"    Course name: {sheet.cell(row = 1, column = course_name_column).value}")
+    print(f"    Course version: {sheet.cell(row = 1, column = course_version_column).value}")
     confirmation = input("Please confirm this looks right? (y/N): ")
     if confirmation not in ["y", "Y", "yes", "Yes"]:
         return
@@ -73,12 +75,13 @@ def main():
 
         course_code = str(row[course_code_column - 1].value)
         course_name = str(row[course_name_column - 1].value)
+        course_version = str(row[course_version_column - 1].value)
 
-        if "null" in course_code or "null" in course_name:
-            print(f"{kth_id}: Either course_code or course_name equals 'null', skipping...")
+        if "null" in course_code or "null" in course_name or "null" in course_version:
+            print(f"{kth_id}: Either course_code, course_name or course_version equals 'null', skipping...")
             continue
 
-        channel_name = f"{course_code.lower()}-{course_name.lower().replace(' ', '-')}"
+        channel_name = f"{course_version}-{course_code.lower()}-{course_name.lower().replace(' ', '-')}"
         channel_name = unicodedata.normalize("NFKD", channel_name).encode("ascii", errors = "ignore").decode("ascii")
 
         channel_name = re.sub(r"[^a-z0-9-]", "", channel_name)
