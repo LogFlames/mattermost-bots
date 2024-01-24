@@ -56,7 +56,6 @@ def main():
     channels = {}
     for channel in get_all_public_channels(driver, TEAM_ID):
         channels[channel["name"]] = channel["id"]
-        print(channel["name"])
 
     skipped_kth_ids = set()
 
@@ -102,7 +101,7 @@ def main():
             continue
         
         print(f"Adding user {kth_id} to channel {channel_name}...")
-        driver.channels.add_user(channels[channel_name]["id"], {"user_id": users[kth_id]})
+        driver.channels.add_user(channels[channel_name], {"user_id": users[kth_id]})
 
 if __name__ == "__main__":
     main()
