@@ -149,3 +149,14 @@ def get_all_users(driver: Driver):
 
     return users
 
+def get_all_public_channels(driver: Driver, team_id):
+    channels = []
+    page = 0
+    new_channels = [None]
+    while len(new_channels) > 0:
+        new_channels = driver.channels.get_public_channels(team_id, {"page": page, "per_page": 60})
+        channels.extend(new_channels)
+        page += 1
+
+    return channels
+
