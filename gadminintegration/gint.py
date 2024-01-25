@@ -15,7 +15,7 @@ def get_group_members(group, recursive = False, include_subgroups = False):
     # created automatically when the authorization flow completes for the first
     # time.
     if os.path.exists(os.path.join(os.path.dirname(__file__), "token.json")):
-        creds = Credentials.from_authorized_user_file("token.json", SCOPES)
+        creds = Credentials.from_authorized_user_file(os.path.join(os.path.dirname(__file__), "token.json"), SCOPES)
     # If there are no (valid) credentials available, let the user log in.
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
