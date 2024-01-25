@@ -160,3 +160,16 @@ def get_all_public_channels(driver: Driver, team_id):
 
     return channels
 
+def get_all_private_channels(driver: Driver, team_id):
+    channels = []
+    page = 0
+    new_channels = [None]
+    while len(new_channels) > 0:
+        new_channels = driver.client.get(
+                endpoint = f"/teams/{team_id}/channels/private",
+                params = {"page": page, "per_page": 60})
+        channels.extend(new_channels)
+        page += 1
+
+    return channels
+
