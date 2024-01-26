@@ -2,7 +2,16 @@ POSTABLE_CHANNELS = {
         "wkgnsmmbqpgpj8ptdiyx8os16c": "evenemang",
         "pda7c6r7zbbtmc17x4ehczc8gc": "sektionsnytt",
         "wy6t5d3tapf5pfbgxq9onp1upe": "general",
-        "dcbn8ipq8381bgcwdre78x9skh": "test-channel"
+        "dcbn8ipq8381bgcwdre78x9skh": "test-channel",
+        "it7zah8m5jrw9dm8bkjm14eyaw": "events"
+        }
+
+LANG = {
+        "evenemang": "sv",
+        "sektionsnytt": "sv",
+        "general": "sv",
+        "test-channel": "sv",
+        "events": "en"
         }
 
 EMOJI_MAP = {

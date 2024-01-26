@@ -7,7 +7,7 @@ from typing import Literal
 from secret import WP_AUTH
 from configuration import FEATURED_MEDIA
 
-def create_wp_post(namnd, title, message, timestamp=None, status: Literal["draft", "publish"] = "publish"):
+def create_wp_post(namnd, title, message, timestamp=None, lang: Literal["sv", "en"] = "sv", status: Literal["draft", "publish"] = "publish"):
     if namnd not in WP_AUTH:
         return 401, {"error": "Must be a valid nämnd from WP_AUTH"}
 
@@ -23,7 +23,7 @@ def create_wp_post(namnd, title, message, timestamp=None, status: Literal["draft
             "title": title,
             "content": message,
             "status": status,
-            "lang": "sv"
+            "lang": lang
             }
 
     if timestamp:
