@@ -32,7 +32,7 @@ FEATURED_MEDIA = {
         "fkm": 53014,
         "fn": 55668,
         "force": 49467,
-        "frum": 50366,
+        "frum": 57120,
         "fsn": 54686,
         "fysikalen": 57056,
         "jamn": 50465,
