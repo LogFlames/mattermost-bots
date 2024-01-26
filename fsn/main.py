@@ -41,7 +41,9 @@ unsubscribe - stop being added to new course channels
         with open(os.path.join(os.path.dirname(__file__), "added_to_channel", "unsubscribed.txt"), "r+") as f:
             u = f.read()
             u.replace(f"{post['user_id']}\n", "")
+            f.seek(0)
             f.write(u)
+            f.truncate()
 
         send_dm(driver, post["user_id"], """You have been subscribed to new course channels.""")
         return
