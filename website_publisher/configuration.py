@@ -24,7 +24,7 @@ EMOJI_MAP = {
         }
 
 FEATURED_MEDIA = {
-        "fan": 55979,
+        "fan": 57121,
         "fart": 55784,
         "fcom": 53687,
         "fdev": 54998,
