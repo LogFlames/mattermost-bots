@@ -84,7 +84,7 @@ def handle_reaction_added(driver: Driver, data, CHANNEL_ID_TO_TEAM_URL):
 
     message = convert_markdown(html_escape_codes(replace_usertags(driver, remove_emojis(post["message"]))))
 
-    res_status, res = create_wp_post(namnd = namnd, title = title, message = message, timestamp = post["create_at"] / 1000, lang = LANG[POSTABLE_CHANNELS[post["channel"]]] status = "draft")
+    res_status, res = create_wp_post(namnd = namnd, title = title, message = message, timestamp = post["create_at"] / 1000, lang = LANG[POSTABLE_CHANNELS[post["channel_id"]]], status = "draft")
 
     if res_status >= 400:
         print("Got non-ok status from f.kth.se")
