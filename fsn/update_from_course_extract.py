@@ -135,19 +135,21 @@ def main():
                 "channel_id": new_channel["id"], 
                 "message": f"""### Welcome to {course_code} {course_name} ({course_version})
 
-##### This is a private channel where you can discuss this course. Only the current members of the course are part of this channel. If you leave this channel you can join it again by writing `join {course_code.lower()} {course_version.lower()}` in a DM to @fsn-bot.
+##### This is a private channel where you can discuss this course. Only the current members of the course are part of this channel. 
+
+If you leave this channel you can join it again by writing `join {course_code.lower()} {course_version.lower()}` in a DM to @fsn-bot.
+If you wish to stop being added to new course channels in the future, type `unsubscribe` in a DM to @fsn-bot. To re-register again for new course-channels type `subscribe` in a DM.
 
 In here you can use $\\LaTeX$ to write math formulas. For example:
 ```
 $\\int_{{0}}^{{\\infty}}{{\\frac{{f(x)}}{{g(x)}}dx}}$
 ```
-$\\int_{{0}}^{{\\infty}}{{\\frac{{f(x)}}{{g(x)}}dx}}$
+## $\\int_{{0}}^{{\\infty}}{{\\frac{{f(x)}}{{g(x)}}dx}}$
 
-*If you encounter any problems, require moderation, wish to not be added to new course channels in the future, or have any other type of question, please send an email to [mattermost@f.kth.se](mailto:mattermost@f.kth.se) or contact @ellundel or @eskilny by DM.*"""})
+*If you encounter any problems, require moderation, or have any other type of question, please send an email to [mattermost@f.kth.se](mailto:mattermost@f.kth.se) or contact @ellundel or @eskilny by DM.*"""})
 
         if channel_name not in channels:
             continue
-
 
         channel_users_list_path = os.path.join(os.path.dirname(__file__), "added_to_channel", f"{course_code.lower()}-{course_version.lower()}.txt")
         if os.path.exists(channel_users_list_path):
