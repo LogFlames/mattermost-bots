@@ -96,7 +96,7 @@ def delete_new_posts_in_clean_channels(driver: Driver, channels):
         res = driver.posts.get_posts_for_channel(channel_id = channels[channel])
         for post in res["posts"]:
             if res["posts"][post]["type"] in ("system_add_to_channel", "system_join_channel", "system_remove_from_channel", "system_leave_channel"):
-                print(f"Deleting {post}")
+                print(f"Deleting system join post: {post}")
                 driver.posts.delete_post(post_id = post)
 
 def add_to_default_channels(driver: Driver, wsdata, team_id, channels):
