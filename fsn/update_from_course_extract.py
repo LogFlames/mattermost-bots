@@ -162,6 +162,19 @@ $\\int_{{0}}^{{\\infty}}{{\\frac{{f(x)}}{{g(x)}}dx}}$
             if already_been_added:
                 continue
 
+        unsubscribed_users_path = os.path.join(os.path.dirname(__file__), "added_to_channel", "unsubscribed.txt")
+        if os.path.exists(unsubscribed_users_path):
+            already_been_added = False
+            with open(unsubscribed_users_path, "r") as f:
+                for line in f:
+                    if users[kth_id] in line:
+                        print(f"User {kth_id} has unsubscribed from new course channels. Skipping...")
+                        already_been_added = True
+                        break
+
+            if already_been_added:
+                continue
+
         
         print(f"Adding user {kth_id} to channel {channel_name}...")
         driver.channels.add_user(channels[channel_name], {"user_id": users[kth_id]})
