@@ -25,7 +25,6 @@ def main():
 
     driver.login()
 
-
     #### --- Config ----
     # filename = "VT24_p3.xlsx"
     filename = "Testing.xlsx"
@@ -63,7 +62,8 @@ def main():
 
     channels = {}
     for channel in get_all_private_channels(driver, TEAM_ID):
-        channels[channel["name"]] = channel["id"]
+        if channel["creator_id"] == driver.client.userid:
+            channels[channel["name"]] = channel["id"]
 
     # Validation
     row_index = 2
@@ -135,25 +135,35 @@ def main():
                 "channel_id": new_channel["id"], 
                 "message": f"""### Welcome to {course_code} {course_name} ({course_version})
 
-**This is a private channel where you can discuss this course. Only the current members of the course are part of this channel.**
+##### This is a private channel where you can discuss this course. Only the current members of the course are part of this channel. If you leave this channel you can join it again by writing `join {course_code.lower()} {course_version.lower()}` in a DM to @fsn-bot.
 
-If you wish to mute or leave the channel you are free to do so. Course membership are syncronized twice during the start of each study period, and so you may have to leave it twice.
+In here you can use $\\LaTeX$ to write math formulas. For example:
+```
+$\\int_{{0}}^{{\\infty}}{{\\frac{{f(x)}}{{g(x)}}dx}}$
+```
+$\\int_{{0}}^{{\\infty}}{{\\frac{{f(x)}}{{g(x)}}dx}}$
 
-**If you do not wish to be added to new course channels** please send an email to [mattermost@f.kth.se](mailto:mattermost@f.kth.se) or contact any of our @admins.
-
-*If you encounter any problems, require moderation or have any other type of question, please send an email to [mattermost@f.kth.se](mailto:mattermost@f.kth.se) or contact @admins by DM.*"""})
-
-            ## TODO: Send welcome message in new channel
+*If you encounter any problems, require moderation, wish to not be added to new course channels in the future, or have any other type of question, please send an email to [mattermost@f.kth.se](mailto:mattermost@f.kth.se) or contact @ellundel or @eskilny by DM.*"""})
 
         if channel_name not in channels:
             continue
+
+
+        with open(os.path.join(os.path.dirname(__file__), "added_to_channel", f"{course_code.lower()}-{course_version.lower()}.txt"), "r+") as f:
+            for line in f:
+                if users[kth_id] in line:
+                    print(f"User {kth_id} has already been added to {channel_name}. Skipping...")
+                    continue
+
         
         print(f"Adding user {kth_id} to channel {channel_name}...")
         driver.channels.add_user(channels[channel_name], {"user_id": users[kth_id]})
+        with open(os.path.join(os.path.dirname(__file__), "added_to_channel", f"{course_code.lower()}-{course_version.lower()}.txt"), "a") as f:
+            f.write(f"{users[kth_id]}\n")
 
         row_index += 1
 
-    ## TODO: Något utskick (i kanalerna, att alla har blivit tillagda för denna omgång?)
+    delete_new_posts_in_clean_channels(driver, channels)
 
 if __name__ == "__main__":
     main()
