@@ -149,11 +149,13 @@ $\\int_{{0}}^{{\\infty}}{{\\frac{{f(x)}}{{g(x)}}dx}}$
             continue
 
 
-        with open(os.path.join(os.path.dirname(__file__), "added_to_channel", f"{course_code.lower()}-{course_version.lower()}.txt"), "r+") as f:
-            for line in f:
-                if users[kth_id] in line:
-                    print(f"User {kth_id} has already been added to {channel_name}. Skipping...")
-                    continue
+        channel_users_list_path = os.path.join(os.path.dirname(__file__), "added_to_channel", f"{course_code.lower()}-{course_version.lower()}.txt")
+        if os.path.exists(channel_users_list_path):
+            with open(channel_users_list_path, "r") as f:
+                for line in f:
+                    if users[kth_id] in line:
+                        print(f"User {kth_id} has already been added to {channel_name}. Skipping...")
+                        continue
 
         
         print(f"Adding user {kth_id} to channel {channel_name}...")
