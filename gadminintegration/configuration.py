@@ -35,10 +35,10 @@ NAMNDER = [
          "groups": ["fint_alla.fint@fysiksektionen.se"],
          "teams": ["fint"]
          },
-        { # FN
-         "groups": ["fn_alla.fn@fysiksektionen.se"],
-         "teams": ["fn"]
-         },
+#        { # FN
+#         "groups": ["fn_alla.fn@fysiksektionen.se"],
+#         "teams": ["fn"]
+#         },
         { # Funktionärer
          "groups": [
              "sm-valda.namnder@fysiksektionen.se", # SM-valda
