@@ -47,7 +47,7 @@ NAMNDER = [
              "mas.fsn@fysiksektionen.se", "fsn@fysiksektionen.se", # FSN
              "fkm@fysiksektionen.se", # fkm*
              "fcom@fysiksektionen.se", "fdev-projektledare.fcom@fysiksektionen.se", # Fcom
-             "frum@fysiksektionen.se", # FRum
+             "frum@fysiksektionen.se", "frumbassadorer.frum@fysiksektionen.se", # FRum
              # FAN
              "styret@fysiksektionen.se", # styret
              "jamn@fysiksektionen.se", # JämN
