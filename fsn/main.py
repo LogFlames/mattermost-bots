@@ -73,7 +73,7 @@ unsubscribe - stop being added to new course channels
                 added_to_channel = channels[channel]
                 break
         else:
-            send_dm(driver, post["user_id"], f"""Could not find any channel with education code {education_code} and instance code {instance_code}. Active courses are synced once per study period. Please contact [mattermost@f.kth.se](mailto:mattermost@f.kth.se) or DM @ellundel or @eskilny by DM to create the channel.""")
+            send_dm(driver, post["user_id"], f"""Could not find any channel with education code {education_code} and instance code {instance_code}. Active courses are synced once per study period. Please contact [mattermost@f.kth.se](mailto:mattermost@f.kth.se) or @ellundel or @eskilny by DM to create the channel.""")
             return
 
         delete_new_posts_in_clean_channels(driver, {added_to_channel: added_to_channel})
