@@ -140,11 +140,13 @@ def main():
 If you leave this channel you can join it again by writing `join {course_code.lower()} {course_version.lower()}` in a DM to @fsn-bot.
 If you wish to stop being added to new course channels in the future, type `unsubscribe` in a DM to @fsn-bot. To re-register again for new course-channels type `subscribe` in a DM.
 
-In here you can use $\\LaTeX$ to write math formulas. For example:
+In here you can use LaTeX to write math formulas. For example:
 ```
 $\\int_{{0}}^{{\\infty}}{{\\frac{{f(x)}}{{g(x)}}dx}}$
 ```
-## $\\int_{{0}}^{{\\infty}}{{\\frac{{f(x)}}{{g(x)}}dx}}$
+```latex
+\\int_{{0}}^{{\\infty}}{{\\frac{{f(x)}}{{g(x)}}dx}}
+```
 
 *If you encounter any problems, require moderation, or have any other type of question, please send an email to [mattermost@f.kth.se](mailto:mattermost@f.kth.se) or contact @ellundel or @eskilny by DM.*"""})
 
