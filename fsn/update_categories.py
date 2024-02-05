@@ -27,7 +27,8 @@ def main():
 
     users = {}
     for user in get_all_users(driver):
-        users[user["username"]] = user["id"]
+        if "is_bot" in user and user["is_bot"]:
+            users[user["username"]] = user["id"]
 
     channels = {}
     categories = {"Kurser": []}
