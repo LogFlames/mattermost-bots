@@ -99,9 +99,6 @@ def main():
             skipped_kth_ids.add(kth_id)
             continue
 
-        if kth_id not in ["ellundel", "eskilny", "wkraft"]: ## TODO: Debug to only affect ellundel@kth.se 
-            continue
-
         if re.match(r"^[0-9]{5}$", str(row[course_version_column - 1].value)) is None or \
            re.match(r"^[A-Z]{2}[A-Z0-9]{4}$", str(row[course_code_column - 1].value)) is None:
                print(f"row {row_index} (kthid {kth_id}) contains validation error, skipping row...")
