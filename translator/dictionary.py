@@ -1,3 +1,5 @@
+from mattermostdriver import Driver
+
 DICTIONARY = \
 """
 Swedish | English
@@ -187,3 +189,14 @@ Förtidsval | Pre-Election
 Fysiker | Physics Student
 Matematiker | Mathematics Student 
 """
+
+def get_dictionary(driver: Driver | None = None, load_from_mamo: bool = False):
+    if load_from_mamo:
+        if not driver:
+            print("Warning: Getting dictionary but no driver was provided. Using local...")
+            return DICTIONARY
+
+        post = driver.posts.get_post(post_id = "u9s48siqt7d5uk9rmn8icbshfy")
+        return post["message"]
+    else:
+        return DICTIONARY
