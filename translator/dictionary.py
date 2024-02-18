@@ -1,4 +1,5 @@
 from mattermostdriver import Driver
+from typing import Optional
 
 DICTIONARY = \
 """
@@ -190,7 +191,7 @@ Fysiker | Physics Student
 Matematiker | Mathematics Student 
 """
 
-def get_dictionary(driver: Driver | None = None, load_from_mamo: bool = False):
+def get_dictionary(driver: Optional[Driver] = None, load_from_mamo: bool = False):
     if load_from_mamo:
         if not driver:
             print("Warning: Getting dictionary but no driver was provided. Using local...")
