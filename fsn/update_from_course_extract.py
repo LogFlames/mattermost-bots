@@ -27,10 +27,10 @@ def main():
 
     #### --- Config ----
     # filename = "VT24_p3.xlsx"
-    filename = "Testing.xlsx"
+    filename = "VT24_p4.xlsx"
     sheet_name = "Sheet1"
     program_column = 1
-    kth_id_column = 2
+    kth_id_column = 5
     course_code_column = 6
     course_name_column = 7
     course_version_column = 8
