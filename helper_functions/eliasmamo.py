@@ -67,6 +67,24 @@ def manage_channel_categories(driver: Driver, user_id, team_id, channels, conf_c
     if new_categories:
         mm_channels_update_user_sidebar_categories(driver, user_id, team_id, new_categories)
 
+def mm_custom_group_add_members(driver: Driver, group_id, user_ids):
+    return driver.client.post(
+        '/groups/' + group_id + '/members',
+        options={"user_ids": user_ids}
+    )
+
+def mm_custom_group_remove_members(driver: Driver, group_id, user_ids):
+    return driver.client.delete(
+        '/groups/' + group_id + '/members',
+        options = {"user_ids": user_ids}
+    )
+
+def mm_custom_group_get_members(driver: Driver, group_id, page = 0, per_page = 60):
+    return driver.client.get(
+        '/groups/' + group_id + '/members',
+        params = {"page": page, "per_page": per_page}
+    )
+
 def get_channel_members(driver: Driver, channel_id):
     members = []
     page = 0
