@@ -25,7 +25,7 @@ def new_post(driver: Driver, data):
 
     username = post["message"].strip()
 
-    if re.match("^@[a-z-_]*$", username) is None:
+    if re.match("^@[a-z0-9-_]*$", username) is None:
         driver.posts.create_post({"channel_id": GARAM_SKICK_CHANNEL_ID, "message": "Unexpected format, please write on the form `@username`", "root_id": post["id"]})
         return
 
