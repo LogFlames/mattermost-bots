@@ -1,0 +1,12 @@
+[Unit]
+Description=Start Garam-Masala bot
+After=multi-user.target
+
+[Service]
+Type=simple
+Restart=always
+Environment=PYTHONUNBUFFERED=TRUE
+ExecStart=/bin/python3 /opt/mattermost_bots/mattermost-bots/mottagningen/garam_masala.py
+
+[Install]
+WantedBy=multi-user.target
