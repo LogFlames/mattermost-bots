@@ -37,7 +37,7 @@ def handle_posted(driver: Driver, data, CHANNEL_ID_TO_TEAM_URL):
         send_dm(driver, post["user_id"], f"""### Please include titles in your messages
 To increase the readability of posts sent in ~evenemang and ~general, it is very helpful to include a title describing the subject of the message.
 
-In the future, please include a title on the following format with exactly three '#'s:
+In the future, please include a title on the following format with preferably three '#'s:
 ```markdown
 ### Title here
 
