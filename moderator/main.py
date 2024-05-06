@@ -31,12 +31,13 @@ def handle_posted(driver: Driver, data, CHANNEL_ID_TO_TEAM_URL):
     if post["root_id"]:
         return
 
-    if not post["message"].startswith("#"):
+    if not post["message"].startswith("#") or post["message"].startswith("######"):
+
         mattermost_message_link = f"https://mattermost.fysiksektionen.se/{CHANNEL_ID_TO_TEAM_URL[post['channel_id']]}/pl/{post['id']}"
         send_dm(driver, post["user_id"], f"""### Please include titles in your messages
 To increase the readability of posts sent in ~evenemang and ~general, it is very helpful to include a title describing the subject of the message.
 
-In the future, please include a title on the following format:
+In the future, please include a title on the following format with exactly three '#'s:
 ```markdown
 ### Title here
 
