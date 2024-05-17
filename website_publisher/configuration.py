@@ -70,10 +70,11 @@ USERS = {
             "wwpnsya8wfrgt8twu61y5pxbnw" # Maximilian Nordler
             ],
         "jamn": [
-            "3yx6i7tk4bgrtf7k4n5gw541jo" # Isac Wänlund
+            "3yx6i7tk4bgrtf7k4n5gw541jo", # Isac Wänlund
+            "6syubby1mjnf7x6ezsxqud6s6w" # Joel Hedenstedt
             ],
         "fsn": [
-            "f1kbfs9qdffqxbztqtz353gmpw", # Lovisa Tallenmo Keller
+            "sm9pypizmfb3zn3qohd8d7uz6h", # Elias Nilsson
             "87ykcyqzo38cze69rxynqe6kke", # Ludwig Wahlund
             "z9g8y9yxgpry7b9uozk18mqfua" # Lucas Benson
             ],
