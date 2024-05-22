@@ -8,7 +8,13 @@ def handle_posted(driver: Driver, data):
     if post["type"] not in ("system_add_to_channel", "system_join_channel", "system_remove_from_channel", "system_leave_channel"):
         return
 
-    driver.posts.delete_post(post["id"])
+    if "props" in post and "addedUserId" in post["props"] and post["props"]["addedUserId"] == driver.client.userid:
+        res = driver.posts.get_posts_for_channel(post["channel_id"])
+        for p in res["posts"]:
+            if res["posts"][p]["type"] in ("system_add_to_channel", "system_join_channel", "system_remove_from_channel", "system_leave_channel"):
+                driver.posts.delete_post(post_id = p)
+    else:
+        driver.posts.delete_post(post["id"])
 
 def main():
     driver = Driver(
@@ -43,7 +49,7 @@ def main():
                     print(f"Deleting system join post: {post}")
                     driver.posts.delete_post(post_id = post)
 
-        print("Removed all join/leave massages from channels the bot is in.")
+    print("Removed all join/leave massages from channels the bot is in.")
 
     ws.join()
 
