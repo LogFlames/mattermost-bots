@@ -46,10 +46,10 @@ channels_conf.add_channel(
         add_to_events = False,
         send_reply = "reply")
 
-def translate(openai_client: openai.OpenAI, driver: Driver, message):
+def translate(openai_client: openai.OpenAI, driver: Driver, message, high_priority):
     try:
         completion = openai_client.chat.completions.create(
-          model="gpt-3.5-turbo",
+          model="gpt-4o" if high_priority else "gpt-3.5-turbo",
           messages=[
               {"role": "system", "content": "You are a skilled professional translator assistant that translates messages from Swedish to English on demand with high accuracy. To your help you have the following dictionary that directs you how to translate specific phrases. In the dictionary commas are used to indicate there are multiple phrases with the same meaning:\n" + 
                get_dictionary(driver, True)},
@@ -101,7 +101,7 @@ def handle_event(driver: Driver, openai_client: openai.OpenAI, data):
         driver.channels.add_user(EVENTS_CHANNEL_ID, {"user_id": post["user_id"]})
         delete_new_posts_in_clean_channels(driver, {"events": EVENTS_CHANNEL_ID})
 
-    message_eng, translation_successfull = translate(openai_client, driver, post["message"])
+    message_eng, translation_successfull = translate(openai_client, driver, post["message"], high_priority = True)
 
     if not translation_successfull:
         driver.posts.create_post({"channel_id": ADMIN_TRANSLATION_TEST_CHANNEL_ID, "message": f"Error occured while translating a message with openai. Check journal. \n Sent to user: \n {message_eng}"})
@@ -161,7 +161,7 @@ def handle_reaction(driver: Driver, openai_client: openai.OpenAI, data):
     if not post["message"]:
         return
 
-    message_eng, translation_successfull = translate(openai_client, driver, post["message"])
+    message_eng, translation_successfull = translate(openai_client, driver, post["message"], high_priority = False)
 
     if not translation_successfull:
         driver.posts.create_post({"channel_id": ADMIN_TRANSLATION_TEST_CHANNEL_ID, "message": f"Error occured while translating a message with openai. Check journal. \n Edited into message: \n {message_eng}"})
