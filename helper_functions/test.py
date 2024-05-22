@@ -19,4 +19,3 @@ driver = Driver(
 
 driver.login()
 
-enable_all_notifications(driver, user_id)

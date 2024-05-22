@@ -216,3 +216,27 @@ def get_all_private_channels(driver: Driver, team_id):
 
     return channels
 
+def send_post_as_other_user(driver: Driver, user_id, channel_id, message, root_id=""):
+    token = driver.users.create_user_access_token(user_id, {"description": "Send as other user - Bot"})
+    driver_other = Driver(
+            {
+                'url': 'mattermost.fysiksektionen.se',
+                'basepath': '/api/v4',
+                'verify': True,
+                'scheme': 'https',
+                'port': 443,
+                'auth': None,
+                'token': token["token"],
+                'keepalive': True,
+                'keepalive_delay': 5,
+                }
+            )
+
+    driver_other.login()
+
+    driver_other.posts.create_post({"channel_id": channel_id, "message": message, "root_id": root_id})
+
+    driver.users.disable_personal_access_token({"token_id": token["id"]})
+
+
+
