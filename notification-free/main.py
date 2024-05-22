@@ -41,17 +41,18 @@ def main():
 
     print("Setup done. Listening for new posts and reactions...")
 
-    teams = driver.teams.get_user_teams(driver.client.userid)
-    for team in tqdm.tqdm(teams):
-        channels = driver.channels.get_channels_for_user(driver.client.userid, team_id = team["id"])
-        for channel in channels:
-            users = get_all_channel_members(driver, channel["id"])
-            if channel["name"] == "town-square":
-                continue
-            for user in users:
-                disable_notifications_for_channel(driver, channel_id = channel["id"], user_id = user["user_id"])
+    if False:
+        teams = driver.teams.get_user_teams(driver.client.userid)
+        for team in tqdm.tqdm(teams):
+            channels = driver.channels.get_channels_for_user(driver.client.userid, team_id = team["id"])
+            for channel in channels:
+                users = get_all_channel_members(driver, channel["id"])
+                if channel["name"] == "town-square":
+                    continue
+                for user in users:
+                    disable_notifications_for_channel(driver, channel_id = channel["id"], user_id = user["user_id"])
 
-    print("Updated notification props for all users in all channels.")
+        print("Updated notification props for all users in all channels.")
 
     ws.join()
 
