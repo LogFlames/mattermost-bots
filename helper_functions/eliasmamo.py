@@ -130,6 +130,20 @@ def add_to_default_channels(driver: Driver, wsdata, team_id, channels):
 
         delete_new_posts_in_clean_channels(driver, channels)
 
+def disable_notifications_for_channel(driver: Driver, channel_id, user_id):
+    notify = driver.client.put(
+            '/channels/' + channel_id + "/members/" + user_id + "/notify_props")
+
+    notify["desktop"] = "none"
+    notify["push"] = "none"
+
+    return driver.client.put(
+        '/channels/' + channel_id + '/members/' + user_id + "/notify_props",
+        options = {
+            **notify
+        }
+    )
+
 def enable_all_notifications(driver: Driver, user_id):
     user_props = driver.client.put(
             '/users/' + user_id + "/patch")
@@ -162,6 +176,17 @@ def get_all_users(driver: Driver):
     new_users = [None]
     while len(new_users) > 0:
         new_users = driver.users.get_users({"page": page, "per_page": 100})
+        users.extend(new_users)
+        page += 1
+
+    return users
+
+def get_all_channel_members(driver: Driver, channel_id):
+    users = []
+    page = 0
+    new_users = [None]
+    while len(new_users) > 0:
+        new_users = driver.channels.get_channel_members(channel_id = channel_id, params = {"page": page, "per_page": 100})
         users.extend(new_users)
         page += 1
 
