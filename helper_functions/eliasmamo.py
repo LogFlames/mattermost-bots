@@ -136,7 +136,7 @@ def only_notify_mentions_for_channel(driver: Driver, channel_id, user_id):
 
     notify["desktop"] = "mention"
     notify["desktop_threads"] = "all"
-    notify["push"] = "mentions"
+    notify["push"] = "mention"
     notify["push_threads"] = "all"
 
     return driver.client.put(
