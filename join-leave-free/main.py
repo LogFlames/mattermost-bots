@@ -13,6 +13,8 @@ def handle_posted(driver: Driver, data):
         for p in res["posts"]:
             if res["posts"][p]["type"] in ("system_add_to_channel", "system_join_channel", "system_remove_from_channel", "system_leave_channel"):
                 driver.posts.delete_post(post_id = p)
+
+        driver.channels.update_scheme_derived_roles_of_channel_member(post["channel_id"], driver.client.userid, {"scheme_admin": True, "scheme_user": True})
     else:
         driver.posts.delete_post(post["id"])
 
@@ -45,6 +47,8 @@ def main():
         for team in teams:
             channels = driver.channels.get_channels_for_user(driver.client.userid, team_id = team["id"])
             for channel in channels:
+                driver.channels.update_scheme_derived_roles_of_channel_member(channel["id"], driver.client.userid, {"scheme_admin": True, "scheme_user": True})
+
                 res = driver.posts.get_posts_for_channel(channel["id"])
                 for post in res["posts"]:
                     if res["posts"][post]["type"] in ("system_add_to_channel", "system_join_channel", "system_remove_from_channel", "system_leave_channel"):

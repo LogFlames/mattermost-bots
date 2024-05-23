@@ -15,6 +15,8 @@ def new_user(driver: Driver, data):
         users = get_all_channel_members(driver, post["channel_id"])
         for user in users:
             only_notify_mentions_for_channel(driver, channel_id = post["channel_id"], user_id = user["user_id"])
+
+        driver.channels.update_scheme_derived_roles_of_channel_member(post["channel_id"], driver.client.userid, {"scheme_admin": True, "scheme_user": True})
     else:
         only_notify_mentions_for_channel(driver, post["channel_id"], post["user_id"])
 
@@ -41,12 +43,15 @@ def main():
 
     print("Setup done. Listening for new posts and reactions...")
 
-    if False:
+
+    if True:
         todos = []
         teams = driver.teams.get_user_teams(driver.client.userid)
         for team in teams:
             channels = driver.channels.get_channels_for_user(driver.client.userid, team_id = team["id"])
             for channel in channels:
+                driver.channels.update_scheme_derived_roles_of_channel_member(channel["id"], driver.client.userid, {"scheme_admin": True, "scheme_user": True})
+
                 users = get_all_channel_members(driver, channel["id"])
                 if channel["name"] == "town-square":
                     continue
