@@ -49,11 +49,13 @@ def main():
         for team in teams:
             channels = driver.channels.get_channels_for_user(driver.client.userid, team_id = team["id"])
             for channel in channels:
+                if channel["name"] == "town-square":
+                    continue
+
                 driver.channels.update_scheme_derived_roles_of_channel_member(channel["id"], driver.client.userid, {"scheme_admin": True, "scheme_user": True})
 
                 users = get_all_channel_members(driver, channel["id"])
-                if channel["name"] == "town-square":
-                    continue
+
                 for user in users:
                     todos.append({"channel": channel["id"], "user": user["user_id"]})
 
