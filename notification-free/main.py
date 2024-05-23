@@ -42,15 +42,19 @@ def main():
     print("Setup done. Listening for new posts and reactions...")
 
     if False:
+        todos = []
         teams = driver.teams.get_user_teams(driver.client.userid)
-        for team in tqdm.tqdm(teams):
+        for team in teams:
             channels = driver.channels.get_channels_for_user(driver.client.userid, team_id = team["id"])
             for channel in channels:
                 users = get_all_channel_members(driver, channel["id"])
                 if channel["name"] == "town-square":
                     continue
                 for user in users:
-                    only_notify_mentions_for_channel(driver, channel_id = channel["id"], user_id = user["user_id"])
+                    todos.append({"channel": channel["id"], "user": user["user_id"]})
+
+        for todo in tqdm.tqdm(todos):
+            only_notify_mentions_for_channel(driver, channel_id = todo["channel"], user_id = todo["user"])
 
         print("Updated notification props for all users in all channels.")
 
