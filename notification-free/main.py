@@ -43,8 +43,7 @@ def main():
 
     print("Setup done. Listening for new posts and reactions...")
 
-
-    if True:
+    if False:
         todos = []
         teams = driver.teams.get_user_teams(driver.client.userid)
         for team in teams:
