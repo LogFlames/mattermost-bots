@@ -130,12 +130,14 @@ def add_to_default_channels(driver: Driver, wsdata, team_id, channels):
 
         delete_new_posts_in_clean_channels(driver, channels)
 
-def disable_notifications_for_channel(driver: Driver, channel_id, user_id):
+def only_notify_mentions_for_channel(driver: Driver, channel_id, user_id):
     notify = driver.client.put(
             '/channels/' + channel_id + "/members/" + user_id + "/notify_props")
 
-    notify["desktop"] = "none"
-    notify["push"] = "none"
+    notify["desktop"] = "mention"
+    notify["desktop_threads"] = "all"
+    notify["push"] = "mentions"
+    notify["push_threads"] = "all"
 
     return driver.client.put(
         '/channels/' + channel_id + '/members/' + user_id + "/notify_props",

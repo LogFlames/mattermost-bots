@@ -14,9 +14,9 @@ def new_user(driver: Driver, data):
     if "props" in post and "addedUserId" in post["props"] and post["props"]["addedUserId"] == driver.client.userid:
         users = get_all_channel_members(driver, post["channel_id"])
         for user in users:
-            disable_notifications_for_channel(driver, channel_id = post["channel_id"], user_id = user["user_id"])
+            only_notify_mentions_for_channel(driver, channel_id = post["channel_id"], user_id = user["user_id"])
     else:
-        disable_notifications_for_channel(driver, post["channel_id"], post["user_id"])
+        only_notify_mentions_for_channel(driver, post["channel_id"], post["user_id"])
 
 def main():
     driver = Driver(
@@ -50,7 +50,7 @@ def main():
                 if channel["name"] == "town-square":
                     continue
                 for user in users:
-                    disable_notifications_for_channel(driver, channel_id = channel["id"], user_id = user["user_id"])
+                    only_notify_mentions_for_channel(driver, channel_id = channel["id"], user_id = user["user_id"])
 
         print("Updated notification props for all users in all channels.")
 
