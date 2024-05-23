@@ -39,17 +39,20 @@ def main():
 
     print("Setup done. Listening for new posts and reactions...")
 
-    teams = driver.teams.get_user_teams(driver.client.userid)
-    for team in tqdm.tqdm(teams):
-        channels = driver.channels.get_channels_for_user(driver.client.userid, team_id = team["id"])
-        for channel in channels:
-            res = driver.posts.get_posts_for_channel(channel["id"])
-            for post in res["posts"]:
-                if res["posts"][post]["type"] in ("system_add_to_channel", "system_join_channel", "system_remove_from_channel", "system_leave_channel"):
-                    print(f"Deleting system join post: {post}")
-                    driver.posts.delete_post(post_id = post)
+    if True:
+        todos = []
+        teams = driver.teams.get_user_teams(driver.client.userid)
+        for team in teams:
+            channels = driver.channels.get_channels_for_user(driver.client.userid, team_id = team["id"])
+            for channel in channels:
+                res = driver.posts.get_posts_for_channel(channel["id"])
+                for post in res["posts"]:
+                    if res["posts"][post]["type"] in ("system_add_to_channel", "system_join_channel", "system_remove_from_channel", "system_leave_channel"):
+                        todos.append({"post": post})
+        for todo in tqdm.tqdm(todos):
+            driver.posts.delete_post(post_id = todo["post"])
 
-    print("Removed all join/leave massages from channels the bot is in.")
+        print("Removed all join/leave massages from channels the bot is in.")
 
     ws.join()
 
