@@ -6,7 +6,7 @@ After=multi-user.target
 Type=simple
 Restart=always
 Environment=PYTHONUNBUFFERED=TRUE
-ExecStart=/bin/python3 /opt/mattermost_bots/mattermost-bots/f23/fohseriet_ser_dig.py
+ExecStart=/bin/python3 /opt/mattermost_bots/mattermost-bots/f24/fohseriet_ser_dig.py
 
 [Install]
 WantedBy=multi-user.target
