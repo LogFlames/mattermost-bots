@@ -12,11 +12,15 @@ def channel_member_updated(driver: Driver, data):
         print(f"Was made channel admin, making all users notification free")
         users = get_all_channel_members(driver, channel_member["channel_id"])
         for user in tqdm.tqdm(users):
+            if user["user_id"] == driver.client.userid:
+                continue
             only_notify_mentions_for_channel(driver, channel_id = channel_member["channel_id"], user_id = user["user_id"])
     else:
         print(f"Was removed as channel admin, making all users full notification")
         users = get_all_channel_members(driver, channel_member["channel_id"])
         for user in tqdm.tqdm(users):
+            if user["user_id"] == driver.client.userid:
+                continue
             full_notifications_for_channel(driver, channel_id = channel_member["channel_id"], user_id = user["user_id"])
 
 def new_user(driver: Driver, data):
@@ -71,6 +75,8 @@ def main():
                 users = get_all_channel_members(driver, channel["id"])
 
                 for user in users:
+                    if user["user_id"] == driver.client.userid:
+                        continue
                     todos.append({"channel": channel["id"], "user": user["user_id"], "notification_free": "channel_admin" in me["roles"]})
 
         for todo in tqdm.tqdm(todos):
