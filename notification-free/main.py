@@ -50,14 +50,14 @@ def main():
 
     driver.login()
 
-    ws = WebSocket(TOKEN, True)
+    ws = WebSocket(TOKEN)
 
     ws.subscribe("posted", lambda data: new_user(driver, data))
     ws.subscribe("channel_member_updated", lambda data: channel_member_updated(driver, data))
 
     print("Setup done. Listening for new posts and reactions...")
 
-    if True:
+    if False:
         todos = []
         teams = driver.teams.get_user_teams(driver.client.userid)
         for team in teams:
