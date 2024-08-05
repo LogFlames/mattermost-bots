@@ -3,6 +3,22 @@ from secret import TOKEN
 import json
 import tqdm
 
+def channel_member_updated(driver: Driver, data):
+    channel_member = json.loads(data["channelMember"])
+    if channel_member['user_id'] != driver.client.userid:
+        return
+
+    if "channel_admin" in channel_member["roles"]:
+        print(f"Was made channel admin, making all users notification free")
+        users = get_all_channel_members(driver, channel_member["channel_id"])
+        for user in tqdm.tqdm(users):
+            only_notify_mentions_for_channel(driver, channel_id = channel_member["channel_id"], user_id = user["user_id"])
+    else:
+        print(f"Was removed as channel admin, making all users full notification")
+        users = get_all_channel_members(driver, channel_member["channel_id"])
+        for user in tqdm.tqdm(users):
+            full_notifications_for_channel(driver, channel_id = channel_member["channel_id"], user_id = user["user_id"])
+
 def new_user(driver: Driver, data):
     if data["channel_name"] == "town-square":
         return
@@ -11,14 +27,11 @@ def new_user(driver: Driver, data):
     if post["type"] not in ("system_add_to_channel", "system_join_channel"):
         return
 
-    if "props" in post and "addedUserId" in post["props"] and post["props"]["addedUserId"] == driver.client.userid:
-        users = get_all_channel_members(driver, post["channel_id"])
-        for user in users:
-            only_notify_mentions_for_channel(driver, channel_id = post["channel_id"], user_id = user["user_id"])
+    me = driver.channels.get_channel_member(data["channel-id"], driver.client.userid)
+    if "channel_admin" not in me["roles"]:
+        return 
 
-        driver.channels.update_scheme_derived_roles_of_channel_member(post["channel_id"], driver.client.userid, {"scheme_admin": True, "scheme_user": True})
-    else:
-        only_notify_mentions_for_channel(driver, post["channel_id"], post["user_id"])
+    only_notify_mentions_for_channel(driver, post["channel_id"], post["user_id"])
 
 def main():
     driver = Driver(
@@ -37,13 +50,14 @@ def main():
 
     driver.login()
 
-    ws = WebSocket(TOKEN)
+    ws = WebSocket(TOKEN, True)
 
     ws.subscribe("posted", lambda data: new_user(driver, data))
+    ws.subscribe("channel_member_updated", lambda data: channel_member_updated(driver, data))
 
     print("Setup done. Listening for new posts and reactions...")
 
-    if False:
+    if True:
         todos = []
         teams = driver.teams.get_user_teams(driver.client.userid)
         for team in teams:
@@ -52,15 +66,18 @@ def main():
                 if channel["name"] == "town-square":
                     continue
 
-                driver.channels.update_scheme_derived_roles_of_channel_member(channel["id"], driver.client.userid, {"scheme_admin": True, "scheme_user": True})
+                me = driver.channels.get_channel_member(channel["id"], driver.client.userid)
 
                 users = get_all_channel_members(driver, channel["id"])
 
                 for user in users:
-                    todos.append({"channel": channel["id"], "user": user["user_id"]})
+                    todos.append({"channel": channel["id"], "user": user["user_id"], "notification_free": "channel_admin" in me["roles"]})
 
         for todo in tqdm.tqdm(todos):
-            only_notify_mentions_for_channel(driver, channel_id = todo["channel"], user_id = todo["user"])
+            if todo["notification_free"]:
+                only_notify_mentions_for_channel(driver, channel_id = todo["channel"], user_id = todo["user"])
+            else:
+                full_notifications_for_channel(driver, channel_id = todo["chanenl"], user_id = todo["user"])
 
         print("Updated notification props for all users in all channels.")
 
