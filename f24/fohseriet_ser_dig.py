@@ -4,7 +4,7 @@ import json
 import time
 from threading import Thread
 
-FOHSARE = ("yfoh44x7ap893d95q7h4i5t9dr", "6tkf3ofjpbywtksumh6xwn61pr")
+FOHSARE = ("yfoh44x7ap893d95q7h4i5t9dr", "6tkf3ofjpbywtksumh6xwn61pr", "8hrwhomdtty1tg4inr6rwxjo1w")
 
 def clean_fohsare(driver: Driver, data):
     reaction = json.loads(data["reaction"])
