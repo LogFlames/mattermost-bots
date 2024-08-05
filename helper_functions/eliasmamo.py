@@ -146,6 +146,22 @@ def only_notify_mentions_for_channel(driver: Driver, channel_id, user_id):
         }
     )
 
+def full_notifications_for_channel(driver: Driver, channel_id, user_id):
+    notify = driver.client.put(
+            '/channels/' + channel_id + "/members/" + user_id + "/notify_props")
+
+    notify["desktop"] = "all"
+    notify["desktop_threads"] = "all"
+    notify["push"] = "all"
+    notify["push_threads"] = "all"
+
+    return driver.client.put(
+        '/channels/' + channel_id + '/members/' + user_id + "/notify_props",
+        options = {
+            **notify
+        }
+    )
+
 def enable_all_notifications(driver: Driver, user_id):
     user_props = driver.client.put(
             '/users/' + user_id + "/patch")
