@@ -49,7 +49,7 @@ channels_conf.add_channel(
 def translate(openai_client: openai.OpenAI, driver: Driver, message, high_priority):
     try:
         completion = openai_client.chat.completions.create(
-          model="gpt-4o" if high_priority else "gpt-3.5-turbo",
+          model="gpt-4o" if high_priority else "gpt-4o-mini",
           messages=[
               {"role": "system", "content": "You are a skilled professional translator assistant that translates messages from Swedish to English on demand with high accuracy. To your help you have the following dictionary that directs you how to translate specific phrases. In the dictionary commas are used to indicate there are multiple phrases with the same meaning:\n" + 
                get_dictionary(driver, True)},
