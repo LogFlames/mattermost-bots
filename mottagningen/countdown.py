@@ -24,14 +24,25 @@ def main():
     diff = (datetime.fromisoformat("2024-08-12T00:00:00.000000") - datetime.today())
     dagar = diff.days + 1
 
-    driver.channels.update_channel(COUNTDOWN_CHANNEL, {"id": COUNTDOWN_CHANNEL, "name": "countdown", "display_name": f"{dagar} dag{'ar' if dagar != 1 else ''} kvar till dag Ø"})
+    message = f"{dagar} dag{'ar' if dagar != 1 else ''} kvar till dag Ø"
+    if dagar == 0:
+        diff = (datetime.fromisoformat("2024-08-12T12:00:00.000000") - datetime.now())
+        hours = diff.seconds // 3600
+        minutes = (diff.seconds % 3600) // 60
+
+        message = f"{hours}h{minutes}m kvar tills nØllan kommer!".replace(".", ",")
+
+    print(message)
+    return
+
+    driver.channels.update_channel(COUNTDOWN_CHANNEL, {"id": COUNTDOWN_CHANNEL, "name": "countdown", "display_name": message })
 
     posts = driver.posts.get_posts_for_channel(COUNTDOWN_CHANNEL)["posts"]
     for post_id in posts:
         if posts[post_id]["type"] == "system_displayname_change":
             driver.posts.delete_post(post_id)
 
-    driver.posts.create_post({"channel_id": COUNTDOWN_CHANNEL, "message": f"{dagar} dag{'ar' if dagar != 1 else ''} kvar till dag Ø"})
+    driver.posts.create_post({"channel_id": COUNTDOWN_CHANNEL, "message": message})
 
 if __name__ == "__main__":
     main()
