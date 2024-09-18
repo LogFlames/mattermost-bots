@@ -120,7 +120,7 @@ USERS = {
             "yfoh44x7ap893d95q7h4i5t9dr" # Ryll Åman
             ],
         "fint": [
-            "fppkbs46rjry5dyf6y5tq84neh" # Arthur Maignan
+            "sodyawictjn53p9gr5ou7zq7bo" # Xin Chen
             ],
         "valberedningen": [
             ]
