@@ -1,2 +1,2 @@
-# Fysiksektionen bot
-Add new users to channels, clear "added" messages, and categorize in "fysiksektionen"-category 
+# Valvakan bot
+Message a channel when a new person has appiled in the election.
