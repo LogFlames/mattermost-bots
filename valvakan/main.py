@@ -1,6 +1,6 @@
 from eliasmamo_import import *
 from secret import TOKEN
-from configuration import *
+from configuration import CHANNEL_ID, SPREADSHEET_ID
 import time
 
 import os.path
@@ -15,8 +15,7 @@ from googleapiclient.errors import HttpError
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
 
 # The ID and range of a sample spreadsheet.
-SAMPLE_SPREADSHEET_ID = '1Z5cXCBeeVf2Qbu6qARLpX8lm6ZCOTVQps8LRuWZnTDw'
-SAMPLE_RANGE_NAME = 'Blad1!B2:E'
+RANGE_NAME = 'B2:D'
 
 def read_sheet():
     creds = None
@@ -41,15 +40,15 @@ def read_sheet():
 
         # Call the Sheets API
         sheet = service.spreadsheets()
-        result = sheet.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID,
-                                    range=SAMPLE_RANGE_NAME).execute()
+        result = sheet.values().get(spreadsheetId=SPREADSHEET_ID,
+                                    range=RANGE_NAME).execute()
         values = result.get('values', [])
 
         if not values:
             print('No data found.')
             return
 
-        return [f"@channel {row[0]} {row[1]} {row[2]} har sökt {row[3]}" for row in values]
+        return [f"@channel {row[0]} {row[1]} har sökt {row[2]}" for row in values]
     except HttpError as err:
         print(err)
 
