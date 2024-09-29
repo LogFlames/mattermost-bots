@@ -1,2 +1,2 @@
-CHANNEL_ID = "y58scewz9bnri8t8i5p4ec5coo"
-GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/1Z5cXCBeeVf2Qbu6qARLpX8lm6ZCOTVQps8LRuWZnTDw/edit#gid=0"
+CHANNEL_ID = "13xtjpkf6jnj9j4n9hif83o3dr"
+GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/1Zd2HpevzsfuC6LzhE0srxwWVNmKY46URh6rLwva603w/edit?gid=0#gid=0"
