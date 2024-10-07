@@ -128,7 +128,7 @@ def add_to_default_channels(driver: Driver, wsdata, team_id, channels):
         for thread in threads:
             thread.join()
 
-        delete_new_posts_in_clean_channels(driver, channels)
+        # delete_new_posts_in_clean_channels(driver, channels)
 
 def only_notify_mentions_for_channel(driver: Driver, channel_id, user_id):
     notify = driver.client.put(
