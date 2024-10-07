@@ -46,7 +46,7 @@ def read_sheet():
 
         if not values:
             print('No data found.')
-            return
+            return []
 
         return [f"@channel {row[0]} {row[1]} har sökt {row[2]}" for row in values]
     except HttpError as err:
