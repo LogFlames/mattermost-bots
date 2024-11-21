@@ -46,8 +46,8 @@ FEATURED_MEDIA = {
         "fysikalen": 57056,
         "jamn": 50465,
         "mottagningen": 49511,
-        "styret": 51462
-#        "valberedningen": 0
+        "styret": 51462,
+        "valberedningen": 57738
         }
 
 USERS = {
