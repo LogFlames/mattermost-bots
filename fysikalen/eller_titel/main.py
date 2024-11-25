@@ -48,7 +48,7 @@ def read_sheet():
             print('No data found.')
             return []
 
-        return [f"@channel Earhart eller {row[0]}" for row in values]
+        return [f"Earhart eller {row[0]}" for row in values]
     except HttpError as err:
         print(err)
 
