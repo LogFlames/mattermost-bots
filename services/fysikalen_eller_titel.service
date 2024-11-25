@@ -1,0 +1,12 @@
+[Unit]
+Description=Start Fysikalen-Eller-Titel-bot
+After=multi-user.target
+
+[Service]
+Type=simple
+Restart=always
+Environment=PYTHONUNBUFFERED=TRUE
+ExecStart=/bin/python3 /opt/mattermost_bots/mattermost-bots/fysikalen/eller_titel/main.py
+
+[Install]
+WantedBy=multi-user.target
