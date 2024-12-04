@@ -109,9 +109,12 @@ def send_current_settings(driver, post, data):
     if will_send_english_info:
         send_dm(driver, post["user_id"], "Message configuration is finished. You can choose to send an english message as well using the `english`", root_id = post["root_id"])
 
+    # TODO: save settings in static message database
+
 def handle_reply(driver: Driver, post):
     replies = driver.posts.get_thread(post["root_id"])
     last_saved_data = None
+    is_linked_message = False
     for reply_post_id in replies["order"][::-1]:
         if replies["posts"][reply_post_id]["user_id"] != driver.client.userid:
             continue
@@ -131,6 +134,10 @@ def handle_reply(driver: Driver, post):
 
     if last_saved_data is None:
         send_dm(driver, post["user_id"], "Could not find any previous saved data - this should not happen. Please contact an admin for help.", root_id = post["root_id"])
+        return
+
+    if "original_linked_post" in last_saved_data:
+        send_dm(driver, post["user_id"], "There is a linked english message, edit the settings of the original message to change time.", root_id = post["root_id"])
         return
 
     command = post["message"].strip()
@@ -156,6 +163,7 @@ def handle_reply(driver: Driver, post):
             send_dm(driver, post["user_id"], "There is already a linked english message.")
             return
 
+        # TODO: create translation
         eng_post = send_dm_as_other_user(driver, post["user_id"], driver.client.userid, """English translation""", root_id = None)
 
         original_post_data = {"original_linked_post": post["root_id"]}
