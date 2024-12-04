@@ -182,11 +182,12 @@ def enable_all_notifications(driver: Driver, user_id):
         }
     )
 
-def send_dm(driver: Driver, userid, message):
+def send_dm(driver: Driver, userid, message, root_id=None):
     dm_channel = driver.channels.create_direct_message_channel([userid, driver.client.userid])
-    driver.posts.create_post({
-        "channel_id": dm_channel["id"], 
-        "message": message})
+    post_data = {"channel_id": dm_channel["id"], "message": message}
+    if root_id:
+        post_data["root_id"] = root_id
+    driver.posts.create_post(post_data)
 
 def get_all_users(driver: Driver):
     users = []
@@ -256,5 +257,31 @@ def send_post_as_other_user(driver: Driver, user_id, channel_id, message, root_i
 
     driver.users.disable_personal_access_token({"token_id": token["id"]})
 
+def send_dm_as_other_user(driver: Driver, from_userid, to_userid, message, root_id=None):
+    dm_channel = driver.channels.create_direct_message_channel([from_userid, to_userid])
+    post_data = {"channel_id": dm_channel["id"], "message": message}
+    if root_id:
+        post_data["root_id"] = root_id
 
+    token = driver.users.create_user_access_token(from_userid, {"description": "Send as other user - Bot"})
+    driver_other = Driver(
+            {
+                'url': 'mattermost.fysiksektionen.se',
+                'basepath': '/api/v4',
+                'verify': True,
+                'scheme': 'https',
+                'port': 443,
+                'auth': None,
+                'token': token["token"],
+                'keepalive': True,
+                'keepalive_delay': 5,
+                }
+            )
 
+    driver_other.login()
+
+    post = driver_other.posts.create_post(post_data)
+
+    driver.users.disable_personal_access_token({"token_id": token["id"]})
+
+    return post
