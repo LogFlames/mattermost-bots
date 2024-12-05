@@ -14,8 +14,8 @@ import datetime
 import re
 
 def get_help_text():
-    return f"""`yyyy-mm-dd` - update the time by typing a timestamp on the format `yyyy-mm-dd hh:mm`. Example: `2024-12-04 12:30`, `2024-02-10 09:00`
-`channel_id/name` - You can update the channel by typing one of the preconfigured channels, `{'`, `'.join(CHANNEL_KEYWORDS.keys())}`, or a channel-id for a custom channel.
+    return f"""`yyyy-mm-dd hh:mm` - update the time by typing a timestamp on the format `yyyy-mm-dd hh:mm`. Example: `2024-12-04 12:30`, `2024-02-10 09:00`
+`channel_id` - You can update the channel by typing one of the preconfigured channels, `{'`, `'.join(CHANNEL_KEYWORDS.keys())}`, or a channel-id for a custom channel.
 `english` - if the channel is `evenemang` or `general` you can type `english` to also send an automatically translated message. You will get the oportunity to edit the translation before sending.
 """
 
