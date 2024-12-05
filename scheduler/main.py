@@ -160,7 +160,7 @@ def handle_reply(driver: Driver, post):
         send_current_settings(driver, post, last_saved_data)
     elif command == "english":
         if last_saved_data["linked_english_post_id"] is not None:
-            send_dm(driver, post["user_id"], "There is already a linked english message.")
+            send_dm(driver, post["user_id"], "There is already a linked english message.", root_id = post["root_id"])
             return
 
         # TODO: create translation
