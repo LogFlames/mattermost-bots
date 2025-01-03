@@ -50,6 +50,12 @@ def handle_reaction_added(driver: Driver, data, CHANNEL_ID_TO_TEAM_URL):
     if reaction["emoji_name"] not in EMOJI_MAP:
         return 
 
+    reactions_on_post = driver.reactions.get_reactions_of_post(reaction["post_id"])
+
+    for reaction_on_post in reactions_on_post:
+        if reaction_on_post["user_id"] == driver.client.userid:
+            return
+
     namnd = EMOJI_MAP[reaction["emoji_name"]]
 
     if reaction["user_id"] not in AUTHENTICATED_USERS[namnd]:
@@ -61,12 +67,6 @@ def handle_reaction_added(driver: Driver, data, CHANNEL_ID_TO_TEAM_URL):
         send_dm(driver, reaction["user_id"], "Messages in this channel cannot be posted to the website. If you think this is a mistake please contact Mattermästare at mattermost@f.kth.se.")
         print(f"{reaction['user_id']} attempted to react with {reaction['emoji_name']} in an non-postable channel. Sent DM.")
         return
-
-    reactions_on_post = driver.reactions.get_reactions_of_post(reaction["post_id"])
-
-    for reaction_on_post in reactions_on_post:
-        if reaction_on_post["user_id"] == driver.client.userid:
-            return
 
     driver.reactions.create_reaction({"post_id": reaction["post_id"], "emoji_name": reaction["emoji_name"], "user_id": driver.client.userid})
 
