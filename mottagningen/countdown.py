@@ -21,19 +21,12 @@ def main():
 
     driver.login()
 
-    diff = (datetime.fromisoformat("2024-08-12T00:00:00.000000") - datetime.today())
+    diff = (datetime.fromisoformat("2025-08-11T00:00:00.000000") - datetime.today())
     dagar = diff.days + 1
 
     message = f"{dagar} dag{'ar' if dagar != 1 else ''} kvar till dag Ø"
-    if dagar == 0:
-        diff = (datetime.fromisoformat("2024-08-12T12:00:00.000000") - datetime.now())
-        hours = diff.seconds // 3600
-        minutes = (diff.seconds % 3600) // 60
-
-        message = f"{hours}h{minutes}m kvar tills nØllan kommer!".replace(".", ",")
-
-    print(message)
-    return
+    if dagar < 0:
+        return
 
     driver.channels.update_channel(COUNTDOWN_CHANNEL, {"id": COUNTDOWN_CHANNEL, "name": "countdown", "display_name": message })
 
