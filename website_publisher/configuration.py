@@ -53,34 +53,32 @@ FEATURED_MEDIA = {
 USERS = {
         "mattermästare": [
             "xzt5e9rmtb8b5c78auq3h7bffr", # Elias Lundell @ellundel
-            "zpi7y8ohw7b5t8ieutka3wi4yw", # Eskil Nyberg @eskilny
-            "krir8uax77g58kqzbq5jsxgnpy" # Björn Thiberg @bthiberg
+            "zpi7y8ohw7b5t8ieutka3wi4yw" # Eskil Nyberg @eskilny
             ],
         "styret": [
-            "xzt5e9rmtb8b5c78auq3h7bffr", # Elias Lundell
-            "x1d5x1moetyqjp6q1af3ibkbac", # Niklas Käll
-            "pcnu5yo5bf81xnsw1uwpysunfc", # Rebecca Martinsson
-            "kqfuzsu1wtr43rnwc9wesi4pjr", # Rilind Hoti
-            "jwpei45k4ffbdc8mhr8iyf3syh", # Kajsa Engelfeldt
             "fchz14cm5ibkzncnsc5amft5ge", # Filip Ek
-            "1a7a3s9um78p98zsz1k35a5k8r" # Erika Sandhagen
+            "jwpei45k4ffbdc8mhr8iyf3syh", # Kajsa Engelfeldt
+            "7r84odxya38qxyqn1m9opzop6a", # Emil Wiktorsson
+            "5d85r8gsn7dcjyeo48o4j41cjo", # Katja Borelius
+            "bmzchi357irdif9pcgq9ozpcbc", # Fredrika Lundqvist Åbrink
+            "7k8rz4ohftf7tfnaiktthxoice", # Hugo Chow
+            "zhrji5nhn3dxigoey9g886xmqh" # William Kraft
             ],
         "fn": [
-            "64pa4as6mfro5ea7gmrjfnx4iy", # Jonathan Kenichi Ahrlind
-            "wwpnsya8wfrgt8twu61y5pxbnw" # Maximilian Nordler
+            "w1enszrfhtfcuc5ferrnf9cuor", # Hannah Pontén
+            "yewnx38q87ngpgnq3hpsnmhgiw" # Oscar Siberg
             ],
         "jamn": [
-            "3yx6i7tk4bgrtf7k4n5gw541jo", # Isac Wänlund
-            "6syubby1mjnf7x6ezsxqud6s6w" # Joel Hedenstedt
+            "thu6qzqg13bwzpc1acs8sbb66w", # Magdalena Christiansson
+            "jxxzg9ybcpyfukcstmdyyo96ue" # Sverker Ernlund
             ],
         "fsn": [
-            "sm9pypizmfb3zn3qohd8d7uz6h", # Elias Nilsson
-            "87ykcyqzo38cze69rxynqe6kke", # Ludwig Wahlund
-            "z9g8y9yxgpry7b9uozk18mqfua" # Lucas Benson
+            "j3m1ho7zqbgyzfsj461of6r8qc", # Oliver Källström
+            "any44nxbypfjxgkz4ranh9qkpo", # Zofia Lukasiewicz
+            "zxxnj3qcjtyyf8a8uy8pu43jge" # Oscar Jenner
             ],
         "fan": [
-            "unq197dmcjrqfgxk54cc4h9afa", # Hugo Wretling
-            "w4grts7mhjnotpc9zmpkicp6hw" # Elliot Collin
+            "w3rg7hod3bdozbrrir9g3cfgqh" # Andrey Komarov
             ],
         "fysikalen": [
             "1p1zbmo1ebbfddypuc8qy1mjje", # Albin Wickman Lundberg
@@ -88,39 +86,37 @@ USERS = {
             "4fs75fz3itbkijezahwto33f3w" # Linnea Stålberg
             ],
         "fkm": [
-            "7r84odxya38qxyqn1m9opzop6a", # Emil Wiktorsson
-            "5d85r8gsn7dcjyeo48o4j41cjo", # Katja Borelius
-            "wnq7fw5kdiyiiq5kamz4u7r4oc", # Sam Houghton
-            "qzqkrjydrir7xf9fjckfp3enbo", # PR-Mästare: Signe Stjernstoft
-            "tyic3tfxjpffbxcwet4efuxryc" # PR-Mästare: Mathilda Häggbrink
+            "r6ykmnmnh7fd88mnhmpcjz19do", # Alexander Unge
+            "1nxy4cr597nq9k1u8wu5pts3wo", # Carl Svensson
+            "tyic3tfxjpffbxcwet4efuxryc" # Mathilda Häggbrink
             ],
         "fcom": [
-            "e64p9dgbxjgeuc83c6eugwpfao" # Mårten Gunnarson Fürstenbach
+            "kijr5ob9tifkukobmf334whtbr" # Julia Brännvall
             ],
         "fdev": [
-            "zhrji5nhn3dxigoey9g886xmqh" # William Kraft
+            "wep783x4n7dtjfcqu8si1kfmpr" # Leo Trolin
             ],
         "fart": [
-            "o8mkpfrintf1tng4f6m8wf6x5y" # Wilhelm Carmevik
+            "xmns7h9tafgr78sk616jttnfar" # David Magnusson
             ],
         "force": [
-            "any44nxbypfjxgkz4ranh9qkpo" # Zofia Lukasiewicz
+            "xi4ndxqahb8m3re7knsdeghckw" # Elias Bergström
             ],
         "frum": [
-            "not9nx743bda5jpk7sqfiymz3h", # Emmie Zemack
-            "thu6qzqg13bwzpc1acs8sbb66w" # Magdalena Christiansson
+            "e64p9dgbxjgeuc83c6eugwpfao", # Mårten Gunnarson Fürstenbach
+            "76n3u5yp9tb53mnsjcky7rs9ih" # Signe Svensson
             ],
         "mottagningen": [
-            "bmzchi357irdif9pcgq9ozpcbc", # Fredrika Lundqvist Åbrink
-            "3y41ocz89fnt5pr8qo4e6kj3xy", # Nessim Khemiri
-            "76n3u5yp9tb53mnsjcky7rs9ih", # Signe Svensson
-            "jxxzg9ybcpyfukcstmdyyo96ue", # Sverker Ernlund
-            "3uir9uh7wfdujxjne7hn3q4qpw", # Lukas Granqvist
-            "6tkf3ofjpbywtksumh6xwn61pr", # Magdalena Björk
-            "yfoh44x7ap893d95q7h4i5t9dr" # Ryll Åman
+            "x1d5x1moetyqjp6q1af3ibkbac", # Niklas Käll
+            "fixxox8xyjb9dm8cffikeitgew", # Christoffer Ousbäck
+            "adt5q1g55i8dbnorfmdmp367dy", # Ebba Löwenberg
+            "cwewz5kw1jdkzxi7z1cqfhof5e", # Molly Wörman
+            "czufwoitwbd3pbb6711hp4rime", # Alva Berglund
+            "awucy44oqfgy9m7rc6y91yikyh", # Irma Sigurd
+            "bdbrxi9x4tduddk3egirde41oy" # Nils Tiemer
             ],
         "fint": [
-            "sodyawictjn53p9gr5ou7zq7bo" # Xin Chen
+            "74uzzbi3fib33byk6397j9pj8y" # Viggo Haglund
             ],
         "valberedningen": [
             ]
