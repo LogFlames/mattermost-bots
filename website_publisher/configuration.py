@@ -66,7 +66,10 @@ USERS = {
             ],
         "fn": [
             "w1enszrfhtfcuc5ferrnf9cuor", # Hannah Pontén
-            "yewnx38q87ngpgnq3hpsnmhgiw" # Oscar Siberg
+            "yewnx38q87ngpgnq3hpsnmhgiw", # Oscar Siberg
+            "kikgdfaiypd4indkrkmymonzow", # Erik Boustedt
+            "grr6owq77p8tznmxq5ag7c7eio", # Isabelle Rea Eklund
+            "aiccoirtobdb5pdm7wecify8ga" # Blanca Contreras
             ],
         "jamn": [
             "thu6qzqg13bwzpc1acs8sbb66w", # Magdalena Christiansson
