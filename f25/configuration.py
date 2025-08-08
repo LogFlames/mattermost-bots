@@ -17,7 +17,7 @@ HIDDEN_CHANNELS = {
         "kerberos": "8jfmuhcpk3fapfuhbw38m8ykxa",
         "kontoret": "13rkepgnwfbxzr3mrdo8jy96uy",
         "nolle-puh": "ue61ntnixigwjjrfnj6o11c4xw",
-        "rymdpiraterna": ",9wyquhwsnpgyxfqhffp7dbyksa",
+        "rymdpiraterna": "9wyquhwsnpgyxfqhffp7dbyksa",
         "solsidan": "8x3pdmby9pfkzczam3cs9it57e"
         }
 
