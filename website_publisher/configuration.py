@@ -32,6 +32,42 @@ EMOJI_MAP = {
         "post-to-website-valberedningen": "valberedningen"
         }
 
+NAMND_EMAIL_MAP = {
+        "fan": "fan@f.kth.se",
+        "fart": "fart@f.kth.se",
+        "fcom": "fcom@f.kth.se",
+        "fdev": "fdev@f.kth.se",
+        "fint": "fint@f.kth.se",
+        "fkm": "fkm@f.kth.se",
+        "fn": "fn@f.kth.se",
+        "force": "force@f.kth.se",
+        "frum": "frum@f.kth.se",
+        "fsn": "fsn@f.kth.se",
+        "fysikalen": "fysikalen@f.kth.se",
+        "jamn": "jamn@f.kth.se",
+        "mottagningen": "mottagningen@f.kth.se",
+        "styret": "styret@f.kth.se",
+        "valberedningen": "valberedningen@f.kth.se"
+        }
+
+NAMND_FORMATTED_NAME = {
+        "fan": "FAN - Fysiksektionens aktivitetsnämnd",
+        "fart": "F-Art - Fysiksektionens designgrupp",
+        "fcom": "Fcom - Fysiksentionens kommunikationsnämnd",
+        "fdev": "F.dev - Fysiksektionens programmeringsgrupp",
+        "fint": "FINT - Physics Chapter International",
+        "fkm": "fkm* - Klubbmästeriet",
+        "fn": "FN - Fysiksektionens näringslivsnämnd",
+        "force": "The Force - Fysiksektionens tidning",
+        "frum": "FRum - Fysiksektionens lokalnämnd",
+        "fsn": "FSN - Fysiksektionens studienämnd",
+        "fysikalen": "Fysikalen - Fysiksektionens spex",
+        "jamn": "JämN - Fysiksektionens jämlikhetsnämnd",
+        "mottagningen": "Mottagningen",
+        "styret": "Fysiksektionens styrelse",
+        "valberedningen": "Valberedningen"
+        }
+
 FEATURED_MEDIA = {
         "fan": 57121,
         "fart": 55784,

@@ -1,7 +1,7 @@
 from eliasmamo_import import *
 from secret import TOKEN
 from publish import create_wp_post, update_wp_post
-from configuration import AUTHENTICATED_USERS, POSTABLE_CHANNELS, EMOJI_MAP, LANG
+from configuration import AUTHENTICATED_USERS, POSTABLE_CHANNELS, EMOJI_MAP, LANG, NAMND_EMAIL_MAP, NAMND_FORMATTED_NAME
 import json
 import markdown
 import re
@@ -82,7 +82,18 @@ def handle_reaction_added(driver: Driver, data, CHANNEL_ID_TO_TEAM_URL):
     else:
         title = html_escape_codes(remove_emojis(lines[0]))
 
-    message = convert_markdown(html_escape_codes(replace_usertags(driver, remove_emojis(post["message"]))))
+    ansvarig_namnd = f"<h6>Ansvarig nämnd: <a href=\"mailto:{NAMND_EMAIL_MAP[namnd]}\">{NAMND_FORMATTED_NAME[namnd]}</a></h6>"
+
+    message = convert_markdown(
+            html_escape_codes(
+                replace_usertags(
+                    driver, 
+                    remove_emojis(
+                        post["message"] + "\n" + ansvarig_namnd
+                        )
+                    )
+                )
+            )
 
     res_status, res = create_wp_post(namnd = namnd, title = title, message = message, timestamp = post["create_at"] / 1000, lang = LANG[POSTABLE_CHANNELS[post["channel_id"]]], status = "draft")
 
