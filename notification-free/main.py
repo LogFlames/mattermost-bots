@@ -83,7 +83,7 @@ def main():
             if todo["notification_free"]:
                 only_notify_mentions_for_channel(driver, channel_id = todo["channel"], user_id = todo["user"])
             else:
-                full_notifications_for_channel(driver, channel_id = todo["chanenl"], user_id = todo["user"])
+                full_notifications_for_channel(driver, channel_id = todo["channel"], user_id = todo["user"])
 
         print("Updated notification props for all users in all channels.")
 
