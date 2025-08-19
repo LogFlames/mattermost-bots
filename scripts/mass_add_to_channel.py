@@ -18,11 +18,12 @@ def main():
 
     driver.login()
 
-    TEAM_ID = "b7hgwxzpzibdtdicycojcsn54w" # Mottagningen
+    CHANNEL_ID = "fwqdcizefb8j7b3edfs4znpkey"
+
+    ch = driver.channels.get_channel(CHANNEL_ID)
+    TEAM_ID = ch["team_id"]
 
     members = get_team_members(driver, TEAM_ID)
-
-    CHANNEL_ID = "3uoht86my7r5znzi819iyqc9to" # Frågelådan
 
     driver.channels.add_user(CHANNEL_ID, {"user_ids": members})
 
