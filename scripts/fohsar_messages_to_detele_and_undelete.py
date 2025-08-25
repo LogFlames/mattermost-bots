@@ -3,8 +3,9 @@ from secret import TOKEN
 import os
 import datetime
 from mattermostdriver.exceptions import ResourceNotFound
+import time
 
-blacklisted_messages = {
+blacklisted_messages_2023_2024 = {
         "matwan": ['i3mimqq3djd4iy95o77wbdcd8a', 'mbd43kbx4pfmzc1w3w1p36yaye', 'ezmpb5jdw78ax8cdjxyoii5nuo'],
         "sael": ['xj3hucrrdtb87e3jdbjx74ndha', '4j8fkgg6ff8ujmk1qjcscn8q7h', 'zhcxtbu44f8sbnz8wpzt1u9uta', '58s7xrcgp3gnin75aor6gf98po', 'da99n6pgdfypmd7eypdqk7j1sa'],
         "emmakt": [],
@@ -26,9 +27,45 @@ blacklisted_messages = {
         "edwinost": ['ntbgtqi87jdspp6wfw87ghjxqr'],
         "juliasv": ['pi61m6dp9jgxjpwju7gsygoqrh'],
         "antmatt": ['kgnwcj8roj8x9bk6awxs3eb7ee'],
-        "magdb": ['d34orrdqc7r1txahhp8gr768dc', '9p3s6ox43p8xxbzmqj1ijhze1a', '8418biktu7byimwnpw55zn3f6r', 'hkkscjmubig7dew9i133frkbby', 'qkqkj5q5afribfbkzckp5egnpw', '3x5m16z347buibpihyjrdxww3a', 'hedoc9oj5fri8y5o5n5a5bxjwo', 'r7wgt9j3k7ymir3u6ds4h6b73e', 's9wp41ozn7rjiyr4ghnfh8c4go', 'fjqku113z3gqze6u3qfatyckfr', '3do99qfk7jb4de8d35qcdbek5e', 'tco1hcer5t85tq4xgq1h71aide', 'neitx5ukzpytb8jxnus3c7aioa', 'hnpc7ymb7iyixxz1ef949nn3dw', 'zqk54kf1bpdnjrkezxkqgm316a'],
+        "magdb": ['d34orrdqc7r1txahhp8gr768dc', '9p3s6ox43p8xxbzmqj1ijhze1a', '8418biktu7byimwnpw55zn3f6r', 'hkkscjmubig7dew9i133frkbby', 'qkqkj5q5afribfbkzckp5egnpw', '3x5m16z347buibpihyjrdxww3a', 'hedoc9oj5fri8y5o5n5a5bxjwo', 'r7wgt9j3k7ymir3u6ds4h6b73e', 's9wp41ozn7rjiyr4ghnfh8c4go', 'fjqku113z3gqze6u3qfatyckfr', '3do99qfk7jb4de8d35qcdbek5e', 'tco1hcer5t85tq4xgq1h71aide', 'neitx5ukzpytb8jxnus3c7aioa', 'hnpc7ymb7iyixxz1ef949nn3dw'],
         "rylla": ['jix9eywmnbnkx86a73r6ycgwyr', '13e7i34fhtg7xqmdsj1y4mwn7o', 'mm7jhnhjhfr4xn4s9c6exfj3de', 'adpbccgkcpdbzgkyny7gpt66zy', '6om8jexwnfntiqphrtbnp3z6dr', '5me4u9ziujb3fc9nkrxt1sww8o', 'i5e7qithm7yqix943a3t3z9n4a', 'zy9nzig4mtbn8et374kmitjsiw', 'mp4aqddwridy5ennhttsz7fo3o', 'or3jpyh8q7dq7gdmh5bkborsqh', 'gtgn57ukdf8epe9wtapa7e3bah', 's9jj7q89xbgquyosrpqf8yb3wc']
         }
+
+blacklisted_messages_2025 = {
+        "martengf": ["kc6ge5uhj78d5n8ktum6o6zkpa", "17354enyrtfc9gwzwdag86sn8o", "mazw6iffdb8mjf67gzigw1jaia", "k6px4en5qb8mmnm37gn9hi873c", "eehnbq1tmprdxkiba8yhqbpymh"],
+        "hlennman": ["89npfaxb6jfpumrj7sandg1e7r"],
+        "mollyw": ["ofr36mkh5tr7pk88d6965h7k1o", "1r15neoeh3dt3rh46ow58xm4pa"],
+        "signesv": ["rkhx9wghtid6iccgukux9rtt3y", "7gchxbrq6jnsbdm7qpyw4ykf7a", "jz7f9m11fbr8jrfcgrztk8qkkh"],
+        "sernlund": ["be8mjm9jji8pmjbt3ss69pkqah"],
+        "ntiemer": ["jtejg9fedj8xuerkyb11t31w5r", "aqjgbafyiire7e8yupuhho59pr", "us9j9aks3tde8gdmt9tqmig9ma"],
+        "m25": ["adb5qhawy7rz9eetuo8gm1sepa", "bjy4ush8nbdtzydx6cu3pyhp6r", "jaanyrzxo7dn9ksy1cizf5psua", "un85pdmbjincdbox8njph76wta", "n4etuspw9injfm8xgy5yith5ky", "1oxyebttebgypmg1ord4fzie8w", "cxzjusbfjidoifeeiscy3em9fo", "8n6jhh6zgfnhzn7ycjxnkd5h4a", "r49jtxxq1pnxfn7qxocjmubitc", "9syd9fw1ztdupg84b5k5tcyjiy", "gwfbttf1g3bnzmwmfwqu4bz9oh", "awb8ix4p93y68fsr5wu5r83a4a", "tr8rqukynfyzjx4od3mc9m9ary", "repou6549jgifdh69dwmwz78tw", "9h7hxfjxq78a9xoarmnz4yxufe", "53yeemnkgbnf8gr9riiirxnguh", "paexm3yxx38yirg8s9isus8o5y", "g66p8zkxw78cdfhuramo3oykxo", "ynh8s1smzir1texpfkx55eqtqw", "86ucz4nbrfrgjybktqzhd3c9hh", "r4yn8gzenjf8dnwssnwbazjg5y", "m5hphb7z5byddy5wb77zfwsfyy", "y4pchh3mm7ybtyhc976jt5usia", "owbufgibnind7yuxn7az6qd4kr", "tj3kcak9pp83zk5k9atjf7kxmw", "ujuzmo7b8fd85nan4wmn3gbmey"],
+        "sjsak": ["nfhra1s5sibgxk836r7867n1rc"],
+        "ltrolin": ["ycphyuxsj3d6d8xo5uz7xuwyhe"],
+        "ebbalo": ["ybqwcspu7t89bfffy99fg3mqzy"],
+        "juliasve": ["irbhdrmn8ffyur18rjco96y51o", "9uyyceuuyinojpyggzfxmhopse", "9kyj5d6zb3b48nwwh3bwss4nde", "11cd83nentyp3kor9hh74ekmir"],
+        "haggbr": ["c33ipzoebtrcmesu6unf1f6qnc"],
+        "alvaah": ["pefh44t3gfncbnksm18wjkxnco", "itbe97pjs7fixku1d68hdqou4a"],
+        "lukasgra": ["mookuy4unjncdf3uizq89jp43h", "8xaeukt1kjgitpchykoe4u5z6c"],
+        "strende": ["xgcib99bmidr9yf9ksd3ghp9yh", "ryns9xr3m7diieogsjhqhps34o"],
+        "aleung": ["o18eh6owdfgf5bsstxqg8q7bqe"],
+        "emmiez": ["o8tq664egb83zr4b839th7sb1w", "5sydck8a4jrwdnw8ux3tzhcexo"],
+        "chen9": ["sh9oktec8tb55yi4qkfh4c5cna", "7bdxahj38iyw5f9jzuc7dnpmza"],
+        "albinwl": ["nowkmong8jny7eqzgqbi84yqzy"],
+        "armanas": ["7rm8dz5qbp8k3fge9msh3ta3xo"],
+        "magdb": ["xpmqb8ox53byznu9ked9higefh"],
+        "elbergst": ["meisaho9yin3zfo3nt3mfp6kxo", "i8tt7qo8g7n88bgoqtfxtgtnrh", "zntz86ne3fdzik498spudzcete"]
+        }
+
+blacklisted_messages = {}
+
+for year in [blacklisted_messages_2023_2024, blacklisted_messages_2025]:
+    for name in year:
+        if name not in blacklisted_messages:
+            blacklisted_messages[name] = []
+
+        for message in year[name]:
+            if message not in blacklisted_messages[name]:
+                blacklisted_messages[name].append(message)
 
 messages_to_delete = []
 for person in blacklisted_messages:
@@ -61,6 +98,7 @@ def main():
             driver.login()
 
             for message in messages_to_delete:
+                time.sleep(0.1)
                 try:
                     post = driver.posts.get_post(message)
                 except ResourceNotFound:
