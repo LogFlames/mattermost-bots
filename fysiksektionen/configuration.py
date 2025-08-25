@@ -6,15 +6,14 @@ CHANNELS = {
         "random": "6onymh6hsjyk3ef5q879wzt9fh",
         "info": "dz1jak398fyhir1uxpya7grify",
         "info_eng": "1kfcce1i7py4ip1933fkb95jrh",
-        "events": "it7zah8m5jrw9dm8bkjm14eyaw",
-        "kandidaturperioden": "d1x4bppynfftfjmtubm3ow73sh"
+        "events": "it7zah8m5jrw9dm8bkjm14eyaw"
         }
 
-DEFAULT_CHANNELS = ["sektionsnytt", "evenemang", "general", "random", "info", "kandidaturperioden"]
+DEFAULT_CHANNELS = ["sektionsnytt", "evenemang", "general", "random", "info"]
 ENGLISH_CHANNELS = ["events", "info_eng"]
 
 CATEGORIES = {
-        "Fysiksektionen": ["sektionsnytt", "evenemang", "info", "kandidaturperioden"],
+        "Fysiksektionen": ["sektionsnytt", "evenemang", "info"],
         "Physics Chapter": ["events", "info_eng"],
         "Channels": ["random", "general"]
         }
