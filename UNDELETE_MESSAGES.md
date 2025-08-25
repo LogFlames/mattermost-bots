@@ -34,3 +34,15 @@ WHERE id IN ('chowcd1f7bni9xs6mnc1ttwgny',...);
 ```
 
 [Here](https://www.postgresqltutorial.com/postgresql-cheat-sheet/) is a postgres sheet-cheat if needed.
+
+# Transfer message ownership
+
+Update user ids in [transfer_userid_ownership.py](scripts/transfer_userid_ownership.py). Run script. Copy the 3 SQL-queries directly to psql.
+
+If you wish to record the post-ids for safety when restoring these can be accessed using:
+```
+\pset pager 0
+select id from posts where userid='fake_account_id';
+```
+
+## Be Careful! This writes directly to PROD!!! Do not undelete every message on the server for example :)
