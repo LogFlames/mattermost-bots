@@ -32,10 +32,10 @@ blacklisted_messages_2023_2024 = {
         }
 
 blacklisted_messages_2025 = {
-        "martengf": ["kc6ge5uhj78d5n8ktum6o6zkpa", "17354enyrtfc9gwzwdag86sn8o", "mazw6iffdb8mjf67gzigw1jaia", "k6px4en5qb8mmnm37gn9hi873c", "eehnbq1tmprdxkiba8yhqbpymh"],
+        "martengf": ["kc6ge5uhj78d5n8ktum6o6zkpa", "17354enyrtfc9gwzwdag86sn8o", "mazw6iffdb8mjf67gzigw1jaia", "k6px4en5qb8mmnm37gn9hi873c", "eehnbq1tmprdxkiba8yhqbpymh", "mz5jdwstejfgmgfhctpfbcpw4h"],
         "hlennman": ["89npfaxb6jfpumrj7sandg1e7r"],
         "mollyw": ["ofr36mkh5tr7pk88d6965h7k1o", "1r15neoeh3dt3rh46ow58xm4pa"],
-        "signesv": ["rkhx9wghtid6iccgukux9rtt3y", "7gchxbrq6jnsbdm7qpyw4ykf7a", "jz7f9m11fbr8jrfcgrztk8qkkh"],
+        "signesv": ["rkhx9wghtid6iccgukux9rtt3y", "7gchxbrq6jnsbdm7qpyw4ykf7a", "jz7f9m11fbr8jrfcgrztk8qkkh", "njkh7hbfpbycidy6cei477jatc", "qi76o8kcitdr3ywzs1aq4oookh"],
         "sernlund": ["be8mjm9jji8pmjbt3ss69pkqah"],
         "ntiemer": ["jtejg9fedj8xuerkyb11t31w5r", "aqjgbafyiire7e8yupuhho59pr", "us9j9aks3tde8gdmt9tqmig9ma"],
         "m25": ["adb5qhawy7rz9eetuo8gm1sepa", "bjy4ush8nbdtzydx6cu3pyhp6r", "jaanyrzxo7dn9ksy1cizf5psua", "un85pdmbjincdbox8njph76wta", "n4etuspw9injfm8xgy5yith5ky", "1oxyebttebgypmg1ord4fzie8w", "cxzjusbfjidoifeeiscy3em9fo", "8n6jhh6zgfnhzn7ycjxnkd5h4a", "r49jtxxq1pnxfn7qxocjmubitc", "9syd9fw1ztdupg84b5k5tcyjiy", "gwfbttf1g3bnzmwmfwqu4bz9oh", "awb8ix4p93y68fsr5wu5r83a4a", "tr8rqukynfyzjx4od3mc9m9ary", "repou6549jgifdh69dwmwz78tw", "9h7hxfjxq78a9xoarmnz4yxufe", "53yeemnkgbnf8gr9riiirxnguh", "paexm3yxx38yirg8s9isus8o5y", "g66p8zkxw78cdfhuramo3oykxo", "ynh8s1smzir1texpfkx55eqtqw", "86ucz4nbrfrgjybktqzhd3c9hh", "r4yn8gzenjf8dnwssnwbazjg5y", "m5hphb7z5byddy5wb77zfwsfyy", "y4pchh3mm7ybtyhc976jt5usia", "owbufgibnind7yuxn7az6qd4kr", "tj3kcak9pp83zk5k9atjf7kxmw", "ujuzmo7b8fd85nan4wmn3gbmey"],
@@ -53,7 +53,9 @@ blacklisted_messages_2025 = {
         "albinwl": ["nowkmong8jny7eqzgqbi84yqzy"],
         "armanas": ["7rm8dz5qbp8k3fge9msh3ta3xo"],
         "magdb": ["xpmqb8ox53byznu9ked9higefh"],
-        "elbergst": ["meisaho9yin3zfo3nt3mfp6kxo", "i8tt7qo8g7n88bgoqtfxtgtnrh", "zntz86ne3fdzik498spudzcete"]
+        "elbergst": ["meisaho9yin3zfo3nt3mfp6kxo", "i8tt7qo8g7n88bgoqtfxtgtnrh", "zntz86ne3fdzik498spudzcete"],
+        "lwhalund": ["3smrsnrqoif6pmakg86gq5q1dy"],
+        "hoti": ["nnot4xjexbft3gwobk6mi66u8r"]
         }
 
 blacklisted_messages = {}
