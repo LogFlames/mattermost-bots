@@ -31,7 +31,7 @@ def remove_emojis(text):
 
 def transform_mattermost_message_to_website_html(driver, message, namnd, lang):
     formatted_name = NAMND_FORMATTED_NAME_EN[namnd] if lang == "en" else NAMND_FORMATTED_NAME[namnd]
-    responsible = "Responsible Committee" if lang == "en" else "Ansvarig nämnd: "
+    responsible = "Responsible Committee" if lang == "en" else "Ansvarig nämnd"
     ansvarig_namnd = f"<h6>{responsible}: <a href=\"mailto:{NAMND_EMAIL_MAP[namnd]}\">{formatted_name}</a></h6>"
 
     return convert_markdown(
