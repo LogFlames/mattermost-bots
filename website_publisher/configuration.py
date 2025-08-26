@@ -68,6 +68,24 @@ NAMND_FORMATTED_NAME = {
         "valberedningen": "Valberedningen"
         }
 
+NAMND_FORMATTED_NAME_EN = {
+        "fan": "FAN - Physics Chapter's Activity Committee",
+        "fart": "F-Art - Physics Chapter's Designgroup",
+        "fcom": "Fcom - Physics Chapter's Communications Committee",
+        "fdev": "F.dev - Physics Chapter's Programming Group ",
+        "fint": "FINT - Physics Chapter International",
+        "fkm": "fkm* - Klubbmästeriet",
+        "fn": "FN - Physics Chapter's Business Committee",
+        "force": "The Force - Physics Chapter's Magazine",
+        "frum": "FRum - Physics Chapter's Room Committee",
+        "fsn": "FSN - Physics Chapter's Study Committee",
+        "fysikalen": "Fysikalen - Physics Chapter's spex",
+        "jamn": "JämN - Physics Chapter's Equality Committee",
+        "mottagningen": "The Reception",
+        "styret": "Physics Chapter's Board",
+        "valberedningen": "The Election Committee"
+        }
+
 FEATURED_MEDIA = {
         "fan": 57121,
         "fart": 55784,

@@ -1,7 +1,7 @@
 from eliasmamo_import import *
 from secret import TOKEN
 from publish import create_wp_post, update_wp_post
-from configuration import AUTHENTICATED_USERS, POSTABLE_CHANNELS, EMOJI_MAP, LANG, NAMND_EMAIL_MAP, NAMND_FORMATTED_NAME
+from configuration import AUTHENTICATED_USERS, POSTABLE_CHANNELS, EMOJI_MAP, LANG, NAMND_EMAIL_MAP, NAMND_FORMATTED_NAME, NAMND_FORMATTED_NAME_EN
 import json
 import markdown
 import re
@@ -29,8 +29,10 @@ def html_escape_codes(text):
 def remove_emojis(text):
     return re.sub(r":[a-zA-Z0-9-_+]+:", "", text)
 
-def transform_mattermost_message_to_website_html(driver, message, namnd):
-    ansvarig_namnd = f"<h6>Ansvarig nämnd: <a href=\"mailto:{NAMND_EMAIL_MAP[namnd]}\">{NAMND_FORMATTED_NAME[namnd]}</a></h6>"
+def transform_mattermost_message_to_website_html(driver, message, namnd, lang):
+    formatted_name = NAMND_FORMATTED_NAME_EN[namnd] if lang == "en" else NAMND_FORMATTED_NAME[namnd]
+    responsible = "Responsible Committee" if lang == "en" else "Ansvarig nämnd: "
+    ansvarig_namnd = f"<h6>{responsible} <a href=\"mailto:{NAMND_EMAIL_MAP[namnd]}\">{formatted_name}</a></h6>"
 
     return convert_markdown(
             html_escape_codes(
@@ -96,9 +98,11 @@ def handle_reaction_added(driver: Driver, data, CHANNEL_ID_TO_TEAM_URL):
     else:
         title = html_escape_codes(remove_emojis(lines[0]))
 
-    message = transform_mattermost_message_to_website_html(driver, post["message"], namnd)
+    lang = LANG[POSTABLE_CHANNELS[post["channel_id"]]]
 
-    res_status, res = create_wp_post(namnd = namnd, title = title, message = message, timestamp = post["create_at"] / 1000, lang = LANG[POSTABLE_CHANNELS[post["channel_id"]]], status = "draft")
+    message = transform_mattermost_message_to_website_html(driver, post["message"], namnd, lang)
+
+    res_status, res = create_wp_post(namnd = namnd, title = title, message = message, timestamp = post["create_at"] / 1000, lang = lang, status = "draft")
 
     if res_status >= 400:
         print("Got non-ok status from f.kth.se")
@@ -164,7 +168,8 @@ def handle_posted(driver: Driver, data):
         driver.posts.create_post({"channel_id": post["channel_id"], "message": "The original mattermost post seems to have been deleted, cannot get the post.", "root_id": post["root_id"]})
         return
 
-    content = transform_mattermost_message_to_website_html(driver, publish_content_post["message"], namnd)
+    lang = LANG[POSTABLE_CHANNELS[publish_content_post["channel_id"]]]
+    content = transform_mattermost_message_to_website_html(driver, publish_content_post["message"], namnd, lang)
     title = html_escape_codes(remove_emojis(post["message"]))
 
     res_status, res = update_wp_post(namnd, publish_data["wp_post_id"], title = title, message = content, status = "publish")
