@@ -36,7 +36,7 @@ def transform_mattermost_message_to_website_html(driver, message, namnd, lang, f
 
     files = []
     for file in files_to_include:
-        files.append(f'<img class="size-medium wp-image-{file["id"]} aligncenter" src="{file["guid"]}" alt="" width="50%" />')
+        files.append(f'<img class="size-medium wp-image-{file["id"]} aligncenter" src="{file["guid"]}" alt="Auto-uploaded post attachment image" width="50%" />')
 
     return convert_markdown(
             html_escape_codes(
