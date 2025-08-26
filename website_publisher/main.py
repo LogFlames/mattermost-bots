@@ -26,9 +26,23 @@ def convert_markdown(text):
 def html_escape_codes(text):
     return text.encode("latin1", "xmlcharrefreplace").decode("latin1")
 
-
 def remove_emojis(text):
     return re.sub(r":[a-zA-Z0-9-_+]+:", "", text)
+
+def transform_mattermost_message_to_website_html(driver, message, namnd):
+    ansvarig_namnd = f"<h6>Ansvarig nämnd: <a href=\"mailto:{NAMND_EMAIL_MAP[namnd]}\">{NAMND_FORMATTED_NAME[namnd]}</a></h6>"
+
+    return convert_markdown(
+            html_escape_codes(
+                replace_usertags(
+                    driver, 
+                    remove_emojis(
+                        message + "\n" + ansvarig_namnd
+                        )
+                    )
+                )
+            )
+
 
 def get_teams_name(driver: Driver):
     channel_id_to_team_urls = {}
@@ -82,18 +96,7 @@ def handle_reaction_added(driver: Driver, data, CHANNEL_ID_TO_TEAM_URL):
     else:
         title = html_escape_codes(remove_emojis(lines[0]))
 
-    ansvarig_namnd = f"<h6>Ansvarig nämnd: <a href=\"mailto:{NAMND_EMAIL_MAP[namnd]}\">{NAMND_FORMATTED_NAME[namnd]}</a></h6>"
-
-    message = convert_markdown(
-            html_escape_codes(
-                replace_usertags(
-                    driver, 
-                    remove_emojis(
-                        post["message"] + "\n" + ansvarig_namnd
-                        )
-                    )
-                )
-            )
+    message = transform_mattermost_message_to_website_html(driver, post["message"], namnd)
 
     res_status, res = create_wp_post(namnd = namnd, title = title, message = message, timestamp = post["create_at"] / 1000, lang = LANG[POSTABLE_CHANNELS[post["channel_id"]]], status = "draft")
 
@@ -161,7 +164,7 @@ def handle_posted(driver: Driver, data):
         driver.posts.create_post({"channel_id": post["channel_id"], "message": "The original mattermost post seems to have been deleted, cannot get the post.", "root_id": post["root_id"]})
         return
 
-    content = convert_markdown(html_escape_codes(replace_usertags(driver, remove_emojis(publish_content_post["message"]))))
+    content = transform_mattermost_message_to_website_html(driver, publish_content_post["message"], namnd)
     title = html_escape_codes(remove_emojis(post["message"]))
 
     res_status, res = update_wp_post(namnd, publish_data["wp_post_id"], title = title, message = content, status = "publish")
