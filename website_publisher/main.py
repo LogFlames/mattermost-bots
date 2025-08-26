@@ -103,17 +103,20 @@ def handle_reaction_added(driver: Driver, data, CHANNEL_ID_TO_TEAM_URL):
             if "mime_type" not in file or not file["mime_type"].startswith("image/"):
                 continue
 
-            image = driver.files.get_file(file["id"])
-            res_status, res = upload_wp_image(namnd, image.content, file["name"])
-            if res_status >= 400:
-                print(f"Failed to upload {file['name']} with id: {file['id']}")
-                continue
+            try: 
+                image = driver.files.get_file(file["id"])
+                res_status, res = upload_wp_image(namnd, image.content, file["name"])
+                if res_status >= 400:
+                    print(f"Failed to upload {file['name']} with id: {file['id']}")
+                    continue
 
-            if "guid" in res and "rendered" in res["guid"]:
-                print(f"Uploaded image {file['name']} with id: {file['id']}, got guid: {res['guid']['rendered']}")
-                files_to_include.append({"guid": res["guid"]["rendered"], "id": res["id"]})
-            else:
-                print(f"Failed to upload {file['name']} with id: {file['id']}, no guid in response")
+                if "guid" in res and "rendered" in res["guid"]:
+                    print(f"Uploaded image {file['name']} with id: {file['id']}, got guid: {res['guid']['rendered']}")
+                    files_to_include.append({"guid": res["guid"]["rendered"], "id": res["id"]})
+                else:
+                    print(f"Failed to upload {file['name']} with id: {file['id']}, no guid in response")
+            except Exception as e:
+                print(f"Failed to upload {file['name']} with id: {file['id']}, exception: {e}")
 
     lines = list(filter(None, post["message"].split("\n")))
     
