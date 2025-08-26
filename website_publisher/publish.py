@@ -73,3 +73,20 @@ def get_wp_posts(namnd):
     print(f"Getting posts for {namnd}")
     res = requests.get(url + f"/posts", headers = headers)
     return res.status_code, res.json()
+
+def upload_wp_image(namnd, filedata, filename):
+    if namnd not in WP_AUTH:
+        return 401, {"error": "Must be a valid nämnd from WP_AUTH"}
+
+    url = "https://f.kth.se/wp-json/wp/v2/media"
+    wp_connection = WP_AUTH[namnd]["user"] + ":" + WP_AUTH[namnd]["wp_key"]
+    token = base64.b64encode(wp_connection.encode())
+
+    headers = {
+        "Authorization": "Basic " + token.decode("utf-8"),
+        "Content-Disposition": f'form-data; filename="{filename}"'
+    }
+
+    print(f"Uploading image {filename} for {namnd}")
+    res = requests.post(url, data=filedata, headers=headers)
+    return res.status_code, res.json()

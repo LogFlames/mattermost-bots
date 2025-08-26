@@ -1,6 +1,6 @@
 from eliasmamo_import import *
 from secret import TOKEN
-from publish import create_wp_post, update_wp_post
+from publish import create_wp_post, update_wp_post, upload_wp_image
 from configuration import AUTHENTICATED_USERS, POSTABLE_CHANNELS, EMOJI_MAP, LANG, NAMND_EMAIL_MAP, NAMND_FORMATTED_NAME, NAMND_FORMATTED_NAME_EN
 import json
 import markdown
@@ -29,17 +29,23 @@ def html_escape_codes(text):
 def remove_emojis(text):
     return re.sub(r":[a-zA-Z0-9-_+]+:", "", text)
 
-def transform_mattermost_message_to_website_html(driver, message, namnd, lang):
+def transform_mattermost_message_to_website_html(driver, message, namnd, lang, files_to_include):
     formatted_name = NAMND_FORMATTED_NAME_EN[namnd] if lang == "en" else NAMND_FORMATTED_NAME[namnd]
     responsible = "Responsible Committee" if lang == "en" else "Ansvarig nämnd"
     ansvarig_namnd = f"<h6>{responsible}: <a href=\"mailto:{NAMND_EMAIL_MAP[namnd]}\">{formatted_name}</a></h6>"
+
+    files = []
+    for file in files_to_include:
+        files.append(f'<img class="size-medium wp-image-{file["id"]} aligncenter" src="{file["guid"]}" alt="" width="50%" />')
 
     return convert_markdown(
             html_escape_codes(
                 replace_usertags(
                     driver, 
                     remove_emojis(
-                        message + "\n" + ansvarig_namnd
+                        message + "\n" +
+                        "\n".join(files) + "\n" + 
+                        ansvarig_namnd
                         )
                     )
                 )
@@ -91,6 +97,24 @@ def handle_reaction_added(driver: Driver, data, CHANNEL_ID_TO_TEAM_URL):
     if not post["message"]:
         return
 
+    files_to_include = []
+    if "metadata" in post and "files" in post["metadata"] and len(post["metadata"]["files"]) > 0:
+        for file in post["metadata"]["files"]:
+            if "mime_type" not in file or not file["mime_type"].startswith("image/"):
+                continue
+
+            image = driver.files.get_file(file["id"])
+            res_status, res = upload_wp_image(namnd, image.content, file["name"])
+            if res_status >= 400:
+                print(f"Failed to upload {file['name']} with id: {file['id']}")
+                continue
+
+            if "guid" in res and "rendered" in res["guid"]:
+                print(f"Uploaded image {file['name']} with id: {file['id']}, got guid: {res['guid']['rendered']}")
+                files_to_include.append({"guid": res["guid"]["rendered"], "id": res["id"]})
+            else:
+                print(f"Failed to upload {file['name']} with id: {file['id']}, no guid in response")
+
     lines = list(filter(None, post["message"].split("\n")))
     
     if len(lines) == 0:
@@ -100,7 +124,7 @@ def handle_reaction_added(driver: Driver, data, CHANNEL_ID_TO_TEAM_URL):
 
     lang = LANG[POSTABLE_CHANNELS[post["channel_id"]]]
 
-    message = transform_mattermost_message_to_website_html(driver, post["message"], namnd, lang)
+    message = transform_mattermost_message_to_website_html(driver, post["message"], namnd, lang, files_to_include)
 
     res_status, res = create_wp_post(namnd = namnd, title = title, message = message, timestamp = post["create_at"] / 1000, lang = lang, status = "draft")
 
@@ -113,7 +137,7 @@ def handle_reaction_added(driver: Driver, data, CHANNEL_ID_TO_TEAM_URL):
     wp_post_id = res["id"]
     mattermost_message_link = f"https://mattermost.fysiksektionen.se/{CHANNEL_ID_TO_TEAM_URL[post['channel_id']]}/pl/{reaction['post_id']}"
 
-    data = json.dumps({"wp_post_id": wp_post_id, "post_id": reaction["post_id"], "namnd": namnd}, separators=(",", ":"))
+    data = json.dumps({"wp_post_id": wp_post_id, "post_id": reaction["post_id"], "namnd": namnd, "files": files_to_include}, separators=(",", ":"))
 
     print(f"Sent to {post['user_id']}: Publish post message with links to {mattermost_message_link} and {res['link']}")
     send_dm(driver, reaction["user_id"], 
@@ -168,8 +192,11 @@ def handle_posted(driver: Driver, data):
         driver.posts.create_post({"channel_id": post["channel_id"], "message": "The original mattermost post seems to have been deleted, cannot get the post.", "root_id": post["root_id"]})
         return
 
+    files_to_include = []
+    if "files" in publish_data:
+        files_to_include = publish_data["files"]
     lang = LANG[POSTABLE_CHANNELS[publish_content_post["channel_id"]]]
-    content = transform_mattermost_message_to_website_html(driver, publish_content_post["message"], namnd, lang)
+    content = transform_mattermost_message_to_website_html(driver, publish_content_post["message"], namnd, lang, files_to_include)
     title = html_escape_codes(remove_emojis(post["message"]))
 
     res_status, res = update_wp_post(namnd, publish_data["wp_post_id"], title = title, message = content, status = "publish")
