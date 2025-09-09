@@ -63,7 +63,12 @@ blacklisted_messages_2025 = {
         "hugowr": ["r5e6d3m4o7na8xh5xqsyhmdpuc"],
         "samho": ["53wf9pdpbjyq3mkareu8ak4gxh", "o9an7rixmj8m9mdg4h97driwce"],
         "elliotc": ["i71asgrw13gtjjh644xr4rchmo"],
-        "vmel": ["131r549ap3r5xybtxjiyzqpkwc"]
+        "vmel": ["131r549ap3r5xybtxjiyzqpkwc"],
+        "svastr": ["8jqrmtgxjfnkxrgg9zmib5s46r"],
+        "casperbe": ["bm7uoop71frgzq4af5461jjktc"],
+        "glek": ["qugmkdfncpgx7fm4bytoyf31ey"],
+        "feeric": ["xqb8mgyy13y5mphxtpy9h9o1ar"],
+        "jubr": ["tzk5tnq5p3r7f8u1kign4bidzy"]
         }
 
 blacklisted_messages = {}
