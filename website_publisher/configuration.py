@@ -176,6 +176,9 @@ USERS = {
             "74uzzbi3fib33byk6397j9pj8y" # Viggo Haglund
             ],
         "valberedningen": [
+            "kxxnbi4wkinu8nbxuy9n9f5zir", # Julia Svensk
+            "4ckbz94ojinybnurk18jw8bk7h", # Kristina Torell
+            "spyinmbnypnf7mrbj5971apmhh" # David Pettersson
             ]
         }
 
