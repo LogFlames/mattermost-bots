@@ -1,2 +1,2 @@
-CHANNEL_ID = "13xtjpkf6jnj9j4n9hif83o3dr"
-SPREADSHEET_ID = "1Zd2HpevzsfuC6LzhE0srxwWVNmKY46URh6rLwva603w"
+CHANNEL_ID = "1xi6ti9zejg1ffrn1fstedr38y"
+SPREADSHEET_ID = "1rzxiL2h76HRRfEJTlizbep2oxCrBeZqQ_PHFcI7ndsE"
