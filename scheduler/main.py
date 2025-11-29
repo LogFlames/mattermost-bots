@@ -33,7 +33,6 @@ def get_channel_name(driver: Driver, channel_id: str):
     except mattermostdriver.exceptions.InvalidOrMissingParameters:
         return "<invalid or missing channel id>" # some function rely on this exact string, change in those places as well, I'm sorry.
 
-
 def create_data_table(driver, data):
     table = "| | |\n|---|---|"
     if data["channel_id"]:
@@ -90,7 +89,7 @@ def get_current_settings(driver, data, table):
 {send_not_send}
 []({json.dumps(data)})"""
 
-def send_current_settings(driver, post, data):
+def update_current_settings(driver, post, data):
     table = create_data_table(driver, data)
 
     will_send_english_info = False
@@ -106,6 +105,9 @@ def send_current_settings(driver, post, data):
     message = get_current_settings(driver, data, table)
     send_dm(driver, post["user_id"], message, root_id = post["root_id"])
 
+    # update original settings
+    # send link to original settings
+
     if will_send_english_info:
         send_dm(driver, post["user_id"], "Message configuration is finished. You can choose to send an english message as well using the `english`", root_id = post["root_id"])
 
@@ -114,7 +116,6 @@ def send_current_settings(driver, post, data):
 def handle_reply(driver: Driver, post):
     replies = driver.posts.get_thread(post["root_id"])
     last_saved_data = None
-    is_linked_message = False
     for reply_post_id in replies["order"][::-1]:
         if replies["posts"][reply_post_id]["user_id"] != driver.client.userid:
             continue
@@ -143,7 +144,7 @@ def handle_reply(driver: Driver, post):
     command = post["message"].strip()
     if command in CHANNEL_KEYWORDS:
         last_saved_data["channel_id"] = CHANNEL_KEYWORDS[command]
-        send_current_settings(driver, post, last_saved_data)
+        update_current_settings(driver, post, last_saved_data)
     elif re.match(r"^[a-z0-9]{26}$", command): 
         try:
             channel = driver.channels.get_channel(command)
@@ -157,7 +158,7 @@ def handle_reply(driver: Driver, post):
         # TODO: verify that the user has write access to channel
 
         last_saved_data["channel_id"] = command
-        send_current_settings(driver, post, last_saved_data)
+        update_current_settings(driver, post, last_saved_data)
     elif command == "english":
         if last_saved_data["linked_english_post_id"] is not None:
             send_dm(driver, post["user_id"], "There is already a linked english message.", root_id = post["root_id"])
@@ -173,7 +174,7 @@ def handle_reply(driver: Driver, post):
                 root_id = eng_post["id"])
 
         last_saved_data["linked_english_post_id"] = eng_post["id"]
-        send_current_settings(driver, post, last_saved_data)
+        update_current_settings(driver, post, last_saved_data)
     elif re.match(r"^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-2]{1}[0-9]{1}:[0-5]{1}[0-9]{1}$", command):
         try:
             new_date = datetime.datetime.strptime(command, "%Y-%m-%d %H:%M")
@@ -190,7 +191,7 @@ def handle_reply(driver: Driver, post):
             return
 
         last_saved_data["time"] = command
-        send_current_settings(driver, post, last_saved_data)
+        update_current_settings(driver, post, last_saved_data)
     else:
         send_dm(driver, post["user_id"], f"""Unknown command, contact @ellundel or @eskilny if you need help.
 {get_help_text()}""", root_id = post["root_id"])
