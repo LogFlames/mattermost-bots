@@ -2,6 +2,9 @@ from eliasmamo_import import *
 from secret import TOKEN
 from datetime import datetime
 
+# /etc/crontab
+# 30  9   * * *   root    /bin/python3 /opt/mattermost_bots/mattermost-bots/mottagningen/countdown.py >> /root/mottagningen_countdown_log.log 2>&1
+
 COUNTDOWN_CHANNEL = "uduyxpg5stgttfkiehqwszf7he"
 
 def main():
@@ -21,7 +24,7 @@ def main():
 
     driver.login()
 
-    diff = (datetime.fromisoformat("2025-08-11T00:00:00.000000") - datetime.today())
+    diff = (datetime.fromisoformat("2026-08-10T00:00:00.000000") - datetime.today())
     dagar = diff.days + 1
 
     message = f"{dagar} dag{'ar' if dagar != 1 else ''} kvar till dag Ø"
