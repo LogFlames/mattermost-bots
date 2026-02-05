@@ -5,13 +5,13 @@ class TranslateChannelsConf:
     def __init__(self):
         self.channels = {}
 
-    def add_channel(self, name, channel_id, add_to_events, send_reply: Literal["reply", "dm"], dm_prefix=None):
-        self.channels[channel_id] = ChannelSettings(name = name, channel_id = channel_id, add_to_events = add_to_events, send_reply = send_reply, dm_prefix = dm_prefix)
+    def add_channel(self, name, channel_id, add_to_channel, send_reply: Literal["reply", "dm"], dm_prefix=None):
+        self.channels[channel_id] = ChannelSettings(name = name, channel_id = channel_id, add_to_channel = add_to_channel, send_reply = send_reply, dm_prefix = dm_prefix)
 
 @dataclass
 class ChannelSettings:
     name: str
     channel_id: str
-    add_to_events: bool
+    add_to_channel: str
     send_reply: Literal["reply", "dm"]
     dm_prefix: str

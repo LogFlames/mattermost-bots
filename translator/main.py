@@ -14,6 +14,7 @@ WELCOME_CHANNEL_ID = "14qsngxzdi8nxfdr8it5xzr81y"
 EVENTS_CHANNEL_ID = "it7zah8m5jrw9dm8bkjm14eyaw"
 ADMIN_TRANSLATION_TEST_CHANNEL_ID = "8u5crz5fjid15nphaecbxb84er"
 
+FAN_ENGLISH_INFO_CHANNEL_ID = "hqd8z7kek7b8tbk4fmk1ciznfy"
 FAN_INFO_AND_EVENTS_CHANNEL_ID = "8hw6hkbiqfyf5yg8syrsyb894a"
 
 DM_PREFIX_FYSIKSEKTIONEN = """Vi vill gärna att internationella studenter får möjlighet att gå på evenemang som kan ges på engelska. Vänligen lägg upp ditt evenemang i den engelska kanalen [info-eng](https://mattermost.fysiksektionen.se/fysiksektionen/channels/events) i Fysiksektionen-teamet ifall det är relevant att internationella studenter får informationen. Här är ett förslag på en översättning att utgå ifrån:"""
@@ -25,42 +26,42 @@ channels_conf = TranslateChannelsConf()
 channels_conf.add_channel(
         name = "ADMIN_TRANSLATION_TEST_CHANNEL",
         channel_id = ADMIN_TRANSLATION_TEST_CHANNEL_ID,
-        add_to_events = False,
+        add_to_channel = None,
         send_reply = "reply",
         dm_prefix = None)
 
 channels_conf.add_channel(
         name = "SEKTIONSNYTT_CHANNEL",
         channel_id = "pda7c6r7zbbtmc17x4ehczc8gc",
-        add_to_events = True,
+        add_to_channel = EVENTS_CHANNEL_ID,
         send_reply = "dm",
         dm_prefix = DM_PREFIX_FYSIKSEKTIONEN)
 
 channels_conf.add_channel(
         name = "EVENEMANG_CHANNEL",
         channel_id = "wkgnsmmbqpgpj8ptdiyx8os16c",
-        add_to_events = True,
+        add_to_channel = EVENTS_CHANNEL_ID,
         send_reply = "dm",
         dm_prefix = DM_PREFIX_FYSIKSEKTIONEN)
 
 channels_conf.add_channel(
         name = "STYRET_TRANSLATE",
         channel_id = "eqn9pmk5g3yitrhhgjr1ufbaua",
-        add_to_events = False,
+        add_to_channel = None,
         send_reply = "reply",
         dm_prefix = None)
 
 channels_conf.add_channel(
         name = "FINT_TRANSLATE",
         channel_id = "j7oqyius63rt78bb8gqh8y979o",
-        add_to_events = False,
+        add_to_channel = None,
         send_reply = "reply",
         dm_prefix = None)
 
 channels_conf.add_channel(
         name = "FAN_INFO_AND_EVENTS",
         channel_id = FAN_INFO_AND_EVENTS_CHANNEL_ID,
-        add_to_events = False,
+        add_to_channel = FAN_ENGLISH_INFO_CHANNEL_ID,
         send_reply = "dm",
         dm_prefix = DM_PREFIX_FAN)
 
