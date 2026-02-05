@@ -29,7 +29,8 @@ EMOJI_MAP = {
         "post-to-website-jamn": "jamn",
         "post-to-website-mottagningen": "mottagningen",
         "post-to-website-styret": "styret",
-        "post-to-website-valberedningen": "valberedningen"
+        "post-to-website-valberedningen": "valberedningen",
+        "post-to-website-varbalen": "varbalen"
         }
 
 NAMND_EMAIL_MAP = {
@@ -47,7 +48,8 @@ NAMND_EMAIL_MAP = {
         "jamn": "jamn@f.kth.se",
         "mottagningen": "mottagningen@f.kth.se",
         "styret": "styret@f.kth.se",
-        "valberedningen": "valberedningen@f.kth.se"
+        "valberedningen": "valberedningen@f.kth.se",
+        "varbalen": "varbalen@f.kth.se"
         }
 
 NAMND_FORMATTED_NAME = {
@@ -65,7 +67,8 @@ NAMND_FORMATTED_NAME = {
         "jamn": "JämN - Fysiksektionens jämlikhetsnämnd",
         "mottagningen": "Mottagningen",
         "styret": "Fysiksektionens styrelse",
-        "valberedningen": "Valberedningen"
+        "valberedningen": "Valberedningen",
+        "varbalen": "Vårbalen"
         }
 
 NAMND_FORMATTED_NAME_EN = {
@@ -83,7 +86,8 @@ NAMND_FORMATTED_NAME_EN = {
         "jamn": "JämN - Physics Chapter's Equality Committee",
         "mottagningen": "The Reception",
         "styret": "Physics Chapter's Board",
-        "valberedningen": "The Election Committee"
+        "valberedningen": "The Election Committee",
+        "varbalen": "Vårbalen - The Spring Banquet"
         }
 
 FEATURED_MEDIA = {
@@ -101,7 +105,8 @@ FEATURED_MEDIA = {
         "jamn": 50465,
         "mottagningen": 49511,
         "styret": 51462,
-        "valberedningen": 57738
+        "valberedningen": 57738,
+        "varbalen": 51462
         }
 
 USERS = {
@@ -182,6 +187,11 @@ USERS = {
             "kxxnbi4wkinu8nbxuy9n9f5zir", # Julia Svensk
             "4ckbz94ojinybnurk18jw8bk7h", # Kristina Torell
             "spyinmbnypnf7mrbj5971apmhh" # David Pettersson
+            ],
+        "varbalen": [
+            "awucy44oqfgy9m7rc6y91yikyh", # Irma Sigurd
+            "4xuszzmqwbr6ik9izmn44esjpe", # Sixten Thorelli
+            "ifwp63q6wi84becgwgx59fwwsy" # Johan Sundström Curstedt
             ]
         }
 
@@ -200,5 +210,6 @@ AUTHENTICATED_USERS = {
         "jamn": {*USERS["jamn"], *USERS["styret"], *USERS["mattermästare"], *USERS["fdev"], *USERS["fcom"]},
         "mottagningen": {*USERS["mottagningen"], *USERS["styret"], *USERS["mattermästare"], *USERS["fdev"], *USERS["fcom"]},
         "styret": {*USERS["styret"], *USERS["styret"], *USERS["mattermästare"], *USERS["fdev"], *USERS["fcom"]},
-        "valberedningen": {*USERS["valberedningen"], *USERS["styret"], *USERS["mattermästare"], *USERS["fdev"], *USERS["fcom"]}
+        "valberedningen": {*USERS["valberedningen"], *USERS["styret"], *USERS["mattermästare"], *USERS["fdev"], *USERS["fcom"]},
+        "varbalen": {*USERS["varbalen"], *USERS["styret"], *USERS["mattermästare"], *USERS["fdev"], *USERS["fcom"]}
         }
