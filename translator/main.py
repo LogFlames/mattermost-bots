@@ -18,7 +18,7 @@ FAN_INFO_AND_EVENTS_CHANNEL_ID = "8hw6hkbiqfyf5yg8syrsyb894a"
 
 DM_PREFIX_FYSIKSEKTIONEN = """Vi vill gärna att internationella studenter får möjlighet att gå på evenemang som kan ges på engelska. Vänligen lägg upp ditt evenemang i den engelska kanalen [info-eng](https://mattermost.fysiksektionen.se/fysiksektionen/channels/events) i Fysiksektionen-teamet ifall det är relevant att internationella studenter får informationen. Här är ett förslag på en översättning att utgå ifrån:"""
 
-DM_PREFIX_FAN = """Du skickade ett meddelande i FANs Information & Evenemangs-kanal. Här är ett förslag på en översättning att utgå ifrånöversätting:"""
+DM_PREFIX_FAN = """Du skickade ett meddelande i FANs Information & Evenemangs-kanal. Skicka gärna ditt meddelande i kanalen 'Information in English' också. Här är ett förslag på en översättning att utgå ifrån:"""
 
 channels_conf = TranslateChannelsConf()
 
