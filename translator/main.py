@@ -116,9 +116,9 @@ def handle_event(driver: Driver, openai_client: openai.OpenAI, data):
     if not post["message"]:
         return
 
-    if conf.add_to_events:
-        driver.channels.add_user(EVENTS_CHANNEL_ID, {"user_id": post["user_id"]})
-        delete_new_posts_in_clean_channels(driver, {"events": EVENTS_CHANNEL_ID})
+    if conf.add_to_channel:
+        driver.channels.add_user(conf.add_to_channel, {"user_id": post["user_id"]})
+        delete_new_posts_in_clean_channels(driver, {"events": conf.add_to_channel})
 
     message_eng, translation_successfull = translate(openai_client, driver, post["message"], high_priority = True)
 
