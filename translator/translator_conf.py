@@ -14,3 +14,4 @@ class ChannelSettings:
     channel_id: str
     add_to_events: bool
     send_reply: Literal["reply", "dm"]
+    dm_prefix: str
