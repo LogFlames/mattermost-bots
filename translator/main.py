@@ -139,7 +139,7 @@ def handle_event(driver: Driver, openai_client: openai.OpenAI, data):
 
         driver.posts.create_post({
             "channel_id": dm_channel["id"], 
-            "message": conf.})
+            "message": conf.dm_prefix})
 
         driver.posts.create_post({
             "channel_id": dm_channel["id"], 
