@@ -21,7 +21,7 @@ def main():
 
     driver.login()
 
-    diff = (datetime.fromisoformat("2025-09-25T00:00:00.000000") - datetime.today())
+    diff = (datetime.fromisoformat("2027-04-07T00:00:00.000000") - datetime.today())
     dagar = diff.days + 1
     
     if dagar < 0:
