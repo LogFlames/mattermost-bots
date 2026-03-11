@@ -27,7 +27,7 @@ def main():
     if dagar < 0:
         return
 
-    message = f"{dagar} dag{'ar' if dagar != 1 else ''} kvar till höstföreställningarna!"
+    message = f"{dagar} dag{'ar' if dagar != 1 else ''} kvar till vårföreställningarna!"
 
     driver.channels.update_channel(COUNTDOWN_CHANNEL, {"id": COUNTDOWN_CHANNEL, "name": "countdown", "display_name": message })
 
