@@ -129,7 +129,8 @@ USERS = {
             "stdxenjhojrnxfk9143zh4zhpa", # Erik Torgersson
             "ynnkmskzkjdndgjmwpzte1io8y", # Evelina Gustrin
             "opj8utwq4by4xde48ex43js6ea", # William Andersson
-            "5a9rdw1987fwfkc35sm1u5hmbh" # Gustaf Haglund
+            "5a9rdw1987fwfkc35sm1u5hmbh", # Gustaf Haglund
+            "1143k8iwjibx7bef9wtx71i5nh" # Mauritz Ang
             ],
         "jamn": [
             "4ckbz94ojinybnurk18jw8bk7h", # Kristina Torell
