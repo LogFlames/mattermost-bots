@@ -139,7 +139,8 @@ USERS = {
         "fsn": [
             "fchz14cm5ibkzncnsc5amft5ge", # Filip Ek
             "4fs75fz3itbkijezahwto33f3w", # Linnea Stålberg
-            "7d91naopy7byzcce4db66osi9e" # Alvin Daniels
+            "7d91naopy7byzcce4db66osi9e", # Alvin Daniels
+            "4edq6mup83ni8ffaqj1511e6jc" # Malva Wetterlund
             ],
         "fan": [
             "bdbrxi9x4tduddk3egirde41oy", # Nils Tiemer
