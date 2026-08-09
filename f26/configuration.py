@@ -10,18 +10,18 @@ CHANNELS = {
         "mottagningens-schema": "kjf8z77k3iygxd7q7mkogzuaya"
         }
 
-HIDDEN_CHANNELS = { # TODO
-        "blockis": "ih9sjw8odjyxidhoqf7hrr1zbe",
-        "coola_kidzen": "aq8mqsfd9bdbp8ctewam5ujx7w",
-        "dsvg21": "irwswysorb8tmcomqpf4c8i11y",
-        "kerberos": "8jfmuhcpk3fapfuhbw38m8ykxa",
-        "kontoret": "13rkepgnwfbxzr3mrdo8jy96uy",
-        "nolle-puh": "ue61ntnixigwjjrfnj6o11c4xw",
-        "rymdpiraterna": "9wyquhwsnpgyxfqhffp7dbyksa",
-        "solsidan": "8x3pdmby9pfkzczam3cs9it57e"
+HIDDEN_CHANNELS = {
+        "avator": "mrgtwuufupd4xgugz74qqrp88y",
+        "dsvg22": "4othauqi3trm3pgxyqyz5hw5na",
+        "expedition_oklar": "rax889o3obdwb8fbtehu9jenie",
+        "loket": "dbwjymogc3rptp9muept5ax7ch",
+        "mio": "ikrud68iji83mq43rj6o4wbjuc",
+        "scooby-doo": "93dzahskgiro5jq73n93inm1xh",
+        "sinosauropteryx": "mtqiirxng7dyirko8fmdufbsdr",
+        "trollkonst": "rr5wm83u3tbcfrurt4rcpxatqr"
         }
 
 CATEGORIES = {
         "Information": ["mottagningen-informerar", "mottagningens-schema", "välkommen", "viktig-information"],
-        "nØllegruppen": ["blockis", "coola_kidzen", "dsvg21", "kerberos", "kontoret", "nolle-puh", "rymdpiraterna", "solsidan"]
-        } # TODO
+        "nØllegruppen": ["avator", "dsvg22", "expedition_oklar", "loket", "mio", "scooby-doo", "sinosauropteryx", "trollkonst"]
+        }
