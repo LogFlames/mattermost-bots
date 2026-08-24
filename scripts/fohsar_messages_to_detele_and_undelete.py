@@ -71,9 +71,44 @@ blacklisted_messages_2025 = {
         "jubr": ["tzk5tnq5p3r7f8u1kign4bidzy"]
         }
 
+blacklisted_messages_2026 = {
+        "m26": ["endiesjrw7fdj819z79fagiz8y", "cnd8ndyb1fdp9jfginmc5ywxgy", "93tudhtqsbg65nu86udcfgt3be", "nd63sj9ak38itrydtdhyu51fih", "mxajwum1opyrpx1is87atgd3wo", "3isdyftnci87dyjr5ptj6sfr1e", "m5hphb7z5byddy5wb77zfwsfyy", "y4pchh3mm7ybtyhc976jt5usia", "jgxkzsm5s3gpzqq5joor79f5oh", "bjy4ush8nbdtzydx6cu3pyhp6r", "un85pdmbjincdbox8njph76wta", "cdnj3gwuz7rqzc1pjop65dnokr", "peofb4wmxjr9xr9ix778jzns8y", "oj3qt6dfsjge5c8k4s18kkcj9a", "5zy8cfbdmifyd8w4xwaiiqc6hr", "sjuz89jioiny9n7is9znawgx1c", "k9p43bryhpfo3ptmx8cpdbfmxe", "1oxyebttebgypmg1ord4fzie8w", "fphrq68na3y87mq6dmxuugudzo", "8n6jhh6zgfnhzn7ycjxnkd5h4a", "jq3ggpudef8hfkh5a3xmoanqah", "rbefyjfmkpft7q7xq99uo6xbzr", "etf6cg1r7fbptfcnb1kb891o3y", "7g57q7wjipbpzfj5mt15rmxrxw", "55qisg8eyjbopnojjinudyfz6e", "9riiyhfzipbodep9ztfg8o98ky", "u17o9mc3uj8rxfcf5zqrse41hw", "pr6stppgt7g6mbm1gui7pz9ehy", "eawwpk3cjfnrdpbosgatkrh55r", "zp6wtadxyb8gbd3r4dqkog8dfo", "bjw7app14f8xdngzk1ckaa5xjh", "br5k7684zigr8kwes5o7r8im7a", "1f5xfibtyjy7z8c8as3huxbj3r", "adb5qhawy7rz9eetuo8gm1sepa", "jaanyrzxo7dn9ksy1cizf5psua", "r49jtxxq1pnxfn7qxocjmubitc", "9syd9fw1ztdupg84b5k5tcyjiy", "n4etuspw9injfm8xgy5yith5ky", "cxzjusbfjidoifeeiscy3em9fo", "gwfbttf1g3bnzmwmfwqu4bz9oh", "awb8ix4p93y68fsr5wu5r83a4a", "jsfdzkmbhf897ehaf7oprkjndw", "3isdyftnci87dyjr5ptj6sfr1e", "f9q3genb8i8y7gu4gzsr18ti9h", "5u5ztfnnrjgh5bt435rxxwtznc", "spgb79oaajg6jmmwu3ppe4g73e", "4ndd6eoqcff49fk6w6m1od1rha", "mxajwum1opyrpx1is87atgd3wo", "nd63sj9ak38itrydtdhyu51fih", "873d6b1ju3g3zmo64kfrf85gcc", "tmub1o6fwfbuxd1o6jy4wnyodh", "wk1maijer7r5tc5izxfjorxr8y", "ujuzmo7b8fd85nan4wmn3gbmey", "y4pchh3mm7ybtyhc976jt5usia", "8wfmk11idtge8rgstdb7dh9j4a", "owbufgibnind7yuxn7az6qd4kr", "m5hphb7z5byddy5wb77zfwsfyy", "tj3kcak9pp83zk5k9atjf7kxmw", "jgxkzsm5s3gpzqq5joor79f5oh", "93tudhtqsbg65nu86udcfgt3be", "cnd8ndyb1fdp9jfginmc5ywxgy", "adbdrnfsiidgtrcyie8baykgny", "r4yn8gzenjf8dnwssnwbazjg5y", "9h7hxfjxq78a9xoarmnz4yxufe", "dmhqqsamkfgifpgta444ixk9na", "abfibbotq3btbgsnpm5h9jhfuh", "repou6549jgifdh69dwmwz78tw", "86ucz4nbrfrgjybktqzhd3c9hh", "g66p8zkxw78cdfhuramo3oykxo", "tr8rqukynfyzjx4od3mc9m9ary", "paexm3yxx38yirg8s9isus8o5y", "ynh8s1smzir1texpfkx55eqtqw", "53yeemnkgbnf8gr9riiirxnguh", "endiesjrw7fdj819z79fagiz8y", "zt7i1914dbn1jd6f1zd51yhigw"],
+        "zofialu": ["4n9iacng1bfkbms1b3dt4nox5c"],
+        "wkraft": ["wbujesucjbrkdez41zumk8es5o", "55dnsedrjifftes7pogctxbgyy", "go4hkroiubfn8eraq91gz5u1fe", "bhme4znpzt8epkpj5tbkcx3umy", "ztxtaf43pjr77dan79kda9fyfa", "a4gawqensfnpmcyx1cce85u76h", "ihwcbx4z3bnr3cytjxn5rmqsgh", "wb8cge8qepfmbyuwcejy3gcuny", "dq5bamio57nkdbi9r4u4b4ujbc", "nsskh9gdq7fhpf5gbyszepqahr", "k193kfcdrff8dq97wbbh8iypiy", "5cpqieeimjgj9j4sftifztiq5e", "a9iwok7dofbspqcsctbpuqhxoa", "hug8nawrgbyffgs7rg64jff1ar", "q4wn99cymi8qzg5cs3wyh7pf9e", "7pgkkcxcmpgr5kuh3basci7fso", "x4o4yt1f9bgn7xcisbxgrqucuy"],
+        "la5": ["3ttrbrzp8fd5pn689rdgwki4be"],
+        "ojenner": ["iit6tjrputbpjgsrcb3y1wef1y", "8dad6t8nktdz8qrpnzkju7dn5y"],
+        "ada.nobel": ["a33r3jn3mpg93dtytqy4xx1qmh", "9b9zbktagfrrikx7ordu3i5upy", "cjucg6grp3brxm6ybrwmybzhzw", "pdupejw6wfrs9grq9cjyxrdkty"],
+        "ltrolin": ["czzrnqdumtbn3nwes7m44dawdy", "8d6gfhzpfjrp9jhm3fooyabyar", "krh3ycrb5bgiubj4hhscde7oqa"], "jubr": ["xa8gu7kgc7g5my3mqxjspjgwpc", "weepcwrqg7ns7rc99chb8tto6c", "sq5dprtxtjyaxd9taxgmqme3xr", "zkpuubk7qpf48mk33rksna8n3c", "iyrppsh4aigf8pfkfj5nmcsogy"],
+        "mjoyce": ["hedkozar33dufm8sb3twzajt1r", "ukpixk5bj3b5ibs7q8eis11z7o", "xo77dqcfpjra9f49soo6t999mo", "g6roqyx9njrtifqh5ep1sgebhe", "3gujyzhwgpy19jx1e7fiynscwe", "xor3w663o78e88i6jx8ge4df5r"],
+        "albinwl": ["7twexny6p78czdof6pi1eikg1r", "1sepmhce8jrn9y78utdg5zs3ta", "m4gzgbtbk7d9ig6ozwxdu6ztiw", "51jp4jwecfnpdppyaakhemii1y"],
+        "akomarov": ["ewogn9os4pde388fb838fn6dkr", "f1oqbm3m13baipcy35g9ks9znw"],
+        "mchristi": ["dp6dr98eitnfxbr75cs4q7fn7y"],
+        "hchow": ["wcycc6wdhfrhikgw9ozdgj1y5w", "dwf9i4bodtfamqt7zi75ax7fow"],
+        "juliasve": ["i6efdcrn4jy87q5uexkmg6s5ky", "11cd83nentyp3kor9hh74ekmir", "8yopk5nu9iye5mnh7tj71dtnty"],
+        "alan.pascal": ["y5w87fr3dpf6mc577go5yyfq5h", "757861ax8tg8pgbffj9k4iq3da"],
+        "kajsaeng": ["zndtna94jirqfnrtgjyia7hiwr", "oimgwi738fn5zmauis76irzwdr"],
+        "fiek": ["c5xhs1a1w7nb5n81ejxiofcxbc"],
+        "magdb": ["wq4nyzrbotn4ujn5omsbpbar4e"],
+        "torlenn": ["e1y1jto5jb8t8x91o77ccugt1y"],
+        "marie.lovelace": ["31oe5razkfyjde8o8f5bixip7o"],
+        "martengf": ["ods79qpuxfghdxgcnc5ytnoiuw", "kc6ge5uhj78d5n8ktum6o6zkpa", "kii3nzucb3gjdypfpdmdsx5i7r"],
+        "nkall": ["3qjka1oti3b5pemhtiodg5ayoh"],
+        "nessimk": ["qeb8awamsjym5eks1ymzp4i6ac", "heuczcwdg3ro8k8pdy8kuuxsoc"],
+        "repetto": ["saenrcaxofdhmdcp33mjteyz7h"],
+        "lstal": ["numsetyp5j8iujuo8k7j8ghsxc"],
+        "alainsw": ["kmmqcb1qopy1d8hbm7bcyih8ao"],
+        "emmiez": ["o8tq664egb83zr4b839th7sb1w"],
+        "ntiemer": ["okc9r43557f97dmo1e4oxtnyfr", "kx54fdjyztb3tczg7jtzn45sqr"],
+        "jonng": ["koa6oghzdbnptj49n9pes6cxfe"],
+        "elbergst": ["meisaho9yin3zfo3nt3mfp6kxo"],
+        "damagnus": ["ouo9y37mw7y8td7geot6so4wby"],
+        "adrkro": ["qugkjx48xidrzk69ruf5zi3xch"],
+        "sernlund": ["7xob78chipbt8rfq6yo87bzz5w"]
+        }
+
 blacklisted_messages = {}
 
-for year in [blacklisted_messages_2023_2024, blacklisted_messages_2025]:
+for year in [blacklisted_messages_2023_2024, blacklisted_messages_2025, blacklisted_messages_2026]:
     for name in year:
         if name not in blacklisted_messages:
             blacklisted_messages[name] = []
