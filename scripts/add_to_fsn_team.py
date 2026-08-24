@@ -23,6 +23,8 @@ def main():
     fsn_members = get_team_members(driver, FSN_TEAM)
 
     for team in driver.teams.get_teams({"per_page": 100}):
+        if team["name"] == "sci":
+            continue
         for user in get_team_members(driver, team["id"]):
             if user not in fsn_members:
                 print(f"Adding user {user} to FSN from team {team['name']}")
