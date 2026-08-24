@@ -24,7 +24,7 @@ def main():
 
     driver.login()
 
-    diff = (datetime.fromisoformat("2026-08-10T00:00:00.000000") - datetime.today())
+    diff = (datetime.fromisoformat("2027-08-16T00:00:00.000000") - datetime.today())
     dagar = diff.days + 1
 
     message = f"{dagar} dag{'ar' if dagar != 1 else ''} kvar till dag Ø"
