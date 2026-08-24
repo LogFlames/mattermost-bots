@@ -23,6 +23,8 @@ def main():
     fysiksektionen_members = get_team_members(driver, FYSIKSEKTIONEN_TEAM)
 
     for team in driver.teams.get_teams({"per_page": 100}):
+        if team["name"] == "sci":
+            continue
         for user in get_team_members(driver, team["id"]):
             if user not in fysiksektionen_members:
                 print(f"Adding user {user} to Fysiksektionen from team {team['name']}")
