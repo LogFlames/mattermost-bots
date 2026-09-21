@@ -3,7 +3,8 @@ POSTABLE_CHANNELS = {
         "pda7c6r7zbbtmc17x4ehczc8gc": "sektionsnytt",
         "wy6t5d3tapf5pfbgxq9onp1upe": "general",
         "dcbn8ipq8381bgcwdre78x9skh": "test-channel",
-        "it7zah8m5jrw9dm8bkjm14eyaw": "events"
+        "it7zah8m5jrw9dm8bkjm14eyaw": "events",
+        "mi15sut4tb8sbjm9h6b95bdrbe": "info-fran-studienamnden"
         }
 
 LANG = {
@@ -11,7 +12,8 @@ LANG = {
         "sektionsnytt": "sv",
         "general": "sv",
         "test-channel": "sv",
-        "events": "en"
+        "events": "en",
+        "info-fran-studienamnden": "sv"
         }
 
 EMOJI_MAP = {

@@ -47,6 +47,7 @@ COURSE_CHANNELS = {
 
 CHANNELS = {
         "välkommen_till_fsn": "8tyspqdmyifsmg9wj9zitfeb4c",
+        "info-fran-studienamnden": "mi15sut4tb8sbjm9h6b95bdrbe",
         "random": "q77s98iqkjbsfknafm8zcoft6r",
         "general": "wuuw5rnkpjykfedsbk99hghjpe",
         **COURSE_CHANNELS
@@ -54,13 +55,15 @@ CHANNELS = {
 
 DEFAULT_CHANNELS = {
         "välkommen_till_fsn": "8tyspqdmyifsmg9wj9zitfeb4c",
+        "info-fran-studienamnden": "mi15sut4tb8sbjm9h6b95bdrbe",
         "random": "q77s98iqkjbsfknafm8zcoft6r",
         "general": "wuuw5rnkpjykfedsbk99hghjpe"
         }
 
 CATEGORIES = {
         "Kurser": [*COURSE_CHANNELS],
-        "Channels": ["välkommen_till_fsn", "random", "general"]
+        "FSN": ["välkommen_till_fsn", "info-fran-studienamnden"],
+        "Channels": ["random", "general"]
         }
 
 CHANNEL_GROUPS = {
