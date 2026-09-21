@@ -2,6 +2,16 @@ from eliasmamo_import import *
 from secret import TOKEN
 from configuration import *
 
+def deprecated_channel_onboarding(driver, ws):
+    """Retained for reference; automatic default-channel joins are disabled."""
+    ws.subscribe("user_added", lambda data: add_to_default_channels(driver, data, TEAM_ID, CHANNELS))
+
+    if False:
+        print("Adding new users to default channels...")
+        for user in get_team_members(driver, TEAM_ID):
+            add_to_default_channels(driver, {"team_id": TEAM_ID, "user_id": user}, TEAM_ID, CHANNELS)
+        print("Adding new users to default channels ... Done")
+
 def main():
     driver = Driver(
             {
@@ -20,16 +30,7 @@ def main():
     driver.login()
     ws = WebSocket(TOKEN)
 
-    print("Listening for new users")
-    ws.subscribe("user_added", lambda data: add_to_default_channels(driver, data, TEAM_ID, CHANNELS))
-
     delete_new_posts_in_clean_channels(driver, CHANNELS)
-
-    if False:
-        print("Adding new users to default channels...")
-        for user in get_team_members(driver, TEAM_ID):
-            add_to_default_channels(driver, {"team_id": TEAM_ID, "user_id": user}, TEAM_ID, CHANNELS)
-        print("Adding new users to default channels ... Done")
 
     ws.join()
 

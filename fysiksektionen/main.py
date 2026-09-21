@@ -51,6 +51,13 @@ def reacted(driver, data):
         if reaction["emoji_name"] in ("english", "en_english", "en"):
             add_to_english(driver, reaction["user_id"])
 
+def deprecated_channel_onboarding(driver, ws):
+    """Retained for reference; default-channel onboarding and bulk adds are disabled."""
+    ws.subscribe("user_added", lambda data: new_user(driver, data))
+
+    if False:
+        fix_users(driver)
+
 def main():
     driver = Driver(
             {
@@ -70,13 +77,10 @@ def main():
     ws = WebSocket(TOKEN)
 
     print("Listening for new users")
-    ws.subscribe("user_added", lambda data: new_user(driver, data))
+    ws.subscribe("user_added", lambda data: enable_all_notifications(driver, data["user_id"]))
     ws.subscribe("reaction_added", lambda data: reacted(driver, data))
 
     delete_new_posts_in_clean_channels(driver, CHANNELS)
-
-    if False:
-        fix_users(driver)
 
     ws.join()
 
