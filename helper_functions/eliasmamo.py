@@ -131,34 +131,24 @@ def add_to_default_channels(driver: Driver, wsdata, team_id, channels):
         # delete_new_posts_in_clean_channels(driver, channels)
 
 def only_notify_mentions_for_channel(driver: Driver, channel_id, user_id):
-    notify = driver.client.put(
-            '/channels/' + channel_id + "/members/" + user_id + "/notify_props")
-
-    notify["desktop"] = "mention"
-    notify["desktop_threads"] = "all"
-    notify["push"] = "mention"
-    notify["push_threads"] = "all"
-
     return driver.client.put(
         '/channels/' + channel_id + '/members/' + user_id + "/notify_props",
         options = {
-            **notify
+            "desktop": "mention",
+            "desktop_threads": "all",
+            "push": "mention",
+            "push_threads": "all",
         }
     )
 
 def full_notifications_for_channel(driver: Driver, channel_id, user_id):
-    notify = driver.client.put(
-            '/channels/' + channel_id + "/members/" + user_id + "/notify_props")
-
-    notify["desktop"] = "all"
-    notify["desktop_threads"] = "all"
-    notify["push"] = "all"
-    notify["push_threads"] = "all"
-
     return driver.client.put(
         '/channels/' + channel_id + '/members/' + user_id + "/notify_props",
         options = {
-            **notify
+            "desktop": "all",
+            "desktop_threads": "all",
+            "push": "all",
+            "push_threads": "all",
         }
     )
 
