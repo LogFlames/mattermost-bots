@@ -2,6 +2,7 @@ from eliasmamo_import import *
 import json
 import logging
 from queue import Empty, Queue
+from tqdm import tqdm
 
 logger = logging.getLogger(__name__)
 
@@ -106,7 +107,7 @@ def main():
     ws.subscribe("channel_member_updated", lambda data: events.put(("channel_member_updated", data)))
 
     if False:
-        for channel_id, is_admin in admin_roles.items():
+        for channel_id, is_admin in tqdm(admin_roles.items(), desc="Backfill", unit="channel"):
             try:
                 update_channel_notifications(driver, channel_id, is_admin)
             except Exception:
