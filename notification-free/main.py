@@ -26,6 +26,9 @@ def channel_member_updated(driver: Driver, data, admin_roles):
     if is_admin == was_admin:
         return
 
+    update_channel_notifications(driver, channel_id, is_admin)
+
+def update_channel_notifications(driver: Driver, channel_id, is_admin):
     update = only_notify_mentions_for_channel if is_admin else full_notifications_for_channel
     users = get_all_channel_members(driver, channel_id)
     updated = failed = 0
@@ -101,6 +104,13 @@ def main():
 
     ws.subscribe("posted", lambda data: events.put(("posted", data)))
     ws.subscribe("channel_member_updated", lambda data: events.put(("channel_member_updated", data)))
+
+    if False:
+        for channel_id, is_admin in admin_roles.items():
+            try:
+                update_channel_notifications(driver, channel_id, is_admin)
+            except Exception:
+                logger.exception("Backfill failed: channel=%s", channel_id)
 
     logger.info("Setup done. Listening for membership changes...")
     process_events(driver, ws, events, admin_roles)
