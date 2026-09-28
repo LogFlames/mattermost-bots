@@ -188,9 +188,10 @@ USERS = {
             "em1s4sqtipf93d5k5mxswx5bcc" # Jonathan Niklasson Godar
             ],
         "valberedningen": [
-            "kxxnbi4wkinu8nbxuy9n9f5zir", # Julia Svensk
-            "4ckbz94ojinybnurk18jw8bk7h", # Kristina Torell
-            "spyinmbnypnf7mrbj5971apmhh" # David Pettersson
+            "not9nx743bda5jpk7sqfiymz3h", # Emmie Zemack
+            "thu6qzqg13bwzpc1acs8sbb66w", # Magdalena Christiansson
+            "htq8mgdeqtdcped1tigo9gfiwr", # Set Englund Levander
+            "6iq5t5hhmjf6bfz49kb139p6te" # Sarah Scheving
             ],
         "varbalen": [
             "awucy44oqfgy9m7rc6y91yikyh", # Irma Sigurd
