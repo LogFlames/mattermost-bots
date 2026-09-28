@@ -76,7 +76,7 @@ def main():
         v = read_sheet()
 
         if v is None:
-            print(f"Falied to read sheet values")
+            print(f"Failed to read sheet values")
             continue
 
         for row in v:
