@@ -71,6 +71,8 @@ def main():
 
     prev_vals = read_sheet()
 
+    reported_success = False
+
     while True:
         time.sleep(20)
         v = read_sheet()
@@ -78,6 +80,9 @@ def main():
         if v is None:
             print(f"Failed to read sheet values")
             continue
+        elif not reported_success:
+            print(f"Successful start-up: can read sheet values.")
+            reported_success = True
 
         for row in v:
             if row not in prev_vals:
