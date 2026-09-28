@@ -1,7 +1,7 @@
 from eliasmamo_import import *
 import logging
 from secret import TOKEN
-from configuration import CHANNEL_ID, SPREADSHEET_ID
+from configuration import CHANNEL_ID, HISTORY_MESSAGE_ID, SPREADSHEET_ID
 import time
 
 import os.path
@@ -9,6 +9,7 @@ import os.path
 logger = logging.getLogger(__name__)
 
 from google.auth.transport.requests import Request
+from google.auth.exceptions import RefreshError
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
@@ -20,7 +21,7 @@ SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
 # The ID and range of a sample spreadsheet.
 RANGE_NAME = 'B2:D'
 
-def read_sheet():
+def get_credentials():
     creds = None
     # The file token.json stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
@@ -38,9 +39,14 @@ def read_sheet():
         with open(os.path.join(os.path.dirname(__file__), 'token.json'), 'w') as token:
             token.write(creds.to_json())
 
-    try:
-        service = build('sheets', 'v4', credentials=creds)
+    return creds
 
+def create_service():
+    return build('sheets', 'v4', credentials=get_credentials(), cache_discovery=False) # oauthclient2 might not support cache_discovery
+
+def read_sheet(service):
+
+    try:
         # Call the Sheets API
         sheet = service.spreadsheets()
         result = sheet.values().get(spreadsheetId=SPREADSHEET_ID,
@@ -52,8 +58,33 @@ def read_sheet():
             return []
 
         return [f"@channel {row[0]} {row[1]} har sökt {row[2]}" for row in values]
+    except RefreshError:
+        logger.exception('Google credentials have expired or been revoked.')
+        return None
     except HttpError as err:
         logger.exception(err)
+
+def read_history(driver):
+    message = driver.posts.get_post(HISTORY_MESSAGE_ID)["message"]
+    if len(message) < 6: # assume empty / uninitialized
+        write_history(driver, [])
+        logger.info(f"Start-up: corrected history, assumed empty.")
+        return []
+    if message.startswith("```") and message.endswith("```"):
+        message = message[3:-3].strip()
+    if message == "History is empty.":
+        logger.info(f"Start-up: history read and is empty.")
+        return []
+    logger.info(f"Start-up: non-empty history read.")
+    return message.splitlines() if message else []
+
+def write_history(driver, values):
+    message = "\n".join(values) if values else "History is empty."
+    message = f"```\n{message}\n```"
+    driver.posts.update_post(
+        HISTORY_MESSAGE_ID,
+        {"id": HISTORY_MESSAGE_ID, "message": message},
+    )
 
 def main():
     logging.basicConfig(level=logging.INFO)
@@ -73,28 +104,29 @@ def main():
 
     driver.login()
 
-    prev_vals = read_sheet()
-
-    reported_success = False
+    service = create_service()
+    history = read_history(driver)
+    values = read_sheet(service)
+    if values is not None:
+        logger.info(f"Start-up: can read sheet values.")
 
     while True:
         time.sleep(20)
-        v = read_sheet()
+        values = read_sheet(service)
 
-        if v is None:
+        if values is None:
             logger.error(f"Failed to read sheet values")
             continue
-        elif not reported_success:
-            logger.info(f"Successful start-up: can read sheet values.")
-            reported_success = True
 
-        for row in v:
-            if row not in prev_vals:
+        history_updated = False
+        for row in values:
+            if row not in history:
                 driver.posts.create_post({"channel_id": CHANNEL_ID, "message": row})
+                history.append(row)
+                history_updated = True
 
-        prev_vals = v
-
-    # User addad to team -> Add to channel {'event': 'user_added', 'data': {'team_id': 'g16tqepa3ffntkfnnwqyapkzkr', 'user_id': 'zu7i4ow3obfa3egwpau59r6s4a'}, 'broadcast': {'omit_users': None, 'user_id': '', 'channel_id': '8e9yhhagtjbnpdyr6eiox8i3oa', 'team_id': '', 'connection_id': ''}, 'seq': 8}
+        if history_updated:
+            write_history(driver, history)
 
 if __name__ == "__main__":
     main()
