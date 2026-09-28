@@ -68,14 +68,14 @@ def read_history(driver):
     message = driver.posts.get_post(HISTORY_MESSAGE_ID)["message"]
     if len(message) < 6: # assume empty / uninitialized
         write_history(driver, [])
-        logger.info(f"Start-up: corrected history, assumed empty.")
+        logger.info(f"Corrected history, assumed empty.")
         return []
     if message.startswith("```") and message.endswith("```"):
         message = message[3:-3].strip()
     if message == "History is empty.":
-        logger.info(f"Start-up: history read and is empty.")
+        logger.info(f"History read and is empty.")
         return []
-    logger.info(f"Start-up: non-empty history read.")
+    logger.info(f"Non-empty history read.")
     return message.splitlines() if message else []
 
 def write_history(driver, values):
@@ -108,7 +108,7 @@ def main():
     history = read_history(driver)
     values = read_sheet(service)
     if values is not None:
-        logger.info(f"Start-up: can read sheet values.")
+        logger.info(f"Can read sheet values.")
 
     while True:
         time.sleep(20)
@@ -122,11 +122,12 @@ def main():
         for row in values:
             if row not in history:
                 driver.posts.create_post({"channel_id": CHANNEL_ID, "message": row})
-                history.append(row)
                 history_updated = True
+                logger.info(f"Sent message: \"{row}\"")
 
         if history_updated:
-            write_history(driver, history)
+            write_history(driver, values)
+            history = read_history(driver)
 
 if __name__ == "__main__":
     main()
