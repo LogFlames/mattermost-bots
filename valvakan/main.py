@@ -1,9 +1,12 @@
 from eliasmamo_import import *
+import logging
 from secret import TOKEN
 from configuration import CHANNEL_ID, SPREADSHEET_ID
 import time
 
 import os.path
+
+logger = logging.getLogger(__name__)
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
@@ -45,14 +48,15 @@ def read_sheet():
         values = result.get('values', [])
 
         if not values:
-            print('No data found.')
+            logger.info('No data found.')
             return []
 
         return [f"@channel {row[0]} {row[1]} har sökt {row[2]}" for row in values]
     except HttpError as err:
-        print(err)
+        logger.exception(err)
 
 def main():
+    logging.basicConfig(level=logging.INFO)
     driver = Driver(
             {
                 'url': 'mattermost.fysiksektionen.se',
@@ -78,10 +82,10 @@ def main():
         v = read_sheet()
 
         if v is None:
-            print(f"Failed to read sheet values")
+            logger.error(f"Failed to read sheet values")
             continue
         elif not reported_success:
-            print(f"Successful start-up: can read sheet values.")
+            logger.info(f"Successful start-up: can read sheet values.")
             reported_success = True
 
         for row in v:
