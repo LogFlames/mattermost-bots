@@ -1,7 +1,7 @@
 from eliasmamo_import import *
 import logging
 from secret import TOKEN
-from configuration import CHANNEL_ID, HISTORY_MESSAGE_ID, SPREADSHEET_ID
+from configuration import CHANNEL_ID, HISTORY_MESSAGE_ID, SPREADSHEET_ID, RANGE_NAME
 import time
 
 import os.path
@@ -17,9 +17,6 @@ from googleapiclient.errors import HttpError
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
-
-# The ID and range of a sample spreadsheet.
-RANGE_NAME = 'B2:D'
 
 def get_credentials():
     creds = None
