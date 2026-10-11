@@ -1,8 +1,8 @@
-from eliasmamo_import import *
-from secret import TOKEN
-import os
 import datetime
-from mattermostdriver.exceptions import ResourceNotFound
+import json
+import os
+from pathlib import Path
+import re
 import time
 
 blacklisted_messages_2023_2024 = {
@@ -121,17 +121,207 @@ messages_to_delete = []
 for person in blacklisted_messages:
     messages_to_delete.extend(blacklisted_messages[person])
 
+
+def write_record(log, record):
+    log.write(json.dumps({"version": 1, **record}) + "\n")
+    log.flush()
+    os.fsync(log.fileno())
+
+
+def delete_messages(driver, message_ids, log):
+    from mattermostdriver.exceptions import ResourceNotFound
+
+    def get_post(post_id):
+        return driver.client.get(f"/posts/{post_id}", params={"include_deleted": "true"})
+
+    requested = []
+    for post_id in dict.fromkeys(message_ids):
+        try:
+            post = get_post(post_id)
+        except ResourceNotFound:
+            print(f"Could not find message: {post_id}")
+            continue
+        if post["delete_at"] == 0:
+            requested.append(post)
+
+    # Delete roots first so a later cascade cannot overwrite a logged reply deletion.
+    requested.sort(key=lambda post: bool(post["root_id"]))
+    deleted = 0
+    for requested_post in requested:
+        time.sleep(0.1)
+        post = get_post(requested_post["id"])
+        if post["delete_at"] != 0:
+            continue
+        affected = [post]
+        if not post["root_id"]:
+            affected = list(driver.posts.get_thread(post["id"])["posts"].values())
+        affected = [item for item in affected if item["delete_at"] == 0]
+        files = []
+        for item in affected:
+            for file_id in item.get("file_ids", []):
+                try:
+                    info = driver.files.get_file_metadata(file_id)
+                except ResourceNotFound:
+                    continue
+                if info["delete_at"] == 0 and info["post_id"] == item["id"]:
+                    files.append(file_id)
+
+        channel = driver.channels.get_channel(post["channel_id"])
+        write_record(log, {
+            "event": "prepared", "target_id": post["id"],
+            "deleted_by": driver.client.userid,
+            "channel_id": channel["id"], "channel_was_archived": channel["delete_at"] != 0,
+            "posts": [{"id": item["id"], "rootid": item["root_id"],
+                       "props": {k: v for k, v in item["props"].items() if k == "deleteBy"}}
+                      for item in affected],
+            "files": sorted(set(files)),
+        })
+        archived = channel["delete_at"] != 0
+        if archived:
+            driver.channels.restore_channel(channel["id"])
+        try:
+            print(f"Deleting message: {post['id']}")
+            driver.posts.delete_post(post["id"])
+            result = get_post(post["id"])
+            if result["delete_at"] <= 0 or result["props"].get("deleteBy") != driver.client.userid:
+                raise RuntimeError(f"Could not confirm deletion of {post['id']}")
+            write_record(log, {"event": "deleted", "target_id": post["id"],
+                               "deleteat": result["delete_at"]})
+            deleted += len(affected)
+        finally:
+            if archived:
+                driver.channels.delete_channel(channel["id"])
+    return deleted
+
+
+def generate_restore_sql(text):
+    def valid_id(value):
+        if not isinstance(value, str) or not re.fullmatch(r"[a-z0-9]{26}", value):
+            raise ValueError(f"Invalid Mattermost ID: {value!r}")
+        return value
+
+    legacy = not text.lstrip().startswith("{")
+    files = set()
+    if legacy:
+        posts = [{"id": valid_id(post_id), "props": {}} for post_id in sorted(set(text.split()))]
+    else:
+        prepared, completed = {}, {}
+        for line in text.splitlines():
+            if not line.strip():
+                continue
+            record = json.loads(line)
+            if record["version"] != 1:
+                raise ValueError("Unsupported deletion log version")
+            target = valid_id(record["target_id"])
+            if record["event"] == "prepared" and target not in prepared:
+                prepared[target] = record
+            elif record["event"] == "deleted" and target in prepared and target not in completed:
+                if type(record["deleteat"]) is not int or record["deleteat"] <= 0:
+                    raise ValueError("Invalid confirmed deletion timestamp")
+                completed[target] = record["deleteat"]
+            else:
+                raise ValueError("Invalid deletion log event sequence")
+        if prepared.keys() != completed.keys():
+            raise ValueError("Incomplete deletion log: inspect prepared operations without confirmations before restoring")
+        posts = []
+        for target, record in prepared.items():
+            actor = valid_id(record["deleted_by"])
+            for post in record["posts"]:
+                valid_id(post["id"])
+                if post["rootid"]:
+                    valid_id(post["rootid"])
+                if not isinstance(post["props"], dict) or set(post["props"]) - {"deleteBy"}:
+                    raise ValueError("Invalid saved post properties")
+                posts.append({**post, "deleteat": completed[target], "deleted_by": actor})
+            files.update(valid_id(file_id) for file_id in record["files"])
+    if not posts or len({post["id"] for post in posts}) != len(posts):
+        raise ValueError("Deletion log must contain a nonempty set of unique affected posts")
+
+    def sql_json(value):
+        return "'" + json.dumps(value).replace("'", "''") + "'::jsonb"
+
+    warning = ("-- Legacy ID-only log: deletion attribution and original attachment state are unknown.\n"
+               "-- Review deletion timestamps before running this transaction.\n") if legacy else ""
+    return warning + f"""\\set ON_ERROR_STOP on
+BEGIN;
+SET LOCAL lock_timeout = '5s';
+SET LOCAL statement_timeout = '30s';
+CREATE TEMP TABLE restore_input ON COMMIT DROP AS
+SELECT * FROM jsonb_to_recordset({sql_json(posts)})
+    AS x(id text, rootid text, props jsonb, deleteat bigint, deleted_by text);
+ALTER TABLE restore_input ADD PRIMARY KEY (id);
+CREATE TEMP TABLE restore_files (id text PRIMARY KEY) ON COMMIT DROP;
+INSERT INTO restore_files SELECT jsonb_array_elements_text({sql_json(sorted(files))});
+
+SELECT p.id FROM posts p JOIN restore_input i ON i.id = p.id
+ORDER BY p.id FOR UPDATE OF p;
+DO $$
+BEGIN
+    IF EXISTS (SELECT 1 FROM restore_input i LEFT JOIN posts p ON p.id = i.id WHERE p.id IS NULL)
+       OR EXISTS (
+           SELECT 1 FROM restore_input i JOIN posts p ON p.id = i.id
+           WHERE i.deleteat IS NOT NULL AND p.deleteat <> 0
+             AND (p.deleteat IS DISTINCT FROM i.deleteat
+                  OR p.updateat IS DISTINCT FROM i.deleteat
+                  OR p.rootid IS DISTINCT FROM i.rootid
+                  OR p.props->>'deleteBy' IS DISTINCT FROM i.deleted_by)
+       ) THEN
+        RAISE EXCEPTION 'Post state differs from deletion log; inspect before restoring';
+    END IF;
+END $$;
+CREATE TEMP TABLE restoring ON COMMIT DROP AS
+SELECT p.id, p.rootid, i.props FROM posts p JOIN restore_input i ON i.id = p.id
+WHERE p.deleteat <> 0;
+CREATE TEMP TABLE restore_roots ON COMMIT DROP AS
+SELECT DISTINCT COALESCE(NULLIF(rootid, ''), id) AS id FROM restoring;
+
+UPDATE posts p SET deleteat = 0,
+    updateat = GREATEST(p.updateat, floor(extract(epoch FROM clock_timestamp()) * 1000)::bigint),
+    props = (p.props - 'deleteBy') || r.props
+FROM restoring r WHERE p.id = r.id;
+UPDATE fileinfo f SET deleteat = 0 FROM restoring r
+WHERE f.postid = r.id AND f.deleteat <> 0
+  AND ({'true' if legacy else 'false'} OR f.id IN (SELECT id FROM restore_files));
+UPDATE threads t SET threaddeleteat = 0 FROM restoring r
+WHERE t.postid = r.id AND r.rootid = '' AND t.threaddeleteat <> 0;
+
+WITH expected AS (
+    SELECT r.id, count(p.id) AS replycount, COALESCE(max(p.createat), 0) AS lastreplyat
+    FROM restore_roots r LEFT JOIN posts p ON p.rootid = r.id AND p.deleteat = 0
+    GROUP BY r.id
+), authors AS (
+    SELECT p.rootid, p.userid, max(p.createat) AS lastreplyat
+    FROM posts p JOIN restore_roots r ON r.id = p.rootid WHERE p.deleteat = 0
+    GROUP BY p.rootid, p.userid
+), participants AS (
+    SELECT rootid, jsonb_agg(userid ORDER BY lastreplyat, userid) AS users
+    FROM authors GROUP BY rootid
+)
+UPDATE threads t SET replycount = e.replycount, lastreplyat = e.lastreplyat,
+    participants = COALESCE(p.users, '[]'::jsonb)
+FROM expected e LEFT JOIN participants p ON p.rootid = e.id
+WHERE t.postid = e.id
+  AND (t.replycount IS DISTINCT FROM e.replycount OR t.lastreplyat IS DISTINCT FROM e.lastreplyat
+       OR t.participants IS DISTINCT FROM COALESCE(p.users, '[]'::jsonb));
+
+SELECT count(*) AS restored_posts FROM restoring;
+COMMIT;
+-- Refresh server caches and refetch affected threads separately; SQL sends no client events.
+"""
+
+
 def main():
     while (ans := input("(D). Delete messages\n(U). Generate Update Query \n(q). Quit\nWhat do you want to do?: ")) not in ("D", "U", "q"): pass
     if ans == "D":
-        if not os.path.exists("deleted_messages/"):
-            os.mkdir("deleted_messages/")
+        from mattermostdriver import Driver
+        from secret import TOKEN
 
-        name = f"deleted_messages/deleted_messages_at-{datetime.datetime.now()}.log"
+        directory = Path(__file__).parent / "deleted_messages"
+        directory.mkdir(exist_ok=True)
+        name = directory / f"deleted_messages_at-{datetime.datetime.now()}.log"
         print(f"Writing messages to file: {name}")
-        with open(name, "w+") as log:
-            deleted_messages = set()
-            driver: Driver = Driver(
+        with open(name, "x", opener=lambda path, flags: os.open(path, flags, 0o600)) as log:
+            driver = Driver(
                     {
                         'url': 'mattermost.fysiksektionen.se',
                         'basepath': '/api/v4',
@@ -146,31 +336,9 @@ def main():
                     )
 
             driver.login()
+            deleted_messages = delete_messages(driver, messages_to_delete, log)
 
-            for message in messages_to_delete:
-                time.sleep(0.1)
-                try:
-                    post = driver.posts.get_post(message)
-                except ResourceNotFound:
-                    print(f"Could not find message: {message}")
-                    continue
-                for reply in driver.posts.get_thread(message)['posts'].keys():
-                    print(f"Saving reply id: {reply}")
-                    deleted_messages.add(reply)
-                    log.write(f"{reply}\n")
-                channel = driver.channels.get_channel(post["channel_id"])
-                if channel["delete_at"] > 0:
-                    print(f"Restoring channel {post['channel_id']}")
-                    driver.channels.restore_channel(post["channel_id"])
-
-                print(f"Deleting message: {message}")
-                driver.posts.delete_post(message)
-
-                if channel["delete_at"] > 0:
-                    print(f"Archiving channel {post['channel_id']}")
-                    driver.channels.delete_channel(post["channel_id"])
-
-        if len(deleted_messages) == 0:
+        if deleted_messages == 0:
             print("Did not delete any messages")
             exit(1)
 
@@ -182,11 +350,7 @@ def main():
             exit(1)
 
         with open(pp, "r") as f:
-            messages = f.read().split()
-        posts = "', '".join(messages)
-        print(f"UPDATE posts SET deleteat = 0 WHERE id IN ('{posts}');")
-        print(f"UPDATE fileinfo SET deleteat = 0 WHERE postid IN ('{posts}');")
+            print(generate_restore_sql(f.read()))
 
 if __name__ == "__main__":
     main()
-
